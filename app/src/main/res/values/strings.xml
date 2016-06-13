@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Kaavojapp</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Menu</string>
+    <string name="title_activity_math">MathActivity</string>
+    <string name="title_activity_physics">PhysicsActivity</string>
+    <string name="title_activity_chemistry_actitvity">ChemistryActitvity</string>
+</resources>
