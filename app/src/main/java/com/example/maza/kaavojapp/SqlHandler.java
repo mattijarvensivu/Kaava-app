@@ -21,14 +21,14 @@ public class SqlHandler extends SQLiteOpenHelper {
 
     private static String DB_PATH = "/data/data/com.example.maza.Kaavojapp/databases/";
 
-    private static String DB_NAME = "kaavaDB.db";
+    private static String DB_NAME = "Kaavapp.db";
 
     private SQLiteDatabase myDataBase;
 
     private final Context myContext;
 
     public SqlHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, "kaavaDB.db", null, 1); //ladataan name.db database jos on olemasa muutoin mennään onCreate metodiin.
+        super(context, DB_NAME, null, 1); //ladataan name.db database jos on olemasa muutoin mennään onCreate metodiin.
         myContext = context;
     }
     //http://blog.reigndesign.com/blog/using-your-own-sqlite-database-in-android-applications/ alkaa
@@ -134,12 +134,12 @@ public class SqlHandler extends SQLiteOpenHelper {
     }
 
     //haetaan dataa taulukosta annetuilla parametreillä
-    public HashMap<String, String> getValue (String Id, String nimi, String latex) {
+    public HashMap<String, String> getValue (String Id) {
         HashMap<String, String> pal = new HashMap<>(); //palautettava arvo. Jos ei saada avaimella mitään niin ilmeisesti tuodaan nullia?
         SQLiteDatabase db = getWritableDatabase();
         //tehdään haku databaseen.
-        String query = "select * from kaavat";
-        if(Id.compareTo("") != 0 || nimi.compareTo("") != 0 || latex.compareTo("") != 0 )
+        String query = "select * from android_metadata";
+       /* if(Id.compareTo("") != 0 || nimi.compareTo("") != 0 || latex.compareTo("") != 0 )
         {
             //on annettu haku termi
             query = query + " where";
@@ -167,6 +167,7 @@ public class SqlHandler extends SQLiteOpenHelper {
             }
 
         }
+        */
         Log.d("querry", query); //tarkistetaan että querry on oikein ja järkevä
         Cursor cur = db.rawQuery(query, null); // itse haku täpahtuu tässä
 
@@ -175,8 +176,8 @@ public class SqlHandler extends SQLiteOpenHelper {
             if(cur.moveToFirst()) {
                 // do{
                 pal.put("id",cur.getString(0)); //haetaan data sarakkeesta 0 ja laitetaan se hashMappiin
-                pal.put("name",cur.getString(1)); // pitäs olla selvää mitä tässä tehään
-                pal.put("latex",cur.getString(2));
+                //pal.put("name",cur.getString(1)); // pitäs olla selvää mitä tässä tehään
+                //pal.put("latex",cur.getString(2));
 
                 //}while(cur.moveToNext());
 
@@ -189,7 +190,7 @@ public class SqlHandler extends SQLiteOpenHelper {
         return pal;
     }
 
-    public void addLine (String str, String integ) {
+    /*public void addLine (String str, String integ) {
         //Katsotaan onko identtinen rivi jo olemassa
         HashMap<String, String> data = getValue("", str, integ);
         if(data.get("id") != null )
@@ -202,5 +203,5 @@ public class SqlHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL(querry);
         db.close();
-    }
+    }*/
 }

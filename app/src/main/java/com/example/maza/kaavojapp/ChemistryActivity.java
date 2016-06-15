@@ -82,11 +82,15 @@ public class ChemistryActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            // Handle the camera action
+            Intent myIntent = new Intent(this, MainActivity.class);
+            startActivity(myIntent);
         } else if (id == R.id.nav_gallery) {
+            Intent myIntent = new Intent(this, MathActivity.class);
+            startActivity(myIntent);
 
         } else if (id == R.id.nav_slideshow) {
-
+            Intent myIntent = new Intent(this, PhysicsActivity.class);
+            startActivity(myIntent);
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {

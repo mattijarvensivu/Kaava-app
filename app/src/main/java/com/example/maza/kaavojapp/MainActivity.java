@@ -15,6 +15,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.util.HashMap;
+import java.util.StringTokenizer;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -101,7 +104,14 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_share) {
             Toast.makeText(this, "Voidaan pistää meneen jonnekkin 2", Toast.LENGTH_LONG).show();
         } else if (id == R.id.nav_send) {
-            Toast.makeText(this, "Voidaan pistää meneen jonnekkin 3" , Toast.LENGTH_LONG).show();
+
+            SqlHandler handler = new SqlHandler(getApplicationContext().getApplicationContext(), "", null, 1);
+
+            HashMap<String, String> hash = handler.getValue("");
+
+
+
+            Toast.makeText(this, hash.get("id") , Toast.LENGTH_LONG).show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

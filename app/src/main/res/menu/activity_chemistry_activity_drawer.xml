@@ -5,20 +5,21 @@
         <item
             android:id="@+id/nav_camera"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Kemia otsikko 1" />
+            android:title="Front page" />
         <item
             android:id="@+id/nav_gallery"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Kemia otsikko 2" />
+            android:title="Math" />
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Kemia otsikko 3" />
+            android:title="Physics" />
         <item
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_menu_manage"
             android:title="Kemia otsikko 4" />
     </group>
+
 
     <item android:title="Väliotsikko">
         <menu>
