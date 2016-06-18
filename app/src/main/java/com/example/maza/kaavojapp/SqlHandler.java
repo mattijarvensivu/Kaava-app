@@ -95,6 +95,7 @@ public class SqlHandler extends SQLiteOpenHelper {
      * */
     private void copyDataBase() throws IOException{
 
+        Log.d("minun","creating database");
         //Open your local db as the input stream
         InputStream myInput = myContext.getAssets().open(DB_NAME);
 
@@ -139,27 +140,30 @@ public class SqlHandler extends SQLiteOpenHelper {
 
     //haetaan dataa taulukosta annetuilla parametreillä
     public ArrayList<HashMap<String, String>> getValue (String tableName, HashMap<String,String> searchParameters) {
-        HashMap<String, String> tableS = getStructure(tableName);
+        ArrayList<String[]> tableS = getStructure(tableName);
         //luodaan querry
         String query = "Select * from " + tableName;
         String searchParamsS = "";
-        String[] keys = (String[])searchParameters.keySet().toArray(); //tähän tallennetaan tableS mapin avaimet. Ne ovat myös searchParameters mapin avaimet ja taulun kenttien nimet.
         boolean isFirst = true;
-        for(int i = 0; i < keys.length; i++)
+        for(int i = 0; i < tableS.size(); i++)
         {
-            if(searchParameters.get(keys[i]) != null)
+            if(searchParameters.get(tableS.get(i)[0]) != null)
             {
+                Log.d("minun","osui " + tableS.get(i)[0] + ": " + searchParameters.get(tableS.get(i)[0]));
                 if(searchParamsS.compareTo("") == 0) searchParamsS += " where "; //On olemassa ainakin yksi haku rajoite ja queryyn ei ole lisätty where avain sanaa. Lisätään se
                 if(!isFirst)
                 {
                     searchParamsS += " AND "; //tätä rajoitetta edeltää ainakin yksi toinen rajoite. Lisätään and
                 }
                 //Kyseisellä kentällä on rajoite. Lisätään se kutsuun
-                searchParamsS +=  keys[i] +  " = " ;
-                if(tableS.get(keys[i]).compareTo("TEXT") == 0)
+                searchParamsS +=  tableS.get(i)[0] +  " = " ;
+                if(tableS.get(i)[1].compareTo("TEXT") == 0)
                 {
                     //kyseessä on teksti typpinen kenttä. lisätään hipsuilla
-                    searchParamsS += "'" + searchParameters.get(keys[i]) + "'";
+                    searchParamsS += "'" + searchParameters.get(tableS.get(i)[0]) + "'";
+                }else{
+                    //kyseessä numero kenttä. Ei hipsuja
+                    searchParamsS += searchParameters.get(tableS.get(i)[0]);
                 }
                 isFirst = false;
             }
@@ -167,16 +171,17 @@ public class SqlHandler extends SQLiteOpenHelper {
         //toteutetaan haku
         ArrayList<HashMap<String, String>> pal = new ArrayList<>();
         SQLiteDatabase db = getWritableDatabase();
-        //haetaan pölydän rakenne
-        Cursor cur = db.rawQuery("PRAGMA table_info('" + tableName +"')", null); // itse haku täpahtuu tässä
+        Log.d("minun",query + searchParamsS);
+        Cursor cur = db.rawQuery(query + searchParamsS, null); // itse haku täpahtuu tässä
         //käsitellään saatu data
         try{
             if(cur.moveToFirst()) {
                 do{
                     HashMap<String, String> tmp = new HashMap<String, String>();
-                    for(int i = 0; i < keys.length; i++)
+                    for(int i = 0; i < tableS.size(); i++)
                     {
-                        tmp.put(keys[i],cur.getString(i));
+
+                        tmp.put(tableS.get(i)[0],cur.getString(i));
                     }
                     pal.add(tmp);
                 }while(cur.moveToNext());
@@ -193,19 +198,19 @@ public class SqlHandler extends SQLiteOpenHelper {
     public HashMap<String,String> getParamMap(String tableName)
     {
         HashMap<String, String> pal = new HashMap<>();
-        String[] fieldNames = (String[])getStructure(tableName).keySet().toArray();
-        for(int i = 0; i < fieldNames.length; i++)
+        ArrayList<String[]> fieldNames = getStructure(tableName);
+        for(int i = 0; i < fieldNames.size(); i++)
         {
-            pal.put(fieldNames[i],null);
+            pal.put(fieldNames.get(i)[0],null);
         }
         return pal;
 
     }
 
     //Haetaan annetun taulun rakenne, eli kenttien nimet ja tyyppi
-    public HashMap<String,String> getStructure(String tableName)
+    public ArrayList<String[]> getStructure(String tableName)
     {
-        HashMap<String,String> pal = new HashMap<>();
+        ArrayList<String[]> pal = new ArrayList<>();
         SQLiteDatabase db = getWritableDatabase();
         //haetaan pölydän rakenne
         Cursor cur = db.rawQuery("PRAGMA table_info('" + tableName +"')", null); // itse haku täpahtuu tässä
@@ -213,7 +218,8 @@ public class SqlHandler extends SQLiteOpenHelper {
         try{
             if(cur.moveToFirst()) {
                 do{
-                    pal.put(cur.getString(1), cur.getString(2));
+                    String[] tmp = {cur.getString(1), cur.getString(2)}; //kentän nimi, kentän tyyppi
+                    pal.add(tmp);
                 }while(cur.moveToNext());
 
             }
@@ -223,6 +229,8 @@ public class SqlHandler extends SQLiteOpenHelper {
         }
         return pal;
     }
+
+
 
 
 
