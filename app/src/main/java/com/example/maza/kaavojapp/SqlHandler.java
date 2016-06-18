@@ -62,7 +62,7 @@ public class SqlHandler extends SQLiteOpenHelper {
     //http://blog.reigndesign.com/blog/using-your-own-sqlite-database-in-android-applications/ alkaa
     public void createDataBase(boolean forceCreate) throws IOException {
 
-        boolean dbExist = forceCreate || !checkDataBase(); //hiukan ehkä turhaa hifistelyä mutta menkööt
+        boolean dbExist = !forceCreate && checkDataBase(); //hiukan ehkä turhaa hifistelyä mutta menkööt
 
         if(dbExist){
             //do nothing - database already exist
@@ -155,14 +155,7 @@ public class SqlHandler extends SQLiteOpenHelper {
     //http://blog.reigndesign.com/blog/using-your-own-sqlite-database-in-android-applications/ loppuu
     @Override
     public void onCreate(SQLiteDatabase db) {
-        /*
-        try {
-            Log.d("minun","tultiin oncreateen");
-            copyDataBase();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        */
+
     }
 
     @Override
