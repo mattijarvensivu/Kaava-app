@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,6 +14,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ChemistryActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -20,6 +28,8 @@ public class ChemistryActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.activity_chemistry_activity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -41,6 +51,7 @@ public class ChemistryActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
     }
 
     @Override
@@ -104,9 +115,31 @@ public class ChemistryActivity extends AppCompatActivity
         return true;
     }
 
-    public void takaisinchemistry(View v)
-    {
-        Intent myIntent = new Intent(this, MainActivity.class);
-        startActivity(myIntent);
+    public void HaeChemistry(View v) {
+        Log.w("myApp", "Nappia painettu");
+        EditText haku = (EditText) findViewById(R.id.Chemistrysearch);
+        String hakuparametri = haku.getText().toString();
+        SqlHandler handler = new SqlHandler(getApplicationContext().getApplicationContext(), "", null, 1, true);
+
+        // Tarkistus mistä taulusta haetaan täytyy tehä
+    String tablename = "Alkuaineet";
+    HashMap<String, String> kentat;
+
+    kentat = handler.getParamMap(tablename);
+    kentat.put("nimi", hakuparametri);
+
+    ArrayList<HashMap<String, String>> tulos;
+    tulos = handler.getValue(tablename, kentat);
+    String tulox = tulos.get(0).get("symbol");
+    Log.w("myApp", "ennen iffiä");
+    if (tulos.size() != 0) {
+        Log.w("myApp", "pitäsi tulostaa");
+        Toast.makeText(this, tulox, Toast.LENGTH_LONG).show();
+    } else {
+        Log.w("myApp", "tyhjää");
+        Toast.makeText(this, "Tyhjä", Toast.LENGTH_LONG).show();
     }
-}
+
+        }
+    }
+

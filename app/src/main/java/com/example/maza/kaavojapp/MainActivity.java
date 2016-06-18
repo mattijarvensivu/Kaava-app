@@ -107,37 +107,17 @@ public class MainActivity extends AppCompatActivity
             Toast.makeText(this, "Voidaan pistää meneen jonnekkin 2", Toast.LENGTH_LONG).show();
         } else if (id == R.id.nav_send) {
 
-            SqlHandler handler = new SqlHandler(getApplicationContext().getApplicationContext(), "", null, 1);
+            SqlHandler handler = new SqlHandler(getApplicationContext().getApplicationContext(), "", null, 1, true);
             //http://blog.reigndesign.com/blog/using-your-own-sqlite-database-in-android-applications/ alkaa
-            try {
 
-                handler.createDataBase();
 
-            } catch (IOException ioe) {
 
-                throw new Error("Unable to create database");
-
-            }
-
-            try {
-
-                handler.openDataBase();
-
-            }catch(SQLException sqle){
-
-                try {
-                    throw sqle;
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-
-            }
             //http://blog.reigndesign.com/blog/using-your-own-sqlite-database-in-android-applications/ loppuu
            // HashMap<String, String> hash = handler.getValue("");
 
 
 
-            Toast.makeText(this, hash.get("id") , Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, hash.get("id") , Toast.LENGTH_LONG).show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

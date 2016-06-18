@@ -22,7 +22,7 @@ import java.util.StringTokenizer;
  */
 public class SqlHandler extends SQLiteOpenHelper {
 
-    private static String DB_PATH = "/data/data/com.example.maza.Kaavojapp/databases/";
+    private static String DB_PATH = "/data/data/com.example.maza.kaavojapp/databases/";
 
     private static String DB_NAME = "Kaavapp.db";
 
@@ -31,14 +31,38 @@ public class SqlHandler extends SQLiteOpenHelper {
 
     private final Context myContext;
 
-    public SqlHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+    public SqlHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version, boolean forceCreate) {
         super(context, DB_NAME, null, 1); //ladataan name.db database jos on olemasa muutoin mennään onCreate metodiin.
         myContext = context;
+        try {
+
+            createDataBase(forceCreate);
+
+        } catch (IOException ioe) {
+
+            throw new Error("Unable to create database");
+
+        }
+
+        try {
+
+            openDataBase();
+
+        }catch(SQLException sqle){
+
+            try {
+                throw sqle;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        }
+
     }
     //http://blog.reigndesign.com/blog/using-your-own-sqlite-database-in-android-applications/ alkaa
-    public void createDataBase() throws IOException {
+    public void createDataBase(boolean forceCreate) throws IOException {
 
-        boolean dbExist = checkDataBase();
+        boolean dbExist = forceCreate || !checkDataBase(); //hiukan ehkä turhaa hifistelyä mutta menkööt
 
         if(dbExist){
             //do nothing - database already exist
@@ -58,6 +82,7 @@ public class SqlHandler extends SQLiteOpenHelper {
 
             }
         }
+
 
     }
 
@@ -109,6 +134,7 @@ public class SqlHandler extends SQLiteOpenHelper {
         byte[] buffer = new byte[1024];
         int length;
         while ((length = myInput.read(buffer))>0){
+            Log.d("minun","writing");
             myOutput.write(buffer, 0, length);
         }
 
@@ -129,8 +155,14 @@ public class SqlHandler extends SQLiteOpenHelper {
     //http://blog.reigndesign.com/blog/using-your-own-sqlite-database-in-android-applications/ loppuu
     @Override
     public void onCreate(SQLiteDatabase db) {
-        //meidän sovelluksen ei vissiinkään koskaan tarvii tulla tänne, koska database on jo luotu valmiiksi.
-        Log.d("minun", "tultiin dbn onCreaten");
+        /*
+        try {
+            Log.d("minun","tultiin oncreateen");
+            copyDataBase();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        */
     }
 
     @Override

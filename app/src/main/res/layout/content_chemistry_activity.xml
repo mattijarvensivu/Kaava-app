@@ -12,26 +12,25 @@
     tools:context=".ChemistryActivity"
     tools:showIn="@layout/app_bar_chemistry_activity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Chemistry"
-        android:id="@+id/textView2"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="84dp"
-        android:layout_marginStart="84dp"
-        android:layout_marginTop="145dp" />
-
     <Button
+        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Front page"
-        android:id="@+id/button"
+        android:text="Search"
+        android:id="@+id/Chemistrynappi"
         android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:onClick="HaeChemistry" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Chemistrysearch"
+        android:layout_alignBottom="@+id/Chemistrynappi"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:onClick="takaisinchemistry" />
+        android:layout_toLeftOf="@+id/Chemistrynappi"
+        android:layout_toStartOf="@+id/Chemistrynappi" />
+
 </RelativeLayout>
