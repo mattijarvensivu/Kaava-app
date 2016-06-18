@@ -12,7 +12,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
+import java.util.StringTokenizer;
 
 /**
  * Created by janne on 3.6.2016.
@@ -22,6 +25,7 @@ public class SqlHandler extends SQLiteOpenHelper {
     private static String DB_PATH = "/data/data/com.example.maza.Kaavojapp/databases/";
 
     private static String DB_NAME = "Kaavapp.db";
+
 
     private SQLiteDatabase myDataBase;
 
@@ -134,61 +138,93 @@ public class SqlHandler extends SQLiteOpenHelper {
     }
 
     //haetaan dataa taulukosta annetuilla parametreillä
-    public HashMap<String, String> getValue (String Id) {
-        HashMap<String, String> pal = new HashMap<>(); //palautettava arvo. Jos ei saada avaimella mitään niin ilmeisesti tuodaan nullia?
-        SQLiteDatabase db = getWritableDatabase();
-        //tehdään haku databaseen.
-        String query = "select * from android_metadata";
-       /* if(Id.compareTo("") != 0 || nimi.compareTo("") != 0 || latex.compareTo("") != 0 )
+    public ArrayList<HashMap<String, String>> getValue (String tableName, HashMap<String,String> searchParameters) {
+        HashMap<String, String> tableS = getStructure(tableName);
+        //luodaan querry
+        String query = "Select * from " + tableName;
+        String searchParamsS = "";
+        String[] keys = (String[])searchParameters.keySet().toArray(); //tähän tallennetaan tableS mapin avaimet. Ne ovat myös searchParameters mapin avaimet ja taulun kenttien nimet.
+        boolean isFirst = true;
+        for(int i = 0; i < keys.length; i++)
         {
-            //on annettu haku termi
-            query = query + " where";
-            if(Id.compareTo("") != 0)
+            if(searchParameters.get(keys[i]) != null)
             {
-                //ID oli annettu
-                query += " _id = " + Id;
-                if(nimi.compareTo("") != 0 || latex.compareTo("") != 0) {
-                    //oli muitakin hakutermejä
-                    query += " and";
+                if(searchParamsS.compareTo("") == 0) searchParamsS += " where "; //On olemassa ainakin yksi haku rajoite ja queryyn ei ole lisätty where avain sanaa. Lisätään se
+                if(!isFirst)
+                {
+                    searchParamsS += " AND "; //tätä rajoitetta edeltää ainakin yksi toinen rajoite. Lisätään and
                 }
-            }
-            if(nimi.compareTo("") != 0)
-            {
-                //name oli annettu
-                query += " name = '" + nimi + "'"; //huom, kun haetaan stringin perusteella tulee olla hipsut. Jos jompaan kumpaan muuhun kenttään antaa muuta, tuottaa tämä errorin!
-                if(latex.compareTo("") != 0) {
-                    //myös latex oli annettu
-                    query += " and";
+                //Kyseisellä kentällä on rajoite. Lisätään se kutsuun
+                searchParamsS +=  keys[i] +  " = " ;
+                if(tableS.get(keys[i]).compareTo("TEXT") == 0)
+                {
+                    //kyseessä on teksti typpinen kenttä. lisätään hipsuilla
+                    searchParamsS += "'" + searchParameters.get(keys[i]) + "'";
                 }
+                isFirst = false;
             }
-            if(latex.compareTo("") != 0) {
-                //Ainakin ilatex oli annettu
-                query += " latex = '" + latex + "'";
-            }
-
         }
-        */
-        Log.d("querry", query); //tarkistetaan että querry on oikein ja järkevä
-        Cursor cur = db.rawQuery(query, null); // itse haku täpahtuu tässä
-
-        //luetaan saatu data ja tallennetaan se HashMappiin. Jos useita osumia, vain ensimmäinen valitaan
+        //toteutetaan haku
+        ArrayList<HashMap<String, String>> pal = new ArrayList<>();
+        SQLiteDatabase db = getWritableDatabase();
+        //haetaan pölydän rakenne
+        Cursor cur = db.rawQuery("PRAGMA table_info('" + tableName +"')", null); // itse haku täpahtuu tässä
+        //käsitellään saatu data
         try{
             if(cur.moveToFirst()) {
-                // do{
-                pal.put("id",cur.getString(0)); //haetaan data sarakkeesta 0 ja laitetaan se hashMappiin
-                //pal.put("name",cur.getString(1)); // pitäs olla selvää mitä tässä tehään
-                //pal.put("latex",cur.getString(2));
-
-                //}while(cur.moveToNext());
+                do{
+                    HashMap<String, String> tmp = new HashMap<String, String>();
+                    for(int i = 0; i < keys.length; i++)
+                    {
+                        tmp.put(keys[i],cur.getString(i));
+                    }
+                    pal.add(tmp);
+                }while(cur.moveToNext());
 
             }
         }finally {
             cur.close(); //tarvitaanko?
             db.close();
         }
-
         return pal;
     }
+
+    //Luodaan HashMappi johonka voidaan laittaa annetun nimisen taulun hakuparametrit.
+    public HashMap<String,String> getParamMap(String tableName)
+    {
+        HashMap<String, String> pal = new HashMap<>();
+        String[] fieldNames = (String[])getStructure(tableName).keySet().toArray();
+        for(int i = 0; i < fieldNames.length; i++)
+        {
+            pal.put(fieldNames[i],null);
+        }
+        return pal;
+
+    }
+
+    //Haetaan annetun taulun rakenne, eli kenttien nimet ja tyyppi
+    public HashMap<String,String> getStructure(String tableName)
+    {
+        HashMap<String,String> pal = new HashMap<>();
+        SQLiteDatabase db = getWritableDatabase();
+        //haetaan pölydän rakenne
+        Cursor cur = db.rawQuery("PRAGMA table_info('" + tableName +"')", null); // itse haku täpahtuu tässä
+        //käsitellään saatu data
+        try{
+            if(cur.moveToFirst()) {
+                do{
+                    pal.put(cur.getString(1), cur.getString(2));
+                }while(cur.moveToNext());
+
+            }
+        }finally {
+            cur.close(); //tarvitaanko?
+            db.close();
+        }
+        return pal;
+    }
+
+
 
     /*public void addLine (String str, String integ) {
         //Katsotaan onko identtinen rivi jo olemassa

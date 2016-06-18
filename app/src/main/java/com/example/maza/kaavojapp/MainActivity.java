@@ -15,6 +15,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
@@ -106,8 +108,32 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_send) {
 
             SqlHandler handler = new SqlHandler(getApplicationContext().getApplicationContext(), "", null, 1);
+            //http://blog.reigndesign.com/blog/using-your-own-sqlite-database-in-android-applications/ alkaa
+            try {
 
-            HashMap<String, String> hash = handler.getValue("");
+                handler.createDataBase();
+
+            } catch (IOException ioe) {
+
+                throw new Error("Unable to create database");
+
+            }
+
+            try {
+
+                handler.openDataBase();
+
+            }catch(SQLException sqle){
+
+                try {
+                    throw sqle;
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+            }
+            //http://blog.reigndesign.com/blog/using-your-own-sqlite-database-in-android-applications/ loppuu
+           // HashMap<String, String> hash = handler.getValue("");
 
 
 
