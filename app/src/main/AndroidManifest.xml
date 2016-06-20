@@ -28,6 +28,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ChemistryActivity"
+            android:windowSoftInputMode="stateHidden"
             android:label="@string/title_activity_chemistry_actitvity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>

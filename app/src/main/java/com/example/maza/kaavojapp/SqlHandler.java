@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.ListAdapter;
+import android.widget.SimpleCursorAdapter;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -62,7 +64,7 @@ public class SqlHandler extends SQLiteOpenHelper {
     //http://blog.reigndesign.com/blog/using-your-own-sqlite-database-in-android-applications/ alkaa
     public void createDataBase(boolean forceCreate) throws IOException {
 
-        boolean dbExist = forceCreate || !checkDataBase(); //hiukan ehkä turhaa hifistelyä mutta menkööt
+        boolean dbExist = !forceCreate && checkDataBase(); //hiukan ehkä turhaa hifistelyä mutta menkööt
 
         if(dbExist){
             //do nothing - database already exist
