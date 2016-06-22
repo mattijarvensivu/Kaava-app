@@ -1,6 +1,8 @@
 package com.example.maza.kaavojapp;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,6 +17,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -24,11 +30,17 @@ import java.util.HashMap;
 
 public class ChemistryActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    private SQLiteDatabase db;
+    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // register listView's context menu (to delete row)
+        // registerForContextMenu(listView);
+
+        // get data with own made queryData method
 
         setContentView(R.layout.activity_chemistry_activity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -51,7 +63,8 @@ public class ChemistryActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
+       listView = (ListView)  findViewById(R.id.listViewtest);
+        Testiquery();
     }
 
     @Override
@@ -122,24 +135,51 @@ public class ChemistryActivity extends AppCompatActivity
         SqlHandler handler = new SqlHandler(getApplicationContext().getApplicationContext(), "", null, 1, true);
 
         // Tarkistus mistä taulusta haetaan täytyy tehä
-    String tablename = "Alkuaineet";
-    HashMap<String, String> kentat;
+        String tablename = "Alkuaineet";
+        HashMap<String, String> kentat;
 
-    kentat = handler.getParamMap(tablename);
-    kentat.put("nimi", hakuparametri);
+        kentat = handler.getParamMap(tablename);
+        kentat.put("nimi", hakuparametri);
 
-    ArrayList<HashMap<String, String>> tulos;
-    tulos = handler.getValue(tablename, kentat);
-    String tulox = tulos.get(0).get("symbol");
-    Log.w("myApp", "ennen iffiä");
-    if (tulos.size() != 0) {
-        Log.w("myApp", "pitäsi tulostaa");
-        Toast.makeText(this, tulox, Toast.LENGTH_LONG).show();
-    } else {
-        Log.w("myApp", "tyhjää");
-        Toast.makeText(this, "Tyhjä", Toast.LENGTH_LONG).show();
-    }
-
+        ArrayList<HashMap<String, String>> tulos;
+        tulos = handler.getValue(tablename, kentat);
+        String tulox = tulos.get(0).get("symbol");
+        Log.w("myApp", "ennen iffiä");
+        if (tulos.size() != 0) {
+            Log.w("myApp", "pitäsi tulostaa");
+            Toast.makeText(this, tulox, Toast.LENGTH_LONG).show();
+        } else {
+            Log.w("myApp", "tyhjää");
+            Toast.makeText(this, "Tyhjä", Toast.LENGTH_LONG).show();
         }
+
     }
+
+
+    public void Testiquery(){
+
+        //SQLiteDatabase db = getWritableDatabase();
+        db = (new SqlHandler(getApplicationContext().getApplicationContext(), "", null, 1, true)).getWritableDatabase();
+        Cursor cursor = db.rawQuery("Select _id, symbol, nimi, jarjestyluku from Alkuaineet ORDER BY jarjestyluku", null);
+        String[] resultColumns = {"_id","symbol","nimi", "jarjestyluku"};
+        cursor = db.query("Alkuaineet",resultColumns,null,null,null,null,"jarjestyluku ASC",null);
+
+        ListAdapter adapter = new SimpleCursorAdapter(this,
+                R.layout.list_item, cursor,
+                new String[] {"jarjestyluku","symbol", "nimi" },      // from
+                new int[] {R.id.jarjestys,R.id.symbol, R.id.nimi }    // to
+                ,0);  // flags
+
+        TextView columnHeader1 = (TextView) findViewById(R.id.column_header1);
+        TextView columnHeader2 = (TextView) findViewById(R.id.column_header2);
+        TextView columnHeader3 = (TextView) findViewById(R.id.column_header3);
+        columnHeader1.setText("Järjestysluku");
+        columnHeader2.setText("Symbol");
+        columnHeader3.setText("Nimi");
+
+        listView.setAdapter(adapter);
+    }
+    
+
+}
 
