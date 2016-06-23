@@ -1,6 +1,316 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-</LinearLayout>
+    <ScrollView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Nimi"
+                android:layout_gravity="center"
+                android:id="@+id/txvNimiMain" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txvENimi"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_gravity="center"
+                android:text="Eng nimi"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txvJLuku"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_gravity="center"
+                android:text="J.luku"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txvSymbol"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_gravity="center"
+                android:textSize="40dp"
+                android:text="Symbooli"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txvMMass"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_gravity="center"
+                android:text="Mooli massa"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txvLuokka"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_gravity="center"
+                android:text="Luokka"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txvHLLabel"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Hapetus luvut"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:id="@+id/txvHLField"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_gravity="left"
+                android:text="Hapetus luvut"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txvENegLabel"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Elektronegatiivisuus:"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txvENegField"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="E.neg arvo"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txvRakenneLabel"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Elektroni rakenne"/>
+
+            <io.github.kexanie.library.MathView
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:id="@+id/txvRakenneField"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_gravity="center"
+                android:text="E.rakenne"
+                app:engine="MathJax"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txvOMLabel"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Olomuoto:"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txvOMField"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Olomuoto"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txvSPLabel"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Sulamis piste:"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txvSPField"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="SP"/>
+
+                <io.github.kexanie.library.MathView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/mwUnit"
+                    android:layout_gravity="bottom"
+                    android:layout_margin="4dp"
+                    app:engine="KaTeX"
+                    app:text="\\(\\large{C^{\\circ}}\\)"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txvKPLabel"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Kiehumis piste:"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txvKPField"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="kp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txvDenLabel"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Tiheys:"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txvDenField"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Dens"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txvOmLLabel"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Ominaislämpö:"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txvOmLField"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="ominais.l"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txvLJLabel"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Lämmön johtavuus:"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txvLJField"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="lämmön"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:id="@+id/txvASLabel"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Atomi säde"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txvTASLabel"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Teoreettinen:"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txvTASField"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="300pm"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txvKASLabel"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Kokeellinen:"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txvKASField"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="300pm"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:id="@+id/txvIOField"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Ionisaatio energiat"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/lvoIonE"
+                android:orientation="vertical">
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+</merge>
