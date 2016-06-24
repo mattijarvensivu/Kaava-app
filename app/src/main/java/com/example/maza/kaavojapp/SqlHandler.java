@@ -11,6 +11,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.sql.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -163,41 +164,12 @@ public class SqlHandler extends SQLiteOpenHelper {
 
     }
 
+
     //haetaan dataa taulukosta annetuilla parametreillä
     public ArrayList<HashMap<String, String>> getValue (String tableName, HashMap<String,String> searchParameters) {
+        Cursor cur = getCursor(tableName,searchParameters);
         ArrayList<String[]> tableS = getStructure(tableName);
-        //luodaan querry
-        String query = "Select * from " + tableName;
-        String searchParamsS = "";
-        boolean isFirst = true;
-        for(int i = 0; i < tableS.size(); i++)
-        {
-            if(searchParameters.get(tableS.get(i)[0]) != null)
-            {
-                Log.d("minun","osui " + tableS.get(i)[0] + ": " + searchParameters.get(tableS.get(i)[0]));
-                if(searchParamsS.compareTo("") == 0) searchParamsS += " where "; //On olemassa ainakin yksi haku rajoite ja queryyn ei ole lisätty where avain sanaa. Lisätään se
-                if(!isFirst)
-                {
-                    searchParamsS += " AND "; //tätä rajoitetta edeltää ainakin yksi toinen rajoite. Lisätään and
-                }
-                //Kyseisellä kentällä on rajoite. Lisätään se kutsuun
-                searchParamsS +=  tableS.get(i)[0] +  " = " ;
-                if(tableS.get(i)[1].compareTo("TEXT") == 0)
-                {
-                    //kyseessä on teksti typpinen kenttä. lisätään hipsuilla
-                    searchParamsS += "'" + searchParameters.get(tableS.get(i)[0]) + "'";
-                }else{
-                    //kyseessä numero kenttä. Ei hipsuja
-                    searchParamsS += searchParameters.get(tableS.get(i)[0]);
-                }
-                isFirst = false;
-            }
-        }
-        //toteutetaan haku
         ArrayList<HashMap<String, String>> pal = new ArrayList<>();
-        SQLiteDatabase db = getWritableDatabase();
-        Log.d("minun",query + searchParamsS);
-        Cursor cur = db.rawQuery(query + searchParamsS, null); // itse haku täpahtuu tässä
         //käsitellään saatu data
         try{
             if(cur.moveToFirst()) {
@@ -213,8 +185,7 @@ public class SqlHandler extends SQLiteOpenHelper {
 
             }
         }finally {
-            cur.close(); //tarvitaanko?
-            db.close();
+
         }
         return pal;
     }
@@ -253,6 +224,44 @@ public class SqlHandler extends SQLiteOpenHelper {
             db.close();
         }
         return pal;
+    }
+
+
+    public Cursor getCursor(String tableName, HashMap<String, String> searchParameters)
+    {
+        ArrayList<String[]> tableS = getStructure(tableName);
+        //luodaan querry
+        String query = "Select * from " + tableName;
+        String searchParamsS = "";
+        boolean isFirst = true;
+        for(int i = 0; i < tableS.size(); i++)
+        {
+            if(searchParameters.get(tableS.get(i)[0]) != null)
+            {
+                Log.d("minun","osui " + tableS.get(i)[0] + ": " + searchParameters.get(tableS.get(i)[0]));
+                if(searchParamsS.compareTo("") == 0) searchParamsS += " where "; //On olemassa ainakin yksi haku rajoite ja queryyn ei ole lisätty where avain sanaa. Lisätään se
+                if(!isFirst)
+                {
+                    searchParamsS += " AND "; //tätä rajoitetta edeltää ainakin yksi toinen rajoite. Lisätään and
+                }
+                //Kyseisellä kentällä on rajoite. Lisätään se kutsuun
+                searchParamsS +=  tableS.get(i)[0] +  " = " ;
+                if(tableS.get(i)[1].compareTo("TEXT") == 0)
+                {
+                    //kyseessä on teksti typpinen kenttä. lisätään hipsuilla
+                    searchParamsS += "'" + searchParameters.get(tableS.get(i)[0]) + "'";
+                }else{
+                    //kyseessä numero kenttä. Ei hipsuja
+                    searchParamsS += searchParameters.get(tableS.get(i)[0]);
+                }
+                isFirst = false;
+            }
+        }
+        //toteutetaan haku
+        SQLiteDatabase db = getWritableDatabase();
+        Log.d("minun",query + searchParamsS);
+        db.close();
+        return db.rawQuery(query + searchParamsS, null); // itse haku täpahtuu tässä
     }
 
 

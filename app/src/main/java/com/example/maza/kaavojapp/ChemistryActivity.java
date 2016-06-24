@@ -30,7 +30,7 @@ import java.util.HashMap;
 
 public class ChemistryActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private SQLiteDatabase db;
+    SqlHandler hand;
     private ListView listView;
 
     @Override
@@ -64,6 +64,7 @@ public class ChemistryActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
        listView = (ListView)  findViewById(R.id.listViewtest);
+        hand = new SqlHandler(getApplicationContext().getApplicationContext(), "", null, 1, true);
         Testiquery();
     }
 
@@ -132,17 +133,16 @@ public class ChemistryActivity extends AppCompatActivity
         Log.w("myApp", "Nappia painettu");
         EditText haku = (EditText) findViewById(R.id.Chemistrysearch);
         String hakuparametri = haku.getText().toString();
-        SqlHandler handler = new SqlHandler(getApplicationContext().getApplicationContext(), "", null, 1, true);
 
         // Tarkistus mistä taulusta haetaan täytyy tehä
         String tablename = "Alkuaineet";
         HashMap<String, String> kentat;
 
-        kentat = handler.getParamMap(tablename);
+        kentat = hand.getParamMap(tablename);
         kentat.put("nimi", hakuparametri);
 
         ArrayList<HashMap<String, String>> tulos;
-        tulos = handler.getValue(tablename, kentat);
+        tulos = hand.getValue(tablename, kentat);
         String tulox = tulos.get(0).get("symbol");
         Log.w("myApp", "ennen iffiä");
         if (tulos.size() != 0) {
@@ -158,11 +158,9 @@ public class ChemistryActivity extends AppCompatActivity
 
     public void Testiquery(){
 
-        //SQLiteDatabase db = getWritableDatabase();
-        db = (new SqlHandler(getApplicationContext().getApplicationContext(), "", null, 1, true)).getWritableDatabase();
-        Cursor cursor = db.rawQuery("Select _id, symbol, nimi, jarjestyluku from Alkuaineet ORDER BY jarjestyluku", null);
+        SQLiteDatabase db = hand.getWritableDatabase();
         String[] resultColumns = {"_id","symbol","nimi", "jarjestyluku"};
-        cursor = db.query("Alkuaineet",resultColumns,null,null,null,null,"jarjestyluku ASC",null);
+        Cursor cursor = db.query("Alkuaineet",resultColumns,null,null,null,null,"jarjestyluku ASC",null);
 
         ListAdapter adapter = new SimpleCursorAdapter(this,
                 R.layout.list_item, cursor,
