@@ -1,5 +1,6 @@
 package com.example.maza.kaavojapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,7 +18,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
@@ -63,9 +68,8 @@ public class ChemistryActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-       listView = (ListView)  findViewById(R.id.listViewtest);
-        hand = new SqlHandler(getApplicationContext().getApplicationContext(), "", null, 1, true);
-        Testiquery();
+       listView = (ListView)  findViewById(R.id.lsvTulos);
+        hand = new SqlHandler(getApplicationContext().getApplicationContext(), "", null, 1, false);
     }
 
     @Override
@@ -136,48 +140,42 @@ public class ChemistryActivity extends AppCompatActivity
 
         // Tarkistus mistä taulusta haetaan täytyy tehä
         String tablename = "Alkuaineet";
-        HashMap<String, String> kentat;
+        final HashMap<String, String> kentat;
 
         kentat = hand.getParamMap(tablename);
         kentat.put("nimi", hakuparametri);
 
-        ArrayList<HashMap<String, String>> tulos;
-        tulos = hand.getValue(tablename, kentat);
-        String tulox = tulos.get(0).get("symbol");
-        Log.w("myApp", "ennen iffiä");
-        if (tulos.size() != 0) {
-            Log.w("myApp", "pitäsi tulostaa");
-            Toast.makeText(this, tulox, Toast.LENGTH_LONG).show();
-        } else {
-            Log.w("myApp", "tyhjää");
-            Toast.makeText(this, "Tyhjä", Toast.LENGTH_LONG).show();
-        }
+        ArrayList<Tulos> tulos = hand.getValue(tablename, kentat);
+        placeToCenter(listView); //laitetaan listViewi keskelle
+
+        //lisätään tiedot listViewiin näkyville
+        listView.setAdapter(new resultAdapter(getApplicationContext(),-1,tulos));
+
+        //lisätää listViewiin tapahtuma kun klikataan jotakin sen kohtaa
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Context con = getApplicationContext();
+                ViewGroup prnt = (ViewGroup)findViewById(R.id.lnlContainer); //haetaan isäntä, eli komponentti mihin tuo tiedot sisältävä komponentti tulee
+                placeToCenter(((Tulos)parent.getItemAtPosition(position)).getLargeView((LayoutInflater) con.getSystemService(Context.LAYOUT_INFLATER_SERVICE),prnt));
+            }
+        });
+
 
     }
 
 
-    public void Testiquery(){
-
-        SQLiteDatabase db = hand.getWritableDatabase();
-        String[] resultColumns = {"_id","symbol","nimi", "jarjestyluku"};
-        Cursor cursor = db.query("Alkuaineet",resultColumns,null,null,null,null,"jarjestyluku ASC",null);
-
-        ListAdapter adapter = new SimpleCursorAdapter(this,
-                R.layout.list_item, cursor,
-                new String[] {"jarjestyluku","symbol", "nimi" },      // from
-                new int[] {R.id.jarjestys,R.id.symbol, R.id.nimi }    // to
-                ,0);  // flags
-
-        TextView columnHeader1 = (TextView) findViewById(R.id.column_header1);
-        TextView columnHeader2 = (TextView) findViewById(R.id.column_header2);
-        TextView columnHeader3 = (TextView) findViewById(R.id.column_header3);
-        columnHeader1.setText("Järjestysluku");
-        columnHeader2.setText("Symbol");
-        columnHeader3.setText("Nimi");
-
-        listView.setAdapter(adapter);
+    //Tässä laitetaan annettu Vievi keskellä olevaan layouttiin
+    private void placeToCenter(View target)
+    {
+        LinearLayout contai = (LinearLayout) findViewById(R.id.lnlContainer);
+        contai.removeAllViews();
+        contai.addView(target);
     }
-    
+
+
 
 }
 

@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent">
 
-    <ScrollView
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+>
             <TextView
+                android:textColor="#000000"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
@@ -18,6 +19,8 @@
                 android:id="@+id/txvNimiMain" />
 
             <TextView
+                 
+                android:textColor="#000000"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/txvENimi"
@@ -26,6 +29,8 @@
                 android:text="Eng nimi"/>
 
             <TextView
+                 
+                android:textColor="#000000"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/txvJLuku"
@@ -33,6 +38,7 @@
                 android:layout_gravity="center"
                 android:text="J.luku"/>
             <TextView
+                android:textColor="#000000"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/txvSymbol"
@@ -41,6 +47,8 @@
                 android:textSize="40dp"
                 android:text="Symbooli"/>
             <TextView
+                 
+                android:textColor="#000000"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/txvMMass"
@@ -49,6 +57,8 @@
                 android:text="Mooli massa"/>
 
             <TextView
+                 
+                android:textColor="#000000"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/txvLuokka"
@@ -57,6 +67,8 @@
                 android:text="Luokka"/>
 
             <TextView
+                 
+                android:textColor="#000000"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/txvHLLabel"
@@ -64,6 +76,8 @@
                 android:text="Hapetus luvut"/>
 
             <TextView
+                 
+                android:textColor="#000000"
                 android:layout_width="wrap_content"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -78,6 +92,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
+                     
+                    android:textColor="#000000"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/txvENegLabel"
@@ -85,6 +101,8 @@
                     android:text="Elektronegatiivisuus:"/>
 
                 <TextView
+                     
+                    android:textColor="#000000"
                     android:layout_width="match_parent"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
@@ -95,6 +113,8 @@
             </LinearLayout>
 
             <TextView
+                 
+                android:textColor="#000000"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/txvRakenneLabel"
@@ -117,6 +137,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
+                     
+                    android:textColor="#000000"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/txvOMLabel"
@@ -124,6 +146,8 @@
                     android:text="Olomuoto:"/>
 
                 <TextView
+                     
+                    android:textColor="#000000"
                     android:layout_width="match_parent"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
@@ -138,6 +162,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
+                     
+                    android:textColor="#000000"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/txvSPLabel"
@@ -145,6 +171,8 @@
                     android:text="Sulamis piste:"/>
 
                 <TextView
+                     
+                    android:textColor="#000000"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/txvSPField"
@@ -167,6 +195,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
+                     
+                    android:textColor="#000000"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/txvKPLabel"
@@ -174,6 +204,8 @@
                     android:text="Kiehumis piste:"/>
 
                 <TextView
+                     
+                    android:textColor="#000000"
                     android:layout_width="match_parent"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
@@ -188,6 +220,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
+                     
+                    android:textColor="#000000"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/txvDenLabel"
@@ -195,6 +229,8 @@
                     android:text="Tiheys:"/>
 
                 <TextView
+                     
+                    android:textColor="#000000"
                     android:layout_width="match_parent"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
@@ -209,6 +245,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
+                     
+                    android:textColor="#000000"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/txvOmLLabel"
@@ -216,6 +254,8 @@
                     android:text="Ominaislämpö:"/>
 
                 <TextView
+                     
+                    android:textColor="#000000"
                     android:layout_width="match_parent"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
@@ -230,6 +270,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
+                     
+                    android:textColor="#000000"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/txvLJLabel"
@@ -237,6 +279,8 @@
                     android:text="Lämmön johtavuus:"/>
 
                 <TextView
+                     
+                    android:textColor="#000000"
                     android:layout_width="match_parent"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
@@ -247,6 +291,8 @@
             </LinearLayout>
 
             <TextView
+                 
+                android:textColor="#000000"
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -259,6 +305,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
+                     
+                    android:textColor="#000000"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/txvTASLabel"
@@ -266,6 +314,8 @@
                     android:text="Teoreettinen:"/>
 
                 <TextView
+                     
+                    android:textColor="#000000"
                     android:layout_width="match_parent"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
@@ -281,6 +331,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
+                     
+                    android:textColor="#000000"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/txvKASLabel"
@@ -288,6 +340,8 @@
                     android:text="Kokeellinen:"/>
 
                 <TextView
+                     
+                    android:textColor="#000000"
                     android:layout_width="match_parent"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
@@ -297,6 +351,8 @@
             </LinearLayout>
 
             <TextView
+                 
+                android:textColor="#000000"
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -312,5 +368,4 @@
             </LinearLayout>
         </LinearLayout>
 
-    </ScrollView>
-</merge>
+</ScrollView>

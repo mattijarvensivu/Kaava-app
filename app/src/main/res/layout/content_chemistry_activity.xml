@@ -34,38 +34,20 @@
         android:layout_toStartOf="@+id/Chemistrynappi"
         android:visibility="visible" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/lnlContainer"
+        android:layout_below="@+id/Chemistrysearch">
     <ListView
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/listViewtest"
+        android:id="@+id/lsvTulos"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/Chemistrysearch" />
+         />
+    </LinearLayout>
 
-    <TextView android:id="@+id/column_header1"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_above="@id/listViewtest"
-        android:layout_below="@id/Chemistrysearch"
-        android:text="Järjestysluku"
-        />
-    <TextView android:id="@+id/column_header2"
-        android:layout_marginLeft="110dp"
-        android:layout_below="@id/Chemistrysearch"
-        android:layout_above="@id/listViewtest"
-        android:layout_width="60dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        />
-    <TextView android:id="@+id/column_header3"
-        android:layout_marginLeft="180dp"
-        android:layout_below="@id/Chemistrysearch"
-        android:layout_above="@id/listViewtest"
-        android:layout_width="60dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        />
 
 </RelativeLayout>

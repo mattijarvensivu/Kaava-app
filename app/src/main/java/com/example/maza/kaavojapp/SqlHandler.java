@@ -166,10 +166,10 @@ public class SqlHandler extends SQLiteOpenHelper {
 
 
     //haetaan dataa taulukosta annetuilla parametreillä
-    public ArrayList<HashMap<String, String>> getValue (String tableName, HashMap<String,String> searchParameters) {
+    public ArrayList<Tulos> getValue (String tableName, HashMap<String,String> searchParameters) {
         Cursor cur = getCursor(tableName,searchParameters);
         ArrayList<String[]> tableS = getStructure(tableName);
-        ArrayList<HashMap<String, String>> pal = new ArrayList<>();
+        ArrayList<Tulos> pal = new ArrayList<>();
         //käsitellään saatu data
         try{
             if(cur.moveToFirst()) {
@@ -180,13 +180,14 @@ public class SqlHandler extends SQLiteOpenHelper {
 
                         tmp.put(tableS.get(i)[0],cur.getString(i));
                     }
-                    pal.add(tmp);
+                    pal.add(Tulos.getTulos(tmp));
                 }while(cur.moveToNext());
 
             }
         }finally {
 
         }
+        Log.d("minun","loytyi " + pal.size() + " osumaa");
         return pal;
     }
 
@@ -220,8 +221,8 @@ public class SqlHandler extends SQLiteOpenHelper {
 
             }
         }finally {
-            cur.close(); //tarvitaanko?
-            db.close();
+            //cur.close(); //tarvitaanko?
+            //db.close();
         }
         return pal;
     }
@@ -245,7 +246,7 @@ public class SqlHandler extends SQLiteOpenHelper {
                     searchParamsS += " AND "; //tätä rajoitetta edeltää ainakin yksi toinen rajoite. Lisätään and
                 }
                 //Kyseisellä kentällä on rajoite. Lisätään se kutsuun
-                searchParamsS +=  tableS.get(i)[0] +  " = " ;
+                searchParamsS +=  tableS.get(i)[0] +  " LIKE " ;
                 if(tableS.get(i)[1].compareTo("TEXT") == 0)
                 {
                     //kyseessä on teksti typpinen kenttä. lisätään hipsuilla
@@ -260,8 +261,8 @@ public class SqlHandler extends SQLiteOpenHelper {
         //toteutetaan haku
         SQLiteDatabase db = getWritableDatabase();
         Log.d("minun",query + searchParamsS);
-        db.close();
-        return db.rawQuery(query + searchParamsS, null); // itse haku täpahtuu tässä
+        Cursor pal = db.rawQuery(query + searchParamsS, null); // itse haku täpahtuu tässä
+        return pal;
     }
 
 
