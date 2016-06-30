@@ -69,7 +69,7 @@ public class ChemistryActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
        listView = (ListView)  findViewById(R.id.lsvTulos);
-        hand = new SqlHandler(getApplicationContext().getApplicationContext(), "", null, 1, false);
+        hand = new SqlHandler(getApplicationContext().getApplicationContext(), "", null, 1, true);
     }
 
     @Override
@@ -140,12 +140,20 @@ public class ChemistryActivity extends AppCompatActivity
 
         // Tarkistus mistä taulusta haetaan täytyy tehä
         String tablename = "Alkuaineet";
-        final HashMap<String, String> kentat;
+        HashMap<String, String> kentat;
 
         kentat = hand.getParamMap(tablename);
         kentat.put("nimi", hakuparametri);
 
         ArrayList<Tulos> tulos = hand.getValue(tablename, kentat);
+
+        // vain väliaikainen testi
+        kentat = hand.getParamMap("Hapot");
+        kentat.put("name",hakuparametri);
+
+        ArrayList<Tulos> tulosHapot = hand.getValue("Hapot", kentat);
+
+        tulos.addAll(tulosHapot);
         placeToCenter(listView); //laitetaan listViewi keskelle
 
         //lisätään tiedot listViewiin näkyville

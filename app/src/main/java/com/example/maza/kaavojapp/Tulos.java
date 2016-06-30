@@ -34,6 +34,8 @@ public class Tulos {
         {
             case 23: //kyseesssä alkuaine
                 return new alkuaineTulos(values);
+            case 11: //kyseessä happo. Ei kuitenkaan vielä kuva kenttää
+                return new happoTulos(values);
             default:
                 return null;
         }

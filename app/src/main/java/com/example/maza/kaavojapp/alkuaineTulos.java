@@ -143,7 +143,7 @@ public class alkuaineTulos extends Tulos {
 
         //käsitellään ionisaatio energiat.
         //jos IE != 0, on kyseinen ionisaatio energia olemassa. Lisätään textWiev listaan.
-        IonE.removeAllViews();
+        IonE.removeAllViews(); //tarvitaanko? tuskin
         String[] ies = {tiedot.get("ionisaatioenergia1"), tiedot.get("ionisaatioenergia2"), tiedot.get("ionisaatioenergia3"), tiedot.get("ionisaatioenergia4")};
 
         for (int i = 0; i < ies.length; i++) {

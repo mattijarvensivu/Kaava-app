@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/lnMain">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#000000"
+        android:id="@+id/txvNimi"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#000000"
+        android:id="@+id/txvName"/>
+
+    <io.github.kexanie.library.MathView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/mvKaava"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#000000"
+        android:text="Moolimassa: "/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#000000"
+        android:id="@+id/txvMoolimassa"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#000000"
+            android:text="Tiheys: "/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#000000"
+            android:id="@+id/txvDensity"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#000000"
+            android:text="Konsentraatio: "/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#000000"
+            android:text="1"
+            android:id="@+id/txvCons"/>
+    </LinearLayout>
+
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:progress="100"
+        android:max="499"
+        android:id="@+id/sbCons"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#000000"
+            android:text="pH konsentraatiossa: "/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#000000"
+            android:id="@+id/txvPh"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#000000"
+            android:text="Sulamis piste: "/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#000000"
+            android:id="@+id/txvSp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#000000"
+            android:text="Kiehumis piste: "/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#000000"
+            android:id="@+id/txvKp"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#000000"
+        android:text="Happo vakiot: "/>
+
+
+</LinearLayout>
