@@ -135,11 +135,14 @@ public class ChemistryActivity extends AppCompatActivity
 
     public void HaeChemistry(View v) {
         Log.w("myApp", "Nappia painettu");
+
         EditText haku = (EditText) findViewById(R.id.Chemistrysearch);
         String hakuparametri = haku.getText().toString();
-Boolean tarkistus= false;
+
+        Boolean tarkistus= false;
         StringValidator val = new StringValidator();
         tarkistus = val.CheckString(hakuparametri);
+        
         if(tarkistus) {
 
             // Tarkistus mistä taulusta haetaan täytyy tehä
