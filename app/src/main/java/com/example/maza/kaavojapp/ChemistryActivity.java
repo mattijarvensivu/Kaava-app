@@ -137,41 +137,44 @@ public class ChemistryActivity extends AppCompatActivity
         Log.w("myApp", "Nappia painettu");
         EditText haku = (EditText) findViewById(R.id.Chemistrysearch);
         String hakuparametri = haku.getText().toString();
+Boolean tarkistus= false;
+        StringValidator val = new StringValidator();
+        tarkistus = val.CheckString(hakuparametri);
+        if(tarkistus) {
 
-        // Tarkistus mistä taulusta haetaan täytyy tehä
-        String tablename = "Alkuaineet";
-        HashMap<String, String> kentat;
+            // Tarkistus mistä taulusta haetaan täytyy tehä
+            String tablename = "Alkuaineet";
+            HashMap<String, String> kentat;
 
-        kentat = hand.getParamMap(tablename);
-        kentat.put("nimi", hakuparametri);
+            kentat = hand.getParamMap(tablename);
+            kentat.put("nimi", hakuparametri);
 
-        ArrayList<Tulos> tulos = hand.getValue(tablename, kentat);
+            ArrayList<Tulos> tulos = hand.getValue(tablename, kentat);
 
-        // vain väliaikainen testi
-        kentat = hand.getParamMap("Hapot");
-        kentat.put("name",hakuparametri);
+            // vain väliaikainen testi
+            kentat = hand.getParamMap("Hapot");
+            kentat.put("name", hakuparametri);
 
-        ArrayList<Tulos> tulosHapot = hand.getValue("Hapot", kentat);
+            ArrayList<Tulos> tulosHapot = hand.getValue("Hapot", kentat);
 
-        tulos.addAll(tulosHapot);
-        placeToCenter(listView); //laitetaan listViewi keskelle
+            tulos.addAll(tulosHapot);
+            placeToCenter(listView); //laitetaan listViewi keskelle
 
-        //lisätään tiedot listViewiin näkyville
-        listView.setAdapter(new resultAdapter(getApplicationContext(),-1,tulos));
+            //lisätään tiedot listViewiin näkyville
+            listView.setAdapter(new resultAdapter(getApplicationContext(), -1, tulos));
 
-        //lisätää listViewiin tapahtuma kun klikataan jotakin sen kohtaa
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
+            //lisätää listViewiin tapahtuma kun klikataan jotakin sen kohtaa
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Context con = getApplicationContext();
-                ViewGroup prnt = (ViewGroup)findViewById(R.id.lnlContainer); //haetaan isäntä, eli komponentti mihin tuo tiedot sisältävä komponentti tulee
-                placeToCenter(((Tulos)parent.getItemAtPosition(position)).getLargeView((LayoutInflater) con.getSystemService(Context.LAYOUT_INFLATER_SERVICE),prnt));
-            }
-        });
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Context con = getApplicationContext();
+                    ViewGroup prnt = (ViewGroup) findViewById(R.id.lnlContainer); //haetaan isäntä, eli komponentti mihin tuo tiedot sisältävä komponentti tulee
+                    placeToCenter(((Tulos) parent.getItemAtPosition(position)).getLargeView((LayoutInflater) con.getSystemService(Context.LAYOUT_INFLATER_SERVICE), prnt));
+                }
+            });
 
-
+        }else{ Log.w("myApp", tarkistus.toString() );}
     }
 
 
