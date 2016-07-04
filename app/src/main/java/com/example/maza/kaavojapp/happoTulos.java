@@ -1,9 +1,7 @@
 package com.example.maza.kaavojapp;
 
 import android.os.Build;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -24,8 +22,8 @@ public class happoTulos extends Tulos {
     public happoTulos(HashMap<String,String> vals)
     {
         tiedot = vals;
-        layoutSmall = R.layout.happo_small_layout;
-        layoutLarge = R.layout.happo_large_layout;
+        layoutSmall = R.layout.happo_small;
+        layoutLarge = R.layout.happo_large;
     }
 
     @Override

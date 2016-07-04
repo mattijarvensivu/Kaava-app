@@ -9,8 +9,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import io.github.kexanie.library.MathView;
 
@@ -19,13 +19,14 @@ import io.github.kexanie.library.MathView;
  */
 public class alkuaineTulos extends Tulos {
 
+    private ArrayList<isotooppiTulos> isotoopit;
 
     public alkuaineTulos (HashMap<String,String> values)
     {
-        layoutLarge = R.layout.element_displayer_layout;
-        layoutSmall = R.layout.element_displayer_small_layout;
+        layoutLarge = R.layout.alkuaine_large;
+        layoutSmall = R.layout.alkuaine_small;
         tiedot = values;
-
+        isotoopit = new ArrayList<>();
     }
 
     @Override
@@ -70,6 +71,7 @@ public class alkuaineTulos extends Tulos {
         TextView aSadeT = (TextView) pal.findViewById(R.id.txvTASField);
         TextView aSadeK = (TextView) pal.findViewById(R.id.txvKASField);
         LinearLayout IonE = (LinearLayout) pal.findViewById(R.id.lvoIonE);
+        LinearLayout isot = (LinearLayout) pal.findViewById(R.id.lvoIsot);
 
         //muutetaan atomisäteen no data suomenkieliseksi ja lisätään yksikkö
         if (tiedot.get("atomiSadeTheo").compareTo("no data") == 0) {
@@ -162,6 +164,23 @@ public class alkuaineTulos extends Tulos {
 
         }
 
+        //Esitetään isotoopit
+        for(int i = 0; i < isotoopit.size(); i++)
+        {
+
+            isot.addView(isotoopit.get(i).getSmallView(infl,isot));
+        }
+
+
+
         return pal;
+    }
+
+    public void addIsotoopit(ArrayList<Tulos> vals)
+    {
+        for(int i = 0; i < vals.size(); i++) {
+            isotoopit.add((isotooppiTulos)vals.get(i));
+        }
+
     }
 }

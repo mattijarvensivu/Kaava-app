@@ -30,12 +30,16 @@ public class Tulos {
     @Nullable
     public static Tulos getTulos(HashMap<String,String> values)
     {
+        //tässä rikotaan hieman suunnittelu periaatetta jonka mukaan ohjelman tulisi maagisesti tuntea tietokantaa mahdollisimman vähän.
+        //jos halutaan kuitenkin luoda spesifit tulos luokat, en keksi parempaa tapaa toteuttaa tätä.
         switch (values.size())
         {
             case 23: //kyseesssä alkuaine
                 return new alkuaineTulos(values);
             case 11: //kyseessä happo. Ei kuitenkaan vielä kuva kenttää
                 return new happoTulos(values);
+            case 8:
+                return new isotooppiTulos(values);
             default:
                 return null;
         }
@@ -52,6 +56,12 @@ public class Tulos {
     {
         Log.d("minun","ollaan super tulos metodissa");
         return null;
+    }
+
+    public String getValue(String name)
+    {
+        return tiedot.get(name);
+
     }
 
 

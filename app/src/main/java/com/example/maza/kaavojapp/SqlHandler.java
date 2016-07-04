@@ -187,6 +187,18 @@ public class SqlHandler extends SQLiteOpenHelper {
         }finally {
 
         }
+
+        //tarkistetaan että oliko haettu arvo alkuaineet taulussa. jos oli niin haetaan jokaiselle tulokselle isotoopit.
+        if(tableName.compareTo("Alkuaineet") == 0)
+        {
+            for(int i = 0; i < pal.size(); i++)
+            {
+                //haetaan alkuaineen isotoopit.
+                HashMap<String,String> tmp = new HashMap<>();
+                tmp.put("_alkuaineid",pal.get(i).getValue("_id"));
+                ((alkuaineTulos)pal.get(i)).addIsotoopit(getValue("Isotoopit",tmp));
+            }
+        }
         Log.d("minun","loytyi " + pal.size() + " osumaa");
         return pal;
     }
