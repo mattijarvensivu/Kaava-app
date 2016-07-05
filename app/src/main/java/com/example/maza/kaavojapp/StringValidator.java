@@ -1,5 +1,7 @@
 package com.example.maza.kaavojapp;
 
+import android.util.Log;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,6 +19,19 @@ public class StringValidator {
         hyvaksytty = m.find();
         hyvaksytty = !hyvaksytty;
         return hyvaksytty;
+
+    }
+
+    public static String boldaa (String initial, String hakuString)
+    {
+        String pal = "";
+        int alkuPiste = initial.indexOf(hakuString);
+        if(alkuPiste == -1) return initial;
+        //on olemassa instanssi
+        //poistetaan edeltävä osa
+        pal = initial.substring(0,alkuPiste) + "<b>" + hakuString + "</b>" + boldaa(initial.substring(alkuPiste+hakuString.length(),initial.length()),hakuString);
+        Log.d("minun","boldaajassa: " + pal);
+        return pal;
 
     }
 }

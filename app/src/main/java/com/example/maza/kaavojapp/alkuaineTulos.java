@@ -27,6 +27,7 @@ public class alkuaineTulos extends Tulos {
         layoutSmall = R.layout.alkuaine_small;
         tiedot = values;
         isotoopit = new ArrayList<>();
+        type = 1;
     }
 
     @Override
@@ -36,11 +37,16 @@ public class alkuaineTulos extends Tulos {
         View pal = infl.inflate(layoutSmall, paren, false);
         //asetetaan tiedot paikoilleen
         ((TextView)pal.findViewById(R.id.txvNumber)).setText(tiedot.get("jarjestyluku"));
-        ((TextView)pal.findViewById(R.id.txvName)).setText(tiedot.get("nimi"));
+        ((TextView)pal.findViewById(R.id.txvName)).setText(Html.fromHtml(tiedot.get("nimi")));
         ((TextView)pal.findViewById(R.id.txvSymbol)).setText(tiedot.get("symbol"));
         ((TextView)pal.findViewById(R.id.txvMolar)).setText(tiedot.get("moolimassa"));
 
         return pal;
+    }
+
+    public void boldaa(String haku)
+    {
+        tiedot.put("nimi", StringValidator.boldaa(tiedot.get("nimi"),haku));
     }
 
     @Override

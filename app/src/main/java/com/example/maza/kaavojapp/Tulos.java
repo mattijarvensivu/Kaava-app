@@ -18,7 +18,7 @@ public class Tulos {
     protected int layoutSmall;
     protected int layoutLarge;
     protected HashMap<String,String> tiedot;
-
+    protected int type = 0;
 
     public Tulos()
     {
@@ -52,6 +52,11 @@ public class Tulos {
                 return null;
         }
 
+    }
+
+    public int getType()
+    {
+        return type;
     }
 
     public View getSmallView(LayoutInflater infl, ViewGroup paren)
