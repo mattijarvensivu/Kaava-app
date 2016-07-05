@@ -39,7 +39,15 @@ public class Tulos {
             case 11: //kyseessä happo. Ei kuitenkaan vielä kuva kenttää
                 return new happoTulos(values);
             case 8:
-                return new isotooppiTulos(values);
+                if(values.get("iralku") == null) //tarkistetaan onko iralku nimistä avainta. Jos ei ola, saadaan nulli. Tällöin kyseessä on isotooppiTaulun rivi.
+                return new isotooppiTulos(values); //uniikki kenttä hajoamistapa
+                return new funktionaalinenTulos(values); //funktionaalinen. uniikki kenttä iralku
+            case 3:
+                return new kaavaTulos(values); //kaava
+            case 4:
+                return new muuttujaTulos(values);//muuttuja
+            case 5:
+                return new vakioTulos(values);//vakio
             default:
                 return null;
         }

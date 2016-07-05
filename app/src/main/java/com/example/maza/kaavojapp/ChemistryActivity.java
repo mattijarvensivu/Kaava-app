@@ -69,6 +69,16 @@ public class ChemistryActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
        listView = (ListView)  findViewById(R.id.lsvTulos);
+        //lisätää listViewiin tapahtuma kun klikataan jotakin sen kohtaa
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Context con = getApplicationContext();
+                ViewGroup prnt = (ViewGroup) findViewById(R.id.lnlContainer); //haetaan isäntä, eli komponentti mihin tuo tiedot sisältävä komponentti tulee
+                placeToCenter(((Tulos) parent.getItemAtPosition(position)).getLargeView((LayoutInflater) con.getSystemService(Context.LAYOUT_INFLATER_SERVICE), prnt));
+            }
+        });
         hand = new SqlHandler(getApplicationContext().getApplicationContext(), "", null, 1, true);
     }
 
@@ -121,6 +131,9 @@ public class ChemistryActivity extends AppCompatActivity
             Intent myIntent = new Intent(this, PhysicsActivity.class);
             startActivity(myIntent);
         } else if (id == R.id.nav_manage) {
+            HashMap<String,String> tmpHM = new HashMap<>();
+            listView.setAdapter(new resultAdapter(getApplicationContext(), -1, hand.getValue("Alkuaineet",tmpHM)));
+            placeToCenter(listView);
 
         } else if (id == R.id.nav_share) {
 
@@ -142,7 +155,7 @@ public class ChemistryActivity extends AppCompatActivity
         Boolean tarkistus= false;
         StringValidator val = new StringValidator();
         tarkistus = val.CheckString(hakuparametri);
-        
+
         if(tarkistus) {
 
             // Tarkistus mistä taulusta haetaan täytyy tehä
@@ -154,6 +167,11 @@ public class ChemistryActivity extends AppCompatActivity
 
             ArrayList<Tulos> tulos = hand.getValue(tablename, kentat);
 
+        if(tulos.size()==0){
+        hakuparametri = "%"+hakuparametri+"%";
+        kentat.put("nimi",hakuparametri);
+        tulos = hand.getValue(tablename, kentat);
+}
             // vain väliaikainen testi
             kentat = hand.getParamMap("Hapot");
             kentat.put("name", hakuparametri);
@@ -166,16 +184,8 @@ public class ChemistryActivity extends AppCompatActivity
             //lisätään tiedot listViewiin näkyville
             listView.setAdapter(new resultAdapter(getApplicationContext(), -1, tulos));
 
-            //lisätää listViewiin tapahtuma kun klikataan jotakin sen kohtaa
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            //onClick oli tässä
 
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Context con = getApplicationContext();
-                    ViewGroup prnt = (ViewGroup) findViewById(R.id.lnlContainer); //haetaan isäntä, eli komponentti mihin tuo tiedot sisältävä komponentti tulee
-                    placeToCenter(((Tulos) parent.getItemAtPosition(position)).getLargeView((LayoutInflater) con.getSystemService(Context.LAYOUT_INFLATER_SERVICE), prnt));
-                }
-            });
 
         }else{ Log.w("myApp", tarkistus.toString() );}
     }
