@@ -189,17 +189,47 @@ public class SqlHandler extends SQLiteOpenHelper {
         }
 
         //tarkistetaan että oliko haettu arvo alkuaineet taulussa. jos oli niin haetaan jokaiselle tulokselle isotoopit.
-        if(tableName.compareTo("Alkuaineet") == 0)
+        if(tableName.compareTo("alkuaineet") == 0)
         {
             for(int i = 0; i < pal.size(); i++)
             {
                 //haetaan alkuaineen isotoopit.
                 HashMap<String,String> tmp = new HashMap<>();
                 tmp.put("_alkuaineid",pal.get(i).getValue("_id"));
-                ((alkuaineTulos)pal.get(i)).addIsotoopit(getValue("Isotoopit",tmp));
+                ((alkuaineTulos)pal.get(i)).addIsotoopit(getValue("isotoopit",tmp));
             }
         }
         Log.d("minun","loytyi " + pal.size() + " osumaa");
+
+        //tarkistetaan oliko haku isotppooi taulusta. jos oli niin haetaan isotooppeja vastaavat symbolit.
+        if(tableName.compareTo("isotoopit") == 0)
+        {
+            String symbol = "";
+            String prevId = "-1";
+            for(int i = 0; i < pal.size(); i++)
+            {
+                //tarkistetaan oliko edellinen isotooppi samasta perus alkuaineesta. jos oli niin ei tarvita uutta hakua
+                if(pal.get(i).getValue("_alkuaineid").compareTo(prevId) != 0)
+                {
+                    //Edellinen haettu symboli oli eri id:lle, Joudutaan tekemään haku.
+                    HashMap<String,String> tmp = new HashMap<>();
+                    prevId = pal.get(i).getValue("_alkuaineid");
+                    tmp.put("_id", prevId);
+                    cur = getCursor("alkuaineet",tmp); //tehtävä näin. getValue kutsu aiheuttaisi loputtoman loopin
+                    try{
+                        if(cur.moveToFirst()) {
+                            do{
+                                symbol = cur.getString(1);
+                            }while(cur.moveToNext());
+
+                        }
+                    }finally {
+
+                    }
+                }
+                ((isotooppiTulos)pal.get(i)).setSymbol(symbol);
+            }
+        }
         return pal;
     }
 

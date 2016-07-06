@@ -1,9 +1,11 @@
 package com.example.maza.kaavojapp;
 
+import android.content.res.Resources;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -69,6 +71,13 @@ public class happoTulos extends Tulos {
         ((TextView)pal.findViewById(R.id.txvKp)).setText(tiedot.get("kiehumispiste"));
         phView.setText(df2.format(calculatePh(1))+"");
         LinearLayout mainLay = (LinearLayout)pal.findViewById(R.id.lnMain);
+        try {
+            ((ImageView)pal.findViewById(R.id.imgKuva)).setImageResource(R.drawable.class.getField(tiedot.get("nimi")).getInt(null));
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
 
         //laitetaan happo vakiot.
         String[] ies = {tiedot.get("happovakio1"), tiedot.get("happovakio2"), tiedot.get("happovakio3")};

@@ -159,18 +159,11 @@ public class ChemistryActivity extends AppCompatActivity
         if(tarkistus) {
 
             // Tarkistus mistä taulusta haetaan täytyy tehä
-            String tablename = "Alkuaineet";
-            HashMap<String, String> kentat;
+            ArrayList<Tulos> tulos = suoritaHaku(hakuparametri);
 
-            kentat = hand.getParamMap(tablename);
-            kentat.put("nimi", hakuparametri);
-
-            ArrayList<Tulos> tulos = hand.getValue(tablename, kentat);
         //Jos haku tyhjä haetaan osahaulla
         if(tulos.size()==0 && hakuparametri.length()!=0){
-        String hakuparametri2 = "%"+hakuparametri+"%";
-        kentat.put("nimi",hakuparametri2);
-        tulos = hand.getValue(tablename, kentat);
+        tulos = suoritaHaku("%"+hakuparametri+"%");
             for(int i = 0; i < tulos.size(); i++)
             {
                 if(tulos.get(i).getType() == 1)
@@ -179,13 +172,7 @@ public class ChemistryActivity extends AppCompatActivity
                 }
             }
         }
-            // vain väliaikainen testi
-            kentat = hand.getParamMap("Hapot");
-            kentat.put("name", hakuparametri);
 
-            ArrayList<Tulos> tulosHapot = hand.getValue("Hapot", kentat);
-
-            tulos.addAll(tulosHapot);
             placeToCenter(listView); //laitetaan listViewi keskelle
 
             //lisätään tiedot listViewiin näkyville
@@ -195,6 +182,35 @@ public class ChemistryActivity extends AppCompatActivity
 
 
         }else{ Log.w("myApp", tarkistus.toString() );}
+    }
+
+    private ArrayList<Tulos> suoritaHaku(String hakuparametri)
+    {
+        HashMap<String, String> kentat;
+
+        kentat = hand.getParamMap("alkuaineet");
+        kentat.put("nimi", hakuparametri);
+        ArrayList<Tulos> tulos = hand.getValue("alkuaineet", kentat);
+
+        kentat = hand.getParamMap("Hapot");
+        kentat.put("name", hakuparametri);
+
+        ArrayList<Tulos> tmp = hand.getValue("Hapot", kentat);
+
+        tulos.addAll(tmp);
+
+        //haku logiikka on melkein sama aina. Vain taulun nimi, ja sen parametrin nimi muuttuu.
+        // Olisiko mahdollista tallentaa taulun nimi, ja kentät mistä haetaan johonkin, ja sitten luettaisiin se tässä for silmukassa?
+        kentat = hand.getParamMap("Hapot");
+        kentat.put("nimi", hakuparametri);
+
+       tmp = hand.getValue("Funktionaalinenryhma", kentat);
+
+        tulos.addAll(tmp);
+
+
+        return tulos;
+
     }
 
 
