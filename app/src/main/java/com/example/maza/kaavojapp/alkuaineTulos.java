@@ -6,8 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import java.sql.Array;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,7 +53,7 @@ public class alkuaineTulos extends Tulos {
 
     @Override
     //tuottaa Viewin annetulla inflaterillä ja isännällä. Tässä vievissä näytetään kaikki alkuaineen tiedot
-    public View getLargeView (LayoutInflater infl, ViewGroup paren)
+    public View getLargeView (final LayoutInflater infl, final ViewGroup paren)
     {
         //määritellään desimaali formaatit pyöristyksiä varten
         DecimalFormat df4 = new DecimalFormat("#.####");
@@ -77,7 +79,7 @@ public class alkuaineTulos extends Tulos {
         TextView aSadeT = (TextView) pal.findViewById(R.id.txvTASField);
         TextView aSadeK = (TextView) pal.findViewById(R.id.txvKASField);
         LinearLayout IonE = (LinearLayout) pal.findViewById(R.id.lvoIonE);
-        LinearLayout isot = (LinearLayout) pal.findViewById(R.id.lvoIsot);
+        LinearLayout isot = (LinearLayout) pal.findViewById(R.id.lnlIsot);
 
         //muutetaan atomisäteen no data suomenkieliseksi ja lisätään yksikkö
         if (tiedot.get("atomiSadeTheo").compareTo("no data") == 0) {
@@ -171,10 +173,29 @@ public class alkuaineTulos extends Tulos {
         }
 
         //Esitetään isotoopit
+        //ei syystä tai toisesta hyväksy ArrayList<isotooppiTulos> parametrinä, täytyy olla ArrayList<Tulos>
         for(int i = 0; i < isotoopit.size(); i++)
         {
+            View tmp = isotoopit.get(i).getSmallView(infl,isot);
+            tmp.setClickable(true);
+            tmp.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-            isot.addView(isotoopit.get(i).getSmallView(infl,isot));
+                    String klikattuNimi = ((TextView)v.findViewById(R.id.txvParticles)).getText().toString();
+                    for(int i = 0; i < isotoopit.size(); i++)
+                    {
+                        if(klikattuNimi.compareTo(isotoopit.get(i).getName()) == 0)
+                        {
+                            //löytyi klikattu isotooppi
+                            paren.removeAllViews(); //Viite tähän olioon mahdollisesti katoaa kun tyhjennetään layoutti...
+                            paren.addView(isotoopit.get(i).getLargeView(infl,paren));
+                            break;
+                        }
+                    }
+                }
+            });
+            isot.addView(tmp);
         }
 
 

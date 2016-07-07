@@ -43,7 +43,7 @@ public class isotooppiTulos extends Tulos {
     //Ei ehkä toimi. En päässyt testaamaan koska ei ole vielä keinoa jolla tästä luotaisiin instanssi. Tarkoitus olisi että kun alkuaineessa klikkaa isotooppia niin tämä ponnahtaisi isoksi.
     //Toisaalta onko tilanne jossa isotooppi tulisi näkyviin kun suoritetaan haku?
     public View getLargeView (LayoutInflater infl, ViewGroup paren) {
-        View pal = infl.inflate(layoutSmall, paren, false);
+        View pal = infl.inflate(layoutLarge, paren, false);
 
         ((TextView)pal.findViewById(R.id.txvSymbol)).setText(tiedot.get("massaluku") + symbol);
 
@@ -54,7 +54,7 @@ public class isotooppiTulos extends Tulos {
         ((TextView)pal.findViewById(R.id.txvOsuus)).setText(tiedot.get("esiintymisprosentti") + "%");
 
         //hoidetaan hajoamis tavat
-        String[] hajoamis = tiedot.get("hajoamistapa").split("#");
+        String[] hajoamis = selvennaHajoaminen(tiedot.get("hajoamistapa").split("#"));
         LinearLayout hajoamisTavat = (LinearLayout)pal.findViewById(R.id.lnlHajoamis);
 
         for(int i =0; i < hajoamis.length; i++)
@@ -92,13 +92,18 @@ public class isotooppiTulos extends Tulos {
             }else  if(hajoamis[i].compareTo("IT") == 0)
             {
                 pal[i] = "Isomeri transitio";
+            }else  if(hajoamis[i].compareTo("0") == 0)
+            {
+                pal[i] = "Stabiili";
             }
-            String[] tmp = hajoamis[i].split( Character.toString('+') ); //Ei suostu ottamaan "+", joten tehdään sitten hölmöllä tavalla
+            /*
+            String[] tmp = hajoamis[i].split( Character.toString('+') ); //Ei suostu ottamaan "+", joten tehdään sitten hölmöllä tavalla. Ei toimi tälläkään tavalla
             if(tmp.length > 1)
             {
                 String[] osat = selvennaHajoaminen(tmp); //oletus, hajoaminen voi olla maksimissaan kahden summa
                 pal[i] = osat[0] + "+" + osat[1];
             }
+            */
         }
         return pal;
 
@@ -107,5 +112,9 @@ public class isotooppiTulos extends Tulos {
     public void setSymbol(String value)
     {
         symbol = value;
+    }
+    public String getName()
+    {
+        return tiedot.get("massaluku") + symbol;
     }
 }
