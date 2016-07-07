@@ -176,7 +176,8 @@ public class ChemistryActivity extends AppCompatActivity
             placeToCenter(listView); //laitetaan listViewi keskelle
 
             //lisätään tiedot listViewiin näkyville
-            listView.setAdapter(new resultAdapter(getApplicationContext(), -1, tulos));
+            resultAdapter a = new resultAdapter(getApplicationContext(), -1, tulos);
+            listView.setAdapter(a);
 
             //onClick oli tässä
 
@@ -204,10 +205,26 @@ public class ChemistryActivity extends AppCompatActivity
         kentat = hand.getParamMap("Hapot");
         kentat.put("nimi", hakuparametri);
 
-       tmp = hand.getValue("Funktionaalinenryhma", kentat);
+        tmp = hand.getValue("Funktionaalinenryhma", kentat);
 
         tulos.addAll(tmp);
 
+
+        //Tämä blokki olkoon aluksi ainakin vain testi ominaisuudessa
+        kentat = hand.getParamMap("Muuttuja");
+        kentat.put("symbol", hakuparametri);
+
+        tmp = hand.getValue("Muuttuja", kentat);
+
+        tulos.addAll(tmp);
+
+        kentat = hand.getParamMap("Vakio");
+        kentat.put("symbol", hakuparametri);
+
+        tmp = hand.getValue("Vakio", kentat);
+
+        tulos.addAll(tmp);
+        //testi ominaisuus blokki loppuu
 
         return tulos;
 
