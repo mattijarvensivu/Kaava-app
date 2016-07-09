@@ -68,7 +68,7 @@ public class ChemistryActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-       listView = (ListView)  findViewById(R.id.lsvTulos);
+        listView = (ListView)  findViewById(R.id.lsvTulos);
         //lisätää listViewiin tapahtuma kun klikataan jotakin sen kohtaa
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -161,17 +161,17 @@ public class ChemistryActivity extends AppCompatActivity
             // Tarkistus mistä taulusta haetaan täytyy tehä
             ArrayList<Tulos> tulos = suoritaHaku(hakuparametri);
 
-        //Jos haku tyhjä haetaan osahaulla
-        if(tulos.size()==0 && hakuparametri.length()!=0){
-        tulos = suoritaHaku("%"+hakuparametri+"%");
-            for(int i = 0; i < tulos.size(); i++)
-            {
-                if(tulos.get(i).getType() == 1)
+            //Jos haku tyhjä haetaan osahaulla
+            if(tulos.size()==0 && hakuparametri.length()!=0){
+                tulos = suoritaHaku("%"+hakuparametri+"%");
+                for(int i = 0; i < tulos.size(); i++)
                 {
-                    ((alkuaineTulos)tulos.get(i)).boldaa(hakuparametri);
+                    if(tulos.get(i).getType() == 1)
+                    {
+                        ((alkuaineTulos)tulos.get(i)).boldaa(hakuparametri);
+                    }
                 }
             }
-        }
 
             placeToCenter(listView); //laitetaan listViewi keskelle
 

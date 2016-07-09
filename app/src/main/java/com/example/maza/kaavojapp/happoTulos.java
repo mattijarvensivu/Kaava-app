@@ -1,6 +1,10 @@
 package com.example.maza.kaavojapp;
 
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +18,10 @@ import java.text.DecimalFormat;
 import java.util.HashMap;
 
 import io.github.kexanie.library.MathView;
+import maximsblog.blogspot.com.jlatexmath.core.AjLatexMath;
+import maximsblog.blogspot.com.jlatexmath.core.TeXConstants;
+import maximsblog.blogspot.com.jlatexmath.core.TeXFormula;
+import maximsblog.blogspot.com.jlatexmath.core.TeXIcon;
 
 /**
  * Created by janne on 29.6.2016.
@@ -35,19 +43,27 @@ public class happoTulos extends Tulos {
         DecimalFormat df2 = new DecimalFormat("#.##");
 
         View pal = infl.inflate(layoutSmall, paren, false);
-        MathView kaavaIk = (MathView)pal.findViewById(R.id.mvKaava);
+       ImageView kaavaIk = (ImageView)pal.findViewById(R.id.mvKaava);
         //asetetaan tiedot paikoilleen
         ((TextView)pal.findViewById(R.id.txvNimi)).setText(tiedot.get("name"));
         ((TextView)pal.findViewById(R.id.txvPKa)).setText(tiedot.get("happovakio1"));
-        kaavaIk.setText(tiedot.get("kaava"));
         ((TextView)pal.findViewById(R.id.txvPh)).setText(df2.format(calculatePh(1))+"");
 
-        //diseiblataan mathViewin onTouch jotta voidaan klikata riviä. Ei kovin hyvä jos se tulee tehdä tälleesti
-        //Ilmeisesti johtuu webViewistä, mistä mathView on peritty.
-        kaavaIk.setClickable(false);
-        kaavaIk.setLongClickable(false);
-        kaavaIk.setFocusable(false);
-        kaavaIk.setFocusableInTouchMode(false);
+        AjLatexMath.init(paren.getContext());
+        TeXFormula formula = new TeXFormula(tiedot.get("kaava"));
+
+        //Mahti kutsu! Nähtävästi TexIconBuilderin setteri metodi palauttaa palauttaa sen olion itsensä, eli nuo asetukset voidaan laittaa tuommoseen putkeen. Aivan mahtava idea!
+        TeXIcon icon = formula.new TeXIconBuilder()
+                .setStyle(TeXConstants.STYLE_DISPLAY)
+                .setSize(14).build(); //huomaa lopussa oleva .build()! Ilmeisesti se kutsu aiheuttaa koko roskan rakentumisen.
+        Bitmap image = Bitmap.createBitmap(icon.getIconWidth(), icon.getIconHeight(), Bitmap.Config.ARGB_8888);
+        Canvas g2 = new Canvas(image);
+        g2.drawColor(Color.TRANSPARENT);
+        icon.paintIcon(g2, 0, 0);
+
+
+        kaavaIk.setImageDrawable(new BitmapDrawable(paren.getResources(), image));
+
 
         return pal;
     }

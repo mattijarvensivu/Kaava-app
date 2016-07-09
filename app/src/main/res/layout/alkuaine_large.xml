@@ -121,15 +121,14 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Elektroni rakenne"/>
 
-            <io.github.kexanie.library.MathView
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:id="@+id/txvRakenneField"
-                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:layout_gravity="center"
                 android:text="E.rakenne"
-                app:engine="MathJax"/>
+                />
 
 
             <LinearLayout

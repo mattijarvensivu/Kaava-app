@@ -1,10 +1,15 @@
 package com.example.maza.kaavojapp;
 
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -13,8 +18,13 @@ import java.sql.Array;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 import io.github.kexanie.library.MathView;
+import maximsblog.blogspot.com.jlatexmath.core.AjLatexMath;
+import maximsblog.blogspot.com.jlatexmath.core.TeXConstants;
+import maximsblog.blogspot.com.jlatexmath.core.TeXFormula;
+import maximsblog.blogspot.com.jlatexmath.core.TeXIcon;
 
 /**
  * Created by janne on 28.6.2016.
@@ -42,6 +52,24 @@ public class alkuaineTulos extends Tulos {
         ((TextView)pal.findViewById(R.id.txvName)).setText(Html.fromHtml(tiedot.get("nimi")));
         ((TextView)pal.findViewById(R.id.txvSymbol)).setText(tiedot.get("symbol"));
         ((TextView)pal.findViewById(R.id.txvMolar)).setText(tiedot.get("moolimassa"));
+
+        ImageView kohde = (ImageView)pal.findViewById(R.id.imgTarget);
+
+        AjLatexMath.init(paren.getContext());
+        Random rand = new Random();
+        TeXFormula formula = new TeXFormula("\\frac{1}{" + rand.nextInt() + "}");
+
+        //Mahti kutsu! Nähtävästi TexIconBuilderin setteri metodi palauttaa palauttaa sen olion itsensä, eli nuo asetukset voidaan laittaa tuommoseen putkeen. Aivan mahtava idea!
+        TeXIcon icon = formula.new TeXIconBuilder()
+                .setStyle(TeXConstants.STYLE_DISPLAY)
+                .setSize(14).build(); //huomaa lopussa oleva .build()! Ilmeisesti se kutsu aiheuttaa koko roskan rakentumisen.
+        Bitmap image = Bitmap.createBitmap(icon.getIconWidth(), icon.getIconHeight(), Bitmap.Config.ARGB_8888); //luodaan bitmappi... en oo ihan varma mitä toi vika parametri tekee
+        Canvas g2 = new Canvas(image); //luodaan canvas, ja lisätään se bitmappiin?
+        g2.drawColor(Color.TRANSPARENT); //asetetaan taustaväri
+        icon.paintIcon(g2, 0, 0); //lisätään kaava branchiin
+
+
+        kohde.setImageDrawable(new BitmapDrawable(paren.getResources(), image));
 
         return pal;
     }
@@ -74,7 +102,6 @@ public class alkuaineTulos extends Tulos {
         ((TextView) pal.findViewById(R.id.txvLJField)).setText(tiedot.get("lammonjohtavuus"));
         TextView oMuoto =(TextView) pal.findViewById(R.id.txvOMField);
         TextView luokka =(TextView) pal.findViewById(R.id.txvLuokka);
-        ((MathView) pal.findViewById(R.id.txvRakenneField)).setText(tiedot.get("elektronirakenneLyhyt"));
         ((TextView) pal.findViewById(R.id.txvNimiMain)).setText(tiedot.get("fiName"));
         TextView aSadeT = (TextView) pal.findViewById(R.id.txvTASField);
         TextView aSadeK = (TextView) pal.findViewById(R.id.txvKASField);

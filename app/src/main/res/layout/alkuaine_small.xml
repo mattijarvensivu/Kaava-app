@@ -33,6 +33,11 @@
             android:text="AAAA"
             android:id="@+id/txvName"/>
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/imgTarget"/>
+
     </LinearLayout>
 
     <LinearLayout
