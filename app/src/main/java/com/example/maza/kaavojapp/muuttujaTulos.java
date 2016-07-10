@@ -1,13 +1,23 @@
 package com.example.maza.kaavojapp;
 
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.HashMap;
 
-import io.github.kexanie.library.MathView;
+import maximsblog.blogspot.com.jlatexmath.core.AjLatexMath;
+import maximsblog.blogspot.com.jlatexmath.core.TeXConstants;
+import maximsblog.blogspot.com.jlatexmath.core.TeXFormula;
+import maximsblog.blogspot.com.jlatexmath.core.TeXIcon;
+
 
 /**
  * Created by janne on 7/5/2016.
@@ -29,12 +39,9 @@ public class muuttujaTulos extends Tulos{
         ((TextView)pal.findViewById(R.id.txvSymbol)).setText(tiedot.get("symbol"));
         ((TextView)pal.findViewById(R.id.txvKuvaus)).setText(tiedot.get("kuvaus"));
 
-        MathView yksikko = (MathView)pal.findViewById(R.id.mvYksikko);
-        yksikko.setText(tiedot.get("yksikkö"));
-        yksikko.setClickable(false);
-        yksikko.setLongClickable(false);
-        yksikko.setFocusable(false);
-        yksikko.setFocusableInTouchMode(false);
+        KaavaFactory kf = new KaavaFactory(pal.getContext(),pal.getResources(),(int)Math.ceil(((TextView)pal.findViewById(R.id.txvSymbol)).getTextSize()/ pal.getResources().getDisplayMetrics().density)); //viimeinen parametri laskee käytetyn teksti koon.
+        ((ImageView) pal.findViewById(R.id.mvYksikko)).setImageDrawable(kf.getBmD(tiedot.get("yksikkö")));
+
         return pal;
     }
 

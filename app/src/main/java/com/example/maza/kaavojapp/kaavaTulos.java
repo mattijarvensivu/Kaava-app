@@ -10,7 +10,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import io.github.kexanie.library.MathView;
 
 /**
  * Created by maza on 7/5/2016.

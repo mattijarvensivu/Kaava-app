@@ -1,6 +1,10 @@
 package com.example.maza.kaavojapp;
 
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +17,11 @@ import android.widget.TextView;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 
-import io.github.kexanie.library.MathView;
+import maximsblog.blogspot.com.jlatexmath.core.AjLatexMath;
+import maximsblog.blogspot.com.jlatexmath.core.TeXConstants;
+import maximsblog.blogspot.com.jlatexmath.core.TeXFormula;
+import maximsblog.blogspot.com.jlatexmath.core.TeXIcon;
+
 
 /**
  * Created by janne on 29.6.2016.
@@ -35,19 +43,12 @@ public class happoTulos extends Tulos {
         DecimalFormat df2 = new DecimalFormat("#.##");
 
         View pal = infl.inflate(layoutSmall, paren, false);
-        MathView kaavaIk = (MathView)pal.findViewById(R.id.mvKaava);
         //asetetaan tiedot paikoilleen
         ((TextView)pal.findViewById(R.id.txvNimi)).setText(tiedot.get("name"));
         ((TextView)pal.findViewById(R.id.txvPKa)).setText(tiedot.get("happovakio1"));
-        kaavaIk.setText(tiedot.get("kaava"));
         ((TextView)pal.findViewById(R.id.txvPh)).setText(df2.format(calculatePh(1))+"");
-
-        //diseiblataan mathViewin onTouch jotta voidaan klikata riviä. Ei kovin hyvä jos se tulee tehdä tälleesti
-        //Ilmeisesti johtuu webViewistä, mistä mathView on peritty.
-        kaavaIk.setClickable(false);
-        kaavaIk.setLongClickable(false);
-        kaavaIk.setFocusable(false);
-        kaavaIk.setFocusableInTouchMode(false);
+        KaavaFactory kf = new KaavaFactory(pal.getContext(),pal.getResources(),(int)Math.ceil(((TextView)pal.findViewById(R.id.txvNimi)).getTextSize()/ pal.getResources().getDisplayMetrics().density)); //viimeinen parametri laskee käytetyn teksti koon.
+        ((ImageView)pal.findViewById(R.id.mvKaava)).setImageDrawable(kf.getBmD(tiedot.get("kaava")));
 
         return pal;
     }
@@ -64,7 +65,6 @@ public class happoTulos extends Tulos {
         //asetetaan arvot paikoilleen
         ((TextView)pal.findViewById(R.id.txvNimi)).setText(tiedot.get("nimi"));
         ((TextView)pal.findViewById(R.id.txvName)).setText(tiedot.get("name"));
-        ((MathView)pal.findViewById(R.id.mvKaava)).setText(tiedot.get("kaava"));
         ((TextView)pal.findViewById(R.id.txvMoolimassa)).setText(tiedot.get("moolimassa"));
         ((TextView)pal.findViewById(R.id.txvDensity)).setText(tiedot.get("tiheys"));
         ((TextView)pal.findViewById(R.id.txvSp)).setText(tiedot.get("sulamispiste"));
@@ -78,6 +78,19 @@ public class happoTulos extends Tulos {
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
         }
+
+        //asetetaan yksikkö kuvat
+        KaavaFactory kf = new KaavaFactory(pal.getContext(),pal.getResources(),(int)Math.ceil(phView.getTextSize()/ pal.getResources().getDisplayMetrics().density)); //viimeinen parametri laskee käytetyn teksti koon.
+        ((ImageView)pal.findViewById(R.id.mvKaava)).setImageDrawable(kf.getBmD(tiedot.get("kaava")));
+
+        BitmapDrawable celsius = kf.getBmD("C^{\\circ}");
+        ((ImageView) pal.findViewById(R.id.mwSpUnit)).setImageDrawable(celsius);
+        ((ImageView) pal.findViewById(R.id.mwKpUnit)).setImageDrawable(celsius);
+
+        //asetetaan loput yksiköt paikoilleen
+        ((ImageView)pal.findViewById(R.id.mwDenUnit)).setImageDrawable(kf.getBmD("\\frac{g}{dm^{3}}"));
+        ((ImageView)pal.findViewById(R.id.mwConUnit)).setImageDrawable(kf.getBmD("\\frac{mol}{l}"));
+        ((ImageView)pal.findViewById(R.id.mwMMUnit)).setImageDrawable(kf.getBmD("\\frac{g}{mol}"));
 
         //laitetaan happo vakiot.
         String[] ies = {tiedot.get("happovakio1"), tiedot.get("happovakio2"), tiedot.get("happovakio3")};

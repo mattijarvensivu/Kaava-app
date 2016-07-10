@@ -1,10 +1,18 @@
 package com.example.maza.kaavojapp;
 
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.text.Html;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -14,7 +22,11 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import io.github.kexanie.library.MathView;
+import maximsblog.blogspot.com.jlatexmath.core.AjLatexMath;
+import maximsblog.blogspot.com.jlatexmath.core.TeXConstants;
+import maximsblog.blogspot.com.jlatexmath.core.TeXFormula;
+import maximsblog.blogspot.com.jlatexmath.core.TeXIcon;
+
 
 /**
  * Created by janne on 28.6.2016.
@@ -60,6 +72,7 @@ public class alkuaineTulos extends Tulos {
         DecimalFormat df2 = new DecimalFormat("#.##");
 
         View pal = infl.inflate(layoutLarge, paren, false);
+
         //laitetaan tiedot paikoilleen
         ((TextView) pal.findViewById(R.id.txvSymbol)).setText(tiedot.get("symbol"));
         ((TextView) pal.findViewById(R.id.txvENimi)).setText(tiedot.get("nimi"));
@@ -74,12 +87,28 @@ public class alkuaineTulos extends Tulos {
         ((TextView) pal.findViewById(R.id.txvLJField)).setText(tiedot.get("lammonjohtavuus"));
         TextView oMuoto =(TextView) pal.findViewById(R.id.txvOMField);
         TextView luokka =(TextView) pal.findViewById(R.id.txvLuokka);
-        ((MathView) pal.findViewById(R.id.txvRakenneField)).setText(tiedot.get("elektronirakenneLyhyt"));
         ((TextView) pal.findViewById(R.id.txvNimiMain)).setText(tiedot.get("fiName"));
         TextView aSadeT = (TextView) pal.findViewById(R.id.txvTASField);
         TextView aSadeK = (TextView) pal.findViewById(R.id.txvKASField);
         LinearLayout IonE = (LinearLayout) pal.findViewById(R.id.lvoIonE);
         LinearLayout isot = (LinearLayout) pal.findViewById(R.id.lnlIsot);
+
+        //luodaan olio joka tuottaa kuvan kaavasta. Parempi tehdä näin kuin kirjoittaa joka kerta ne rivit uudestaan.
+        KaavaFactory kf = new KaavaFactory(pal.getContext(),pal.getResources(),(int)Math.ceil(oMuoto.getTextSize()/ pal.getResources().getDisplayMetrics().density)); //viimeinen parametri laskee käytetyn teksti koon.
+        //lisätään elektorni rakennetta kuvaava kuva. Periaatteessa tämän voisi hoita myös html tägeillä.
+        ((ImageView) pal.findViewById(R.id.txvRakenneField)).setImageDrawable(kf.getBmD(tiedot.get("elektronirakenneLyhyt")));
+
+        //luodaan ja asetetaan paikoillen celsius kuva
+        BitmapDrawable celsius = kf.getBmD("C^{\\circ}");
+
+        ((ImageView) pal.findViewById(R.id.mwSpUnit)).setImageDrawable(celsius);
+        ((ImageView) pal.findViewById(R.id.mwKpUnit)).setImageDrawable(celsius);
+
+        //asetetaan loput yksiköt paikoilleen
+        ((ImageView)pal.findViewById(R.id.mwDenUnit)).setImageDrawable(kf.getBmD("\\frac{g}{dm^{3}}"));
+        ((ImageView)pal.findViewById(R.id.mwOLUnit)).setImageDrawable(kf.getBmD("\\frac{J}{K*kg}"));
+        ((ImageView)pal.findViewById(R.id.mwLJUnit)).setImageDrawable(kf.getBmD("\\frac{W}{K*m}"));
+
 
         //muutetaan atomisäteen no data suomenkieliseksi ja lisätään yksikkö
         if (tiedot.get("atomiSadeTheo").compareTo("no data") == 0) {

@@ -23,8 +23,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/imgKuva"/>
 
-    <io.github.kexanie.library.MathView
-        android:layout_width="match_parent"
+    <ImageView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/mvKaava"/>
 
@@ -45,6 +45,12 @@
                         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#000000"
         android:id="@+id/txvMoolimassa"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/mwMMUnit"
+            />
     </LinearLayout>
 
     <LinearLayout
@@ -64,6 +70,12 @@
                             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="#000000"
             android:id="@+id/txvDensity"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/mwDenUnit"
+            />
     </LinearLayout>
 
     <LinearLayout
@@ -84,6 +96,12 @@
             android:textColor="#000000"
             android:text="1"
             android:id="@+id/txvCons"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/mwConUnit"
+            />
     </LinearLayout>
 
     <SeekBar
@@ -129,6 +147,12 @@
                             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="#000000"
             android:id="@+id/txvSp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/mwSpUnit"
+            />
     </LinearLayout>
 
     <LinearLayout
@@ -148,6 +172,12 @@
                             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="#000000"
             android:id="@+id/txvKp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/mwKpUnit"
+            />
     </LinearLayout>
 
     <TextView

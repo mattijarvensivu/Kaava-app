@@ -58,6 +58,12 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/txvIR"/>
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/mwIrUnit"
+            />
+
     </LinearLayout>
 
     <LinearLayout

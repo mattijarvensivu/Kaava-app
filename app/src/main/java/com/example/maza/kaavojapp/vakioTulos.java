@@ -1,13 +1,22 @@
 package com.example.maza.kaavojapp;
 
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.HashMap;
 
-import io.github.kexanie.library.MathView;
+import maximsblog.blogspot.com.jlatexmath.core.AjLatexMath;
+import maximsblog.blogspot.com.jlatexmath.core.TeXConstants;
+import maximsblog.blogspot.com.jlatexmath.core.TeXFormula;
+import maximsblog.blogspot.com.jlatexmath.core.TeXIcon;
+
 
 /**
  * Created by maza on 7/5/2016.
@@ -33,12 +42,10 @@ public class vakioTulos extends Tulos{
         String yksikkoStr = tiedot.get("yksikko");
 
         if(yksikkoStr.compareTo("-") != 0) {
-            MathView yksikko = (MathView) pal.findViewById(R.id.mvYksikko);
-            yksikko.setText(yksikkoStr);
-            yksikko.setClickable(false);
-            yksikko.setLongClickable(false);
-            yksikko.setFocusable(false);
-            yksikko.setFocusableInTouchMode(false);
+            ImageView yksikko = (ImageView) pal.findViewById(R.id.mvYksikko);
+
+            KaavaFactory kf = new KaavaFactory(pal.getContext(),pal.getResources(),(int)Math.ceil(((TextView)pal.findViewById(R.id.txvSymbol)).getTextSize()/ pal.getResources().getDisplayMetrics().density)); //viimeinen parametri laskee käytetyn teksti koon.
+            ((ImageView) pal.findViewById(R.id.mvYksikko)).setImageDrawable(kf.getBmD(tiedot.get("yksikko")));
         }
         return pal;
     }

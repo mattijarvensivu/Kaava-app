@@ -3,8 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Kaava-app.iml" filepath="$PROJECT_DIR$/Kaava-app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/MathView-0.0.6/MathView-0.0.6.iml" filepath="$PROJECT_DIR$/MathView-0.0.6/MathView-0.0.6.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jlatexmath-1.0.4aVer/jlatexmath-1.0.4aVer.iml" filepath="$PROJECT_DIR$/jlatexmath-1.0.4aVer/jlatexmath-1.0.4aVer.iml" />
     </modules>
   </component>
 </project>

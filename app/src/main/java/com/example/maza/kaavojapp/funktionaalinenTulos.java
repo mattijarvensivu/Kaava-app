@@ -58,13 +58,16 @@ public class funktionaalinenTulos extends Tulos{
         if(tiedot.get("nmralku").compareTo("0") != 0 || tiedot.get("nmralku").compareTo("0") != 0)
         {
             //on olemassa nmr siirtymä
-            String nmrAlue = tiedot.get("nmralku") +" - " + tiedot.get("nmrloppu");
+            String nmrAlue = tiedot.get("nmralku") +" - " + tiedot.get("nmrloppu") + " pm";
             ((TextView)pal.findViewById(R.id.txvNMR)).setText(nmrAlue);
 
         }else
         {
             ((LinearLayout)pal.findViewById(R.id.lnlNMR)).removeAllViews();
         }
+
+        KaavaFactory kf = new KaavaFactory(pal.getContext(),pal.getResources(),(int)Math.ceil(((TextView)pal.findViewById(R.id.txvIR)).getTextSize()/ pal.getResources().getDisplayMetrics().density)); //viimeinen parametri laskee käytetyn teksti koon.
+        ((ImageView)pal.findViewById(R.id.mwIrUnit)).setImageDrawable(kf.getBmD("cm^{-1}"));
 
         return pal;
     }
