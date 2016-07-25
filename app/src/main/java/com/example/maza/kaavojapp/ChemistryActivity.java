@@ -32,11 +32,19 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
 
 public class ChemistryActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     SqlHandler hand;
+    Historia his;
     private ListView listView;
+
+    //näitä käytetään havaitsemaan milloin käyttäjä on löytänyt tyydyttävän tuloksen pelkällä smallViewillä
+    private int firstDisplayed= -1;
+    private int lastDisplayed = -1;
+    private float detectionTime = 1; //Kuinka kauan listViewin on pysyttävä muuttumattomana että oletetaan käyttäjän löytäneen siitä mitä haluttiin
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,10 +84,38 @@ public class ChemistryActivity extends AppCompatActivity
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Context con = getApplicationContext();
                 ViewGroup prnt = (ViewGroup) findViewById(R.id.lnlContainer); //haetaan isäntä, eli komponentti mihin tuo tiedot sisältävä komponentti tulee
+                his.wasSelected((Tulos) parent.getItemAtPosition(position));
                 placeToCenter(((Tulos) parent.getItemAtPosition(position)).getLargeView((LayoutInflater) con.getSystemService(Context.LAYOUT_INFLATER_SERVICE), prnt));
             }
         });
+
+        //asetetaan hakukentälle kuuntelija joka katsoo onko listviewi ollu tarpeeksi kauan muuttumatta.
+        EditText haku = (EditText) findViewById(R.id.Chemistrysearch);
+        assert haku != null;
+        haku.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus)
+                {
+                    Log.d("minun","saatiin focus");
+                    resultAdapter ada = (resultAdapter)listView.getAdapter();
+                    if(ada == null) return;
+                    long lastChanged = ada.getLastChangedTime();
+                    if(System.nanoTime() - lastChanged >= detectionTime*Math.pow(10,9) && lastChanged != 0)
+                    {
+                        Log.d("minune","kulu tarpeeksi aikaa. onFokuksessa");
+                        //on kulunut tarpeeksi aikaa. Otetaan first ja last visible muistiin
+                        firstDisplayed = listView.getFirstVisiblePosition();
+                        lastDisplayed = listView.getLastVisiblePosition();
+                    }
+                }else{
+                    Log.d("minun","menetettiin fokus");
+                }
+            }
+        });
+
         hand = new SqlHandler(getApplicationContext().getApplicationContext(), "", null, 1, true);
+        his = new Historia();
     }
 
     @Override
@@ -148,9 +184,24 @@ public class ChemistryActivity extends AppCompatActivity
 
     public void HaeChemistry(View v) {
         Log.w("myApp", "Nappia painettu");
-
         EditText haku = (EditText) findViewById(R.id.Chemistrysearch);
+
+        haku.clearFocus(); //poistetaan fokus haku kentästä. Fokus osuu thiefViewiin.
+        //annetaan osa osumat näkyvissä olleille mikäli tarvetta
+        Log.d("minun","verrataan " + firstDisplayed + " " + lastDisplayed);
+        if(firstDisplayed != -1) //ei tarvitse tarkistaa lastDisplayediä koska ei ole olemassa tilannetta jossa se olisi nolla... eihän?
+        {
+            Log.d("minun","Kului tarpeeksi aikaa, annetaan osa osuma");
+            for(int i = firstDisplayed; i <= lastDisplayed; i++)
+            {
+                his.addPartial((Tulos)listView.getItemAtPosition(i));
+            }
+        }
+
+
+
         String hakuparametri = haku.getText().toString();
+        String[] taulut = his.getTables();
 
         Boolean tarkistus= false;
         StringValidator val = new StringValidator();
@@ -159,14 +210,14 @@ public class ChemistryActivity extends AppCompatActivity
         if(tarkistus) {
 
             // Tarkistus mistä taulusta haetaan täytyy tehä
-            ArrayList<Tulos> tulos = suoritaHaku(hakuparametri);
+            ArrayList<Tulos> tulos = suoritaHaku(hakuparametri,taulut);
 
         //Jos haku tyhjä haetaan osahaulla
         if(tulos.size()==0 && hakuparametri.length()!=0){
-        tulos = suoritaHaku("%"+hakuparametri+"%");
+        tulos = suoritaHaku("%"+hakuparametri+"%",taulut);
             for(int i = 0; i < tulos.size(); i++)
             {
-                if(tulos.get(i).getType() == 1)
+                if(tulos.get(i).getType().compareTo("Alkuaineet") == 0)
                 {
                     ((alkuaineTulos)tulos.get(i)).boldaa(hakuparametri);
                 }
@@ -176,55 +227,33 @@ public class ChemistryActivity extends AppCompatActivity
             placeToCenter(listView); //laitetaan listViewi keskelle
 
             //lisätään tiedot listViewiin näkyville
-            resultAdapter a = new resultAdapter(getApplicationContext(), -1, tulos);
+            resultAdapter a = new resultAdapter(getApplicationContext(), -1, his.sortTulos(tulos));
             listView.setAdapter(a);
-
             //onClick oli tässä
 
 
         }else{ Log.w("myApp", tarkistus.toString() );}
     }
 
-    private ArrayList<Tulos> suoritaHaku(String hakuparametri)
+    private ArrayList<Tulos> suoritaHaku(String hakuparametri, String[] taulut)
     {
         HashMap<String, String> kentat;
+        Set<String> kentatNimet;
+        ArrayList<Tulos> tulos = new ArrayList<>();
 
-        kentat = hand.getParamMap("alkuaineet");
-        kentat.put("nimi", hakuparametri);
-        ArrayList<Tulos> tulos = hand.getValue("alkuaineet", kentat);
+        for(String t : taulut)
+        {
+            kentat = hand.getDefaultMap(t);
+            if(kentat.size() > 0) {
+                kentatNimet = kentat.keySet();
+                for (String k : kentatNimet) {
+                    kentat.put(k, hakuparametri);
+                }
+                tulos.addAll(hand.getValue(t, kentat));
+            }
 
-        kentat = hand.getParamMap("Hapot");
-        kentat.put("name", hakuparametri);
+        }
 
-        ArrayList<Tulos> tmp = hand.getValue("Hapot", kentat);
-
-        tulos.addAll(tmp);
-
-        //haku logiikka on melkein sama aina. Vain taulun nimi, ja sen parametrin nimi muuttuu.
-        // Olisiko mahdollista tallentaa taulun nimi, ja kentät mistä haetaan johonkin, ja sitten luettaisiin se tässä for silmukassa?
-        kentat = hand.getParamMap("Hapot");
-        kentat.put("nimi", hakuparametri);
-
-        tmp = hand.getValue("Funktionaalinenryhma", kentat);
-
-        tulos.addAll(tmp);
-
-
-        //Tämä blokki olkoon aluksi ainakin vain testi ominaisuudessa
-        kentat = hand.getParamMap("Muuttuja");
-        kentat.put("symbol", hakuparametri);
-
-        tmp = hand.getValue("Muuttuja", kentat);
-
-        tulos.addAll(tmp);
-
-        kentat = hand.getParamMap("Vakio");
-        kentat.put("symbol", hakuparametri);
-
-        tmp = hand.getValue("Vakio", kentat);
-
-        tulos.addAll(tmp);
-        //testi ominaisuus blokki loppuu
 
         return tulos;
 
@@ -234,6 +263,8 @@ public class ChemistryActivity extends AppCompatActivity
     //Tässä laitetaan annettu Vievi keskellä olevaan layouttiin
     private void placeToCenter(View target)
     {
+        firstDisplayed = -1;
+        lastDisplayed = -1;
         LinearLayout contai = (LinearLayout) findViewById(R.id.lnlContainer);
         contai.removeAllViews();
         contai.addView(target);

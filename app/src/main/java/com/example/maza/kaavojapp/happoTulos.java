@@ -34,6 +34,7 @@ public class happoTulos extends Tulos {
         tiedot = vals;
         layoutSmall = R.layout.happo_small;
         layoutLarge = R.layout.happo_large;
+        type = "Hapot";
     }
 
     @Override
@@ -140,6 +141,11 @@ public class happoTulos extends Tulos {
         double nom = Math.sqrt(Math.pow(Ka,2) + 4*consent*Ka);
         double cons = Math.max((Ka-nom)/-2,(Ka+nom)/-2);
         return Math.log10(1/cons);
+    }
+
+    public String getKeyField()
+    {
+        return tiedot.get("name");
     }
 
 

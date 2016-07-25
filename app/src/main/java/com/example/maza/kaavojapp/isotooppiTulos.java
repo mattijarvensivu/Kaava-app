@@ -21,6 +21,7 @@ public class isotooppiTulos extends Tulos {
         tiedot = values;
         layoutSmall = R.layout.isotope_small;
         layoutLarge = R.layout.isotope_large;
+        type = "Isotoopit";
     }
 
     @Override

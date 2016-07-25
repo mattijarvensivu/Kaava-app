@@ -41,7 +41,7 @@ public class alkuaineTulos extends Tulos {
         layoutSmall = R.layout.alkuaine_small;
         tiedot = values;
         isotoopit = new ArrayList<>();
-        type = 1;
+        type = "Alkuaineet";
     }
 
     @Override
@@ -238,5 +238,10 @@ public class alkuaineTulos extends Tulos {
             isotoopit.add((isotooppiTulos)vals.get(i));
         }
 
+    }
+
+    public String getKeyField()
+    {
+        return tiedot.get("nimi");
     }
 }

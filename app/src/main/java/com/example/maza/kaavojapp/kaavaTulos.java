@@ -25,6 +25,7 @@ public class kaavaTulos extends Tulos{
         layoutLarge = -1;
         layoutSmall = -1;
         tiedot = values;
+        type = "Kaava";
     }
 
 }

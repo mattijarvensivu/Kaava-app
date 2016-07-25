@@ -29,6 +29,7 @@ public class muuttujaTulos extends Tulos{
         layoutLarge = -1;
         layoutSmall = R.layout.muuttuja_small;
         tiedot = values;
+        type = "Muuttuja";
     }
 
     @Override
@@ -50,6 +51,11 @@ public class muuttujaTulos extends Tulos{
     public View getLargeView (LayoutInflater infl, ViewGroup paren) {
         //En keksinyt mitenkä pitkä jä lyhyt kuvaus eroaisivat toisistaan. Mielestäni muuttuja ei tarvitse kuin lyhyen, ainakin näillä toiminnoilla
         return getSmallView(infl,paren);
+    }
+
+    public String getKeyField()
+    {
+        return tiedot.get("symbol");
     }
 }
 

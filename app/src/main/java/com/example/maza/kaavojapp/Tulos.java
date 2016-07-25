@@ -18,7 +18,7 @@ public class Tulos {
     protected int layoutSmall;
     protected int layoutLarge;
     protected HashMap<String,String> tiedot;
-    protected int type = 0;
+    protected String type = null;
 
     public Tulos()
     {
@@ -54,7 +54,12 @@ public class Tulos {
 
     }
 
-    public int getType()
+    public String getKeyField()
+    {
+        return null;
+    }
+
+    public String getType()
     {
         return type;
     }
@@ -75,6 +80,11 @@ public class Tulos {
     {
         return tiedot.get(name);
 
+    }
+
+    public String toString()
+    {
+        return getKeyField();
     }
 
 

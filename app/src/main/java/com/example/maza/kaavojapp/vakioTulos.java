@@ -28,6 +28,7 @@ public class vakioTulos extends Tulos{
         layoutLarge = -1;
         layoutSmall = R.layout.vakio_small;
         tiedot = values;
+        type = "Vakio";
     }
 
     @Override
@@ -55,5 +56,10 @@ public class vakioTulos extends Tulos{
     public View getLargeView (LayoutInflater infl, ViewGroup paren) {
         //En keksinyt mitenkä pitkä jä lyhyt kuvaus eroaisivat toisistaan. Mielestäni vakion ei tarvitse kuin lyhyen, ainakin näillä toiminnoilla
         return getSmallView(infl,paren);
+    }
+
+    public String getKeyField()
+    {
+        return tiedot.get("symbol");
     }
 }

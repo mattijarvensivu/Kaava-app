@@ -19,6 +19,7 @@ public class funktionaalinenTulos extends Tulos{
         layoutLarge = R.layout.funktional_large;
         layoutSmall = R.layout.funktional_small;
         tiedot = values;
+        type = "Funktionaalinenryhma";
     }
 
     @Override
@@ -70,5 +71,10 @@ public class funktionaalinenTulos extends Tulos{
         ((ImageView)pal.findViewById(R.id.mwIrUnit)).setImageDrawable(kf.getBmD("cm^{-1}"));
 
         return pal;
+    }
+
+    public String getKeyField()
+    {
+        return tiedot.get("nimi");
     }
 }

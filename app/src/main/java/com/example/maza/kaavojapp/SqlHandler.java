@@ -60,6 +60,26 @@ public class SqlHandler extends SQLiteOpenHelper {
         }
 
     }
+
+    //etsitään nimetyn taulun oletus kentät
+    public HashMap<String,String> getDefaultMap(String tableName)
+    {
+        //suoritetaan haku default names tauluun
+        HashMap<String,String> tmp = new HashMap<>();
+        tmp.put("_tname",tableName);
+        //coidaan käyttää perus getCursor metodia
+        Cursor c = getCursor("defaultFields",tmp);
+        HashMap<String,String> pal = new HashMap<>();
+        if(c.moveToFirst())
+        {
+            do{
+                pal.put(c.getString(1),"");
+            }while(c.moveToNext());
+        }
+
+        return pal;
+    }
+
     //http://blog.reigndesign.com/blog/using-your-own-sqlite-database-in-android-applications/ alkaa
     public void createDataBase(boolean forceCreate) throws IOException {
 

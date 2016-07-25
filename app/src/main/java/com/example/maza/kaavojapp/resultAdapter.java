@@ -19,6 +19,8 @@ public class resultAdapter extends ArrayAdapter<Tulos> {
 
     List<Tulos> vals;
     Context con;
+    long prevHaku = 0;
+
 
     public resultAdapter(Context context, int resource, List<Tulos> objects) {
         super(context, resource, objects);
@@ -26,9 +28,15 @@ public class resultAdapter extends ArrayAdapter<Tulos> {
         con = context;
     }
 
+    public long getLastChangedTime()
+    {
+        return prevHaku;
+    }
+
     @Override
     //systeemi kutsu tätä kun se latoo tavaraa listaan. Palautettu View on yksittäinen rivi.
     public View getView(int position, View convertView, ViewGroup parent) {
+        prevHaku = System.nanoTime();
         return vals.get(position).getSmallView((LayoutInflater) con.getSystemService(Context.LAYOUT_INFLATER_SERVICE),parent);
 
     }
