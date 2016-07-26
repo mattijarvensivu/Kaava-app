@@ -131,12 +131,15 @@ public class ChemistryActivity extends AppCompatActivity
             Intent myIntent = new Intent(this, PhysicsActivity.class);
             startActivity(myIntent);
         } else if (id == R.id.nav_manage) {
+
             HashMap<String,String> tmpHM = new HashMap<>();
             listView.setAdapter(new resultAdapter(getApplicationContext(), -1, hand.getValue("Alkuaineet",tmpHM)));
             placeToCenter(listView);
 
         } else if (id == R.id.nav_share) {
-
+            HashMap<String,String> tmpHM = new HashMap<>();
+            listView.setAdapter(new resultAdapter(getApplicationContext(), -1, hand.getValue("Kaava",tmpHM)));
+            placeToCenter(listView);
         } else if (id == R.id.nav_send) {
 
         }
@@ -200,11 +203,16 @@ public class ChemistryActivity extends AppCompatActivity
 
         tulos.addAll(tmp);
 
+
+
         //haku logiikka on melkein sama aina. Vain taulun nimi, ja sen parametrin nimi muuttuu.
         // Olisiko mahdollista tallentaa taulun nimi, ja kentät mistä haetaan johonkin, ja sitten luettaisiin se tässä for silmukassa?
+
         kentat = hand.getParamMap("Hapot");
         kentat.put("nimi", hakuparametri);
 
+        kentat = hand.getParamMap("Funktionaalinenryhma");
+        kentat.put("nimi", hakuparametri);
         tmp = hand.getValue("Funktionaalinenryhma", kentat);
 
         tulos.addAll(tmp);
@@ -224,7 +232,12 @@ public class ChemistryActivity extends AppCompatActivity
         tmp = hand.getValue("Vakio", kentat);
 
         tulos.addAll(tmp);
-        //testi ominaisuus blokki loppuu
+
+        // kaavahaku
+        kentat = hand.getParamMap("Kaava");
+        kentat.put("nimi", hakuparametri);
+        tmp = hand.getValue("Kaava", kentat);
+        tulos.addAll(tmp);
 
         return tulos;
 
