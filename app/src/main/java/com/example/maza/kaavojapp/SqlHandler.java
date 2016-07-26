@@ -260,8 +260,6 @@ public class SqlHandler extends SQLiteOpenHelper {
                 }
             }
 
-
-
             Log.d("minun","loytyi " + pal.size() + " osumaa");
 
             //tarkistetaan oliko haku isotppooi taulusta. jos oli niin haetaan isotooppeja vastaavat symbolit.
@@ -300,6 +298,26 @@ public class SqlHandler extends SQLiteOpenHelper {
 
         return pal;
     }
+
+    public ArrayList<Tulos> getValuebyTag (String tableName, HashMap<String,String> searchParameters) {
+        ArrayList<Tulos> pal = new ArrayList<>();
+        ArrayList<String[]> tableS = getStructure(tableName);
+
+        Cursor cur = getTagcursor(tableName, searchParameters);
+
+        return pal;
+    }
+
+    public Cursor getTagcursor(String tableName, HashMap<String, String> searchParameters) {
+        SQLiteDatabase db = getWritableDatabase();
+        //Log.d("KAAVAID", kaavaid);
+        String query= "Select * From Muuttuja m left join Muuttuja_Kaava as mk on (m._muuttujaid = mk._muuttujaid)" +
+                " left join Kaava as k on (mk._kaavaid = k._kaavaid) Where k._kaavaid = " +  searchParameters.get("_kaavaid") ;
+        Log.d("Tag Cursor query",query);
+        Cursor pal = db.rawQuery(query, null); // itse haku täpahtuu tässä
+        return pal;
+    }
+
 
     //etsitään nimetyn taulun oletus kentät
     public HashMap<String,String> getDefaultMap(String tableName)
