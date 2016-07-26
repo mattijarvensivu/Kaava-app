@@ -232,8 +232,8 @@ public class ChemistryActivity extends AppCompatActivity
         tmp = hand.getValue("Vakio", kentat);
 
         tulos.addAll(tmp);
-
-        // kaavahaku
+//Kaavahaku
+        
         kentat = hand.getParamMap("Kaava");
         kentat.put("nimi", hakuparametri);
         tmp = hand.getValue("Kaava", kentat);
