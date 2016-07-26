@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -22,6 +23,11 @@ import java.util.StringTokenizer;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private int currentLoop;
+    private int maksimiLooppi;
+    private boolean testi = false;
+    private long prevStarTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +53,36 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        Bundle b = getIntent().getExtras();
+        if(b == null)
+        {
+            //ekassa iteraatiossa
+            maksimiLooppi = 100;
+            currentLoop = -1;
+        }else {
+            currentLoop = (int) b.get("currentLoop");
+            maksimiLooppi = (int) b.get("maximumLoop");
+            testi = (boolean)b.get("testia");
+            prevStarTime = (long)b.get("startTime");
+        }
+        if(testi && currentLoop < maksimiLooppi)
+        {
+            aloitaTesti(null);
+        }
+        Log.d("minun","main menun oncreatessa");
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d("minun","main menun onRestartissa");
     }
 
     @Override
@@ -99,6 +135,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_slideshow) {
             Intent myIntent = new Intent(this, ChemistryActivity.class);
             startActivity(myIntent);
+            Log.d("minun","startin jälkeen");
 
         } else if (id == R.id.nav_manage) {
             Toast.makeText(this, "Voidaan pistää meneen jonnekkin", Toast.LENGTH_LONG).show();
@@ -120,8 +157,31 @@ public class MainActivity extends AppCompatActivity
             //Toast.makeText(this, hash.get("id") , Toast.LENGTH_LONG).show();
         }
 
+
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void aloitaTesti(View v)
+    {
+
+        Intent myIntent = new Intent(this, ChemistryActivity.class);
+        myIntent.putExtra("maximumLoop", maksimiLooppi);
+        myIntent.putExtra("currentLoop", currentLoop+1);
+        myIntent.putExtra("testia", true);
+        Log.d("aloitus","delta t: " + (System.nanoTime() - prevStarTime));
+        myIntent.putExtra("startTime",System.nanoTime());
+        startActivity(myIntent);
+
+    }
+
+    @Override
+    protected void onStop() {
+        Log.d("minun","on pause metodissa ennen super kutsua");
+        super.onStop();
+        Log.d("minun","on pause metodissa super kutsun jälkeen");
+
     }
 }

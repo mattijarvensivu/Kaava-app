@@ -46,6 +46,10 @@ public class ChemistryActivity extends AppCompatActivity
     private int lastDisplayed = -1;
     private float detectionTime = 1; //Kuinka kauan listViewin on pysyttävä muuttumattomana että oletetaan käyttäjän löytäneen siitä mitä haluttiin
 
+    private int maksimiLooppi;
+    private int currentLoop;
+    private boolean testi = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,8 +118,27 @@ public class ChemistryActivity extends AppCompatActivity
             }
         });
 
-        hand = new SqlHandler(getApplicationContext().getApplicationContext(), "", null, 1, true);
+        Bundle b = getIntent().getExtras();
+        hand = new SqlHandler(getApplicationContext().getApplicationContext(), "", null, 1, false);
         his = new Historia();
+        if(b != null)
+        {
+            currentLoop = (int) b.get("currentLoop");
+            maksimiLooppi = (int) b.get("maximumLoop");
+            testi = (boolean)b.get("testia");
+        }
+        if(testi && currentLoop < maksimiLooppi)
+        {
+            EditText edt = (EditText)findViewById(R.id.Chemistrysearch);
+            edt.setText("ium");
+            HaeChemistry(null);
+            Intent myIntent = new Intent(this, MainActivity.class);
+            myIntent.putExtra("maximumLoop", maksimiLooppi);
+            myIntent.putExtra("currentLoop", currentLoop);
+            myIntent.putExtra("testia", true);
+            myIntent.putExtra("startTime",(long)b.get("startTime"));
+            startActivity(myIntent);
+        }
     }
 
     @Override
@@ -159,6 +182,7 @@ public class ChemistryActivity extends AppCompatActivity
         if (id == R.id.nav_camera) {
             Intent myIntent = new Intent(this, MainActivity.class);
             startActivity(myIntent);
+            finish();
         } else if (id == R.id.nav_gallery) {
             Intent myIntent = new Intent(this, MathActivity.class);
             startActivity(myIntent);
@@ -203,6 +227,16 @@ public class ChemistryActivity extends AppCompatActivity
         String hakuparametri = haku.getText().toString();
         String[] taulut = his.getTables();
 
+        //TESTI OSAA
+        if(hakuparametri.compareTo("end") == 0)
+        {
+            Log.d("minun","aloitetaan lopetus");
+            his.writeHistory();
+            his.testi();
+            return;
+        }
+        //TESTI OSA LOPPUU
+
         Boolean tarkistus= false;
         StringValidator val = new StringValidator();
         tarkistus = val.CheckString(hakuparametri);
@@ -233,6 +267,7 @@ public class ChemistryActivity extends AppCompatActivity
 
 
         }else{ Log.w("myApp", tarkistus.toString() );}
+        //his.testi();
     }
 
     private ArrayList<Tulos> suoritaHaku(String hakuparametri, String[] taulut)
@@ -270,7 +305,17 @@ public class ChemistryActivity extends AppCompatActivity
         contai.addView(target);
     }
 
+    @Override
+    protected void onDestroy() {
+        Log.d("minun","tullaan on Destroyhyn");
+        his.writeHistory();
+        super.onDestroy();
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
 
+    }
 }
 

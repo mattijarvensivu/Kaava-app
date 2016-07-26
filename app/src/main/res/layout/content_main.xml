@@ -16,4 +16,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Etusivu" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="aloita testi"
+        android:onClick="aloitaTesti"/>
 </RelativeLayout>
