@@ -1,0 +1,4 @@
+Alkuaineet#_id
+Funktionaalinenryhma#_ryhmaid
+Kaava#_kaavaid
+Vakio#_vakioid

@@ -32,6 +32,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 public class ChemistryActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -154,6 +155,7 @@ public class ChemistryActivity extends AppCompatActivity
 
         EditText haku = (EditText) findViewById(R.id.Chemistrysearch);
         String hakuparametri = haku.getText().toString();
+        String[] listOfTables = new String[]{"Alkuaineet","Funktionaalinenryhma","Hapot","Isotoopit","Kaava","Muuttuja","Vakio"};
 
         Boolean tarkistus= false;
         StringValidator val = new StringValidator();
@@ -162,11 +164,11 @@ public class ChemistryActivity extends AppCompatActivity
         if(tarkistus) {
 
             // Tarkistus mistä taulusta haetaan täytyy tehä
-            ArrayList<Tulos> tulos = suoritaHaku(hakuparametri);
+         ArrayList<Tulos> tulos = suoritaHaku(hakuparametri,listOfTables,false);
 
         //Jos haku tyhjä haetaan osahaulla
         if(tulos.size()==0 && hakuparametri.length()!=0){
-        tulos = suoritaHaku("%"+hakuparametri+"%");
+        tulos = suoritaHaku("%"+hakuparametri+"%",listOfTables,false);
             for(int i = 0; i < tulos.size(); i++)
             {
                 if(tulos.get(i).getType() == 1)
@@ -188,56 +190,33 @@ public class ChemistryActivity extends AppCompatActivity
         }else{ Log.w("myApp", tarkistus.toString() );}
     }
 
-    private ArrayList<Tulos> suoritaHaku(String hakuparametri)
+    private ArrayList<Tulos> suoritaHaku(String hakuparametri, String[] taulut, boolean isTag)
     {
         HashMap<String, String> kentat;
+        Set<String> kentatNimet;
+        ArrayList<Tulos> tulos = new ArrayList<>();
 
-        kentat = hand.getParamMap("alkuaineet");
-        kentat.put("nimi", hakuparametri);
-        ArrayList<Tulos> tulos = hand.getValue("alkuaineet", kentat);
+        for(String t : taulut)
+        {
+            kentat = hand.getDefaultMap(t);
+            if(kentat.size() > 0) {
+                kentatNimet = kentat.keySet();
+                for (String k : kentatNimet) {
+                    kentat.put(k, hakuparametri);
+                }
+                /*
+                if(isTag)
+                {
+                    tulos.addAll(hand.getValueByTag(t, kentat));
+                }else {
+                    tulos.addAll(hand.getValue(t, kentat));
+                }
+                */
+                tulos.addAll(hand.getValue(t, kentat));
+            }
 
-        kentat = hand.getParamMap("Hapot");
-        kentat.put("name", hakuparametri);
+        }
 
-        ArrayList<Tulos> tmp = hand.getValue("Hapot", kentat);
-
-        tulos.addAll(tmp);
-
-
-
-        //haku logiikka on melkein sama aina. Vain taulun nimi, ja sen parametrin nimi muuttuu.
-        // Olisiko mahdollista tallentaa taulun nimi, ja kentät mistä haetaan johonkin, ja sitten luettaisiin se tässä for silmukassa?
-
-        kentat = hand.getParamMap("Hapot");
-        kentat.put("nimi", hakuparametri);
-
-        kentat = hand.getParamMap("Funktionaalinenryhma");
-        kentat.put("nimi", hakuparametri);
-        tmp = hand.getValue("Funktionaalinenryhma", kentat);
-
-        tulos.addAll(tmp);
-
-
-        //Tämä blokki olkoon aluksi ainakin vain testi ominaisuudessa
-        kentat = hand.getParamMap("Muuttuja");
-        kentat.put("symbol", hakuparametri);
-
-        tmp = hand.getValue("Muuttuja", kentat);
-
-        tulos.addAll(tmp);
-
-        kentat = hand.getParamMap("Vakio");
-        kentat.put("symbol", hakuparametri);
-
-        tmp = hand.getValue("Vakio", kentat);
-
-        tulos.addAll(tmp);
-//Kaavahaku
-        
-        kentat = hand.getParamMap("Kaava");
-        kentat.put("nimi", hakuparametri);
-        tmp = hand.getValue("Kaava", kentat);
-        tulos.addAll(tmp);
 
         return tulos;
 

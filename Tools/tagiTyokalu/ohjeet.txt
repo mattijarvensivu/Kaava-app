@@ -1,0 +1,18 @@
+Taulut joissa olevilla tiedoilla on t‰gej‰ laitetaan TableNames.txt tiedostoon muodossa
+[taulun nimi]#[id kent‰n nimi]
+Lis‰ksi sen t‰gi taulun nimen tulee olla [taulun nimi]Tag ja linkkeri taulun [Taulun nimi]_tag
+T‰gi taulussa tagin id tulee olla nimelt‰‰n _tagid. T‰gin nimi kentt‰ tulee olla nimelt‰‰n nimi ja kategoria kentt‰ nimelt‰‰n kategoria
+
+Taulu jolle asetetaan t‰gej‰ valitaan komboBoksista alareunassa. T‰gin voi lis‰t‰ oikealla alla olevilla kentill‰ ja lis‰‰ napilla.
+
+T‰git asetetaan riville valitsemalla haluttu rivi vasemman puoleiseen kentt‰‰n ja lis‰‰m‰ll‰ rasti sille haluttuihin t‰gehin oikealla. Kun halutut t‰git on rastittu, painetaan Exicute nappia joka kirjaa muutoksen tietokantaan.
+
+T‰gin voi poistaa rivilt‰ hakemalla haluttu rivi vasemmalle, poistamalla raksi t‰gin kohdalta ja painamalla exicute nappia.
+
+Huomioitavaa:
+.jar tiedoston kanssa samassa kansiossa on oltava TableNames.txt ja Kaavapp.db, juuri n‰ill‰ nimill‰.
+
+Tunnettuja heikkouksia:
+SQL injektion saa varmaan menem‰‰n sek‰ TableNames.txt ett‰ uuden t‰gin luonti kenttien kautta. Mit‰‰n tarkistuksia ei ole, koska t‰t‰ ei ole tarkoitus julkaista mihink‰‰n.
+
+Kentt‰ jolla voidaan manuaalisesti valita katseltava rivi ei tutki syˆtett‰‰n mitenk‰‰n, eli muut kuin numerot siin‰ rikkoo ohjelman. Samoin sen kautta saa varmaan injektion javaan.

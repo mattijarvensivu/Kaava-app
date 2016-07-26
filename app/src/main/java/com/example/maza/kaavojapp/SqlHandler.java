@@ -301,6 +301,25 @@ public class SqlHandler extends SQLiteOpenHelper {
         return pal;
     }
 
+    //etsitään nimetyn taulun oletus kentät
+    public HashMap<String,String> getDefaultMap(String tableName)
+    {
+        //suoritetaan haku default names tauluun
+        HashMap<String,String> tmp = new HashMap<>();
+        tmp.put("_tname",tableName);
+        //coidaan käyttää perus getCursor metodia
+        Cursor c = getCursor("defaultFields",tmp);
+        HashMap<String,String> pal = new HashMap<>();
+        if(c.moveToFirst())
+        {
+            do{
+                pal.put(c.getString(1),"");
+            }while(c.moveToNext());
+        }
+
+        return pal;
+    }
+
     //Luodaan HashMappi johonka voidaan laittaa annetun nimisen taulun hakuparametrit.
     public HashMap<String,String> getParamMap(String tableName)
     {
