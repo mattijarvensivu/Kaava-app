@@ -82,8 +82,7 @@ public class MathActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            Intent myIntent = new Intent(this, MainActivity.class);
-            startActivity(myIntent);
+
 
         } else if (id == R.id.nav_gallery) {
             Intent myIntent = new Intent(this, PhysicsActivity.class);
@@ -103,6 +102,7 @@ public class MathActivity extends AppCompatActivity
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+        finish();
         return true;
     }
     public void takaisinmath(View v)
