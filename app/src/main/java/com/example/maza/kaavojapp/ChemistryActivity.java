@@ -155,6 +155,7 @@ public class ChemistryActivity extends AppCompatActivity
 
         EditText haku = (EditText) findViewById(R.id.Chemistrysearch);
         String hakuparametri = haku.getText().toString();
+        String[] listOfTagTables = new String[]{"AlkuaineetTag"};
         String[] listOfTables = new String[]{"Alkuaineet","Funktionaalinenryhma","Hapot","Isotoopit","Kaava","Muuttuja","Vakio"};
 
         Boolean tarkistus= false;
@@ -164,8 +165,10 @@ public class ChemistryActivity extends AppCompatActivity
         if(tarkistus) {
 
             // Tarkistus mistä taulusta haetaan täytyy tehä
-         ArrayList<Tulos> tulos = suoritaHaku(hakuparametri,listOfTables,false);
-
+            ArrayList<Tulos> tulos = suoritaHaku(hakuparametri,listOfTagTables,true);
+            if(tulos.size()==0 && hakuparametri.length()!=0) {
+                tulos = suoritaHaku(hakuparametri, listOfTables, false);
+            }
         //Jos haku tyhjä haetaan osahaulla
         if(tulos.size()==0 && hakuparametri.length()!=0){
         tulos = suoritaHaku("%"+hakuparametri+"%",listOfTables,false);
@@ -204,15 +207,15 @@ public class ChemistryActivity extends AppCompatActivity
                 for (String k : kentatNimet) {
                     kentat.put(k, hakuparametri);
                 }
-                /*
-                if(isTag)
+
+                if(isTag==true)
                 {
                     tulos.addAll(hand.getValueByTag(t, kentat));
                 }else {
                     tulos.addAll(hand.getValue(t, kentat));
                 }
-                */
-                tulos.addAll(hand.getValue(t, kentat));
+
+               // tulos.addAll(hand.getValue(t, kentat));
             }
 
         }

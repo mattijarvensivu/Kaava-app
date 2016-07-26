@@ -299,22 +299,48 @@ public class SqlHandler extends SQLiteOpenHelper {
         return pal;
     }
 
-    public ArrayList<Tulos> getValuebyTag (String tableName, HashMap<String,String> searchParameters) {
+    public ArrayList<Tulos> getValueByTag (String tableName, HashMap<String,String> searchParameters) {
         ArrayList<Tulos> pal = new ArrayList<>();
         ArrayList<String[]> tableS = getStructure(tableName);
 
         Cursor cur = getTagcursor(tableName, searchParameters);
 
+
+        try {
+            if (cur.moveToFirst()) {
+                do {
+                    HashMap<String, String> tmp = new HashMap<String, String>();
+                    for (int i = 0; i < tableS.size(); i++) {
+
+                        tmp.put(tableS.get(i)[0], cur.getString(i));
+                    }
+                    pal.add(Tulos.getTulos(tmp));
+                } while (cur.moveToNext());
+
+            }
+        } finally {
+
+        }
+
+
         return pal;
     }
 
     public Cursor getTagcursor(String tableName, HashMap<String, String> searchParameters) {
+        String linkkitaulu = "";
+        String kohdetaulu = "";
+        if(tableName.compareTo("AlkuaineetTag")==0){
+            linkkitaulu = "Alkuaineet_tag";
+            kohdetaulu = "Alkuaineet";
+        }
         SQLiteDatabase db = getWritableDatabase();
-        //Log.d("KAAVAID", kaavaid);
-        String query= "Select * From Muuttuja m left join Muuttuja_Kaava as mk on (m._muuttujaid = mk._muuttujaid)" +
-                " left join Kaava as k on (mk._kaavaid = k._kaavaid) Where k._kaavaid = " +  searchParameters.get("_kaavaid") ;
+
+
+        String query = "Select * From"+kohdetaulu + " a left join"+linkkitaulu + " as ta on (a._id = ta._alkuaineetid)"+
+        "left join"+ tableName+"  as t on (ta._tagid = t._tagid) Where t.nimi = " +searchParameters.get("nimi");
+
         Log.d("Tag Cursor query",query);
-        Cursor pal = db.rawQuery(query, null); // itse haku täpahtuu tässä
+        Cursor pal = db.rawQuery(query, null);
         return pal;
     }
 
