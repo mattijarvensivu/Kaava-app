@@ -301,9 +301,35 @@ public class SqlHandler extends SQLiteOpenHelper {
 
     public ArrayList<Tulos> getValueByTag (String tableName, HashMap<String,String> searchParameters) {
         ArrayList<Tulos> pal = new ArrayList<>();
-        ArrayList<String[]> tableS = getStructure(tableName);
 
-        Cursor cur = getTagcursor(tableName, searchParameters);
+        //haetaan tagi taulua vastaavat kohde ja linkki taulu
+        String linkkitaulu = "";
+        String kohdetaulu = "";
+        String kohdeIdKentta = "";
+        if(tableName.compareTo("AlkuaineetTag")==0){
+            linkkitaulu = "Alkuaineet_tag";
+            kohdetaulu = "Alkuaineet";
+            kohdeIdKentta = "_id";
+        }else if(tableName.compareTo("FunktionaalinenryhmaTag")==0)
+        {
+            linkkitaulu = "Funktionaalinenryhma_tag";
+            kohdetaulu = "Funktionaalinenryhma";
+            kohdeIdKentta = "_ryhmaid";
+        }else if(tableName.compareTo("KaavaTag")==0)
+        {
+            linkkitaulu = "Kaava_tag";
+            kohdetaulu = "Kaava";
+            kohdeIdKentta = "_kaavaid";
+        }
+        else if(tableName.compareTo("VakioTag")==0)
+        {
+            kohdeIdKentta = "_vakioid";
+            linkkitaulu = "Vakio_tag";
+            kohdetaulu = "Vakio";
+        }
+
+        ArrayList<String[]> tableS = getStructure(kohdetaulu);
+        Cursor cur = getTagcursor(tableName, kohdetaulu, linkkitaulu, kohdeIdKentta ,searchParameters);
 
 
         try {
@@ -322,22 +348,15 @@ public class SqlHandler extends SQLiteOpenHelper {
 
         }
 
-
         return pal;
     }
 
-    public Cursor getTagcursor(String tableName, HashMap<String, String> searchParameters) {
-        String linkkitaulu = "";
-        String kohdetaulu = "";
-        if(tableName.compareTo("AlkuaineetTag")==0){
-            linkkitaulu = "Alkuaineet_tag";
-            kohdetaulu = "Alkuaineet";
-        }
+    public Cursor getTagcursor(String tableName, String kohdetaulu, String linkkitaulu,String kohdeIdKentta , HashMap<String, String> searchParameters) {
         SQLiteDatabase db = getWritableDatabase();
 
 
-        String query = "Select * From"+kohdetaulu + " a left join"+linkkitaulu + " as ta on (a._id = ta._alkuaineetid)"+
-        "left join"+ tableName+"  as t on (ta._tagid = t._tagid) Where t.nimi = " +searchParameters.get("nimi");
+        String query = "Select * From "+kohdetaulu + " a left join "+linkkitaulu + " as ta on (a."+ kohdeIdKentta +" = ta._"+ kohdetaulu +"id)"+
+        " left join "+ tableName+"  as t on (ta._tagid = t._tagid) Where t.nimi like '" +searchParameters.get("nimi") + "'";
 
         Log.d("Tag Cursor query",query);
         Cursor pal = db.rawQuery(query, null);
@@ -431,7 +450,7 @@ public class SqlHandler extends SQLiteOpenHelper {
         {
             if(searchParameters.get(tableS.get(i)[0]) != null)
             {
-                Log.d("minun","osui " + tableS.get(i)[0] + ": " + searchParameters.get(tableS.get(i)[0]));
+                Log.d("minun","getCursorissa osui " + tableS.get(i)[0] + ": " + searchParameters.get(tableS.get(i)[0]));
                 if(searchParamsS.compareTo("") == 0) searchParamsS += " where "; //On olemassa ainakin yksi haku rajoite ja queryyn ei ole lisätty where avain sanaa. Lisätään se
                 if(!isFirst)
                 {

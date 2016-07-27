@@ -155,7 +155,7 @@ public class ChemistryActivity extends AppCompatActivity
 
         EditText haku = (EditText) findViewById(R.id.Chemistrysearch);
         String hakuparametri = haku.getText().toString();
-        String[] listOfTagTables = new String[]{"AlkuaineetTag"};
+        String[] listOfTagTables = new String[]{"AlkuaineetTag","FunktionaalinenryhamTag","KaavaTag","VakioTag"};
         String[] listOfTables = new String[]{"Alkuaineet","Funktionaalinenryhma","Hapot","Isotoopit","Kaava","Muuttuja","Vakio"};
 
         Boolean tarkistus= false;
