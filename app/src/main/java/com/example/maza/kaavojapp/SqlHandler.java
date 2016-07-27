@@ -354,7 +354,7 @@ public class SqlHandler extends SQLiteOpenHelper {
     public Cursor getTagcursor(String tableName, String kohdetaulu, String linkkitaulu,String kohdeIdKentta , ArrayList<HashMap<String, String>> searchParameters) {
         SQLiteDatabase db = getWritableDatabase();
 
-        String query = "";
+        String query = "SELECT DISTINCT * FROM(SELECT * from (";
 
         ArrayList<String[]> taulunRakenne = getStructure(kohdetaulu);
         String halututKentat = "";
@@ -380,6 +380,25 @@ public class SqlHandler extends SQLiteOpenHelper {
                 query += " INTERSECT ";
             }
         }
+        query += ") UNION  ALL SELECT * from (";
+
+
+        for(int i = 0; i < searchParameters.size(); i++) {
+
+            //Kommentti koska voin
+            query += "Select "+ halututKentat +" From " + kohdetaulu + " a left join " + linkkitaulu + " as ta on (a." + kohdeIdKentta + " = ta._" + kohdetaulu + "id)" +
+                    " left join " + tableName + "  as t on (ta._tagid = t._tagid) Where t.nimi like '" + searchParameters.get(i).get("nimi") + "'";
+            if(i < searchParameters.size()-1)
+            {
+                //ei olla viimeisessä, lisätään Intersect
+                query += " UNION ";
+            }
+        }
+        query += "))";
+
+
+
+
         Log.d("Tag Cursor query",query);
         Cursor pal = db.rawQuery(query, null);
         return pal;
