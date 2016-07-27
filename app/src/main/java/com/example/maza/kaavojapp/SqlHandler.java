@@ -299,7 +299,7 @@ public class SqlHandler extends SQLiteOpenHelper {
         return pal;
     }
 
-    public ArrayList<Tulos> getValueByTag (String tableName, HashMap<String,String> searchParameters) {
+    public ArrayList<Tulos> getValueByTag (String tableName, ArrayList<HashMap<String,String>> searchParameters) {
         ArrayList<Tulos> pal = new ArrayList<>();
 
         //haetaan tagi taulua vastaavat kohde ja linkki taulu
@@ -351,13 +351,22 @@ public class SqlHandler extends SQLiteOpenHelper {
         return pal;
     }
 
-    public Cursor getTagcursor(String tableName, String kohdetaulu, String linkkitaulu,String kohdeIdKentta , HashMap<String, String> searchParameters) {
+    public Cursor getTagcursor(String tableName, String kohdetaulu, String linkkitaulu,String kohdeIdKentta , ArrayList<HashMap<String, String>> searchParameters) {
         SQLiteDatabase db = getWritableDatabase();
 
-        //Kommentti koska voin
-        String query = "Select * From "+kohdetaulu + " a left join "+linkkitaulu + " as ta on (a."+ kohdeIdKentta +" = ta._"+ kohdetaulu +"id)"+
-        " left join "+ tableName+"  as t on (ta._tagid = t._tagid) Where t.nimi like '" +searchParameters.get("nimi") + "'";
+        String query = "";
 
+        for(int i = 0; i < searchParameters.size(); i++) {
+
+            //Kommentti koska voin
+            query += "Select * From " + kohdetaulu + " a left join " + linkkitaulu + " as ta on (a." + kohdeIdKentta + " = ta._" + kohdetaulu + "id)" +
+                    " left join " + tableName + "  as t on (ta._tagid = t._tagid) Where t.nimi like '" + searchParameters.get(i).get("nimi") + "'";
+            if(i < searchParameters.size()-1)
+            {
+                //ei olla viimeisessä, lisätään Intersect
+                query += " INTERSECT ";
+            }
+        }
         Log.d("Tag Cursor query",query);
         Cursor pal = db.rawQuery(query, null);
         return pal;

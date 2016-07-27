@@ -196,7 +196,9 @@ public class ChemistryActivity extends AppCompatActivity
     private ArrayList<Tulos> suoritaHaku(String hakuparametri, String[] taulut, boolean isTag)
     {
         HashMap<String, String> kentat;
+        ArrayList<HashMap<String, String>> kentatAL = new ArrayList<>();
         Set<String> kentatNimet;
+        String[] splitattuHP = hakuparametri.split(",");
         ArrayList<Tulos> tulos = new ArrayList<>();
 
         for(String t : taulut)
@@ -204,13 +206,24 @@ public class ChemistryActivity extends AppCompatActivity
             kentat = hand.getDefaultMap(t);
             if(kentat.size() > 0) {
                 kentatNimet = kentat.keySet();
-                for (String k : kentatNimet) {
-                    kentat.put(k, hakuparametri);
+                if(!isTag) {
+                    for (String k : kentatNimet) {
+                        kentat.put(k, hakuparametri);
+                    }
+                }else{
+                    //kyseessä on tägi haku
+                    for(String s: splitattuHP) {
+                        HashMap<String, String> tmp = new HashMap<>();
+                        for (String k : kentatNimet) {
+                            tmp.put(k, s);
+                        }
+                        kentatAL.add(tmp);
+                    }
                 }
 
                 if(isTag==true)
                 {
-                    tulos.addAll(hand.getValueByTag(t, kentat));
+                    tulos.addAll(hand.getValueByTag(t, kentatAL));
                 }else {
                     tulos.addAll(hand.getValue(t, kentat));
                 }
