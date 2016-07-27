@@ -244,9 +244,12 @@ public class ChemistryActivity extends AppCompatActivity
                 if(isTag==true)
                 {
                     ArrayList<HashMap<String,String>> tagit = new ArrayList<>();
-                    HashMap<String, String> tmp = new HashMap<>();
-                    tmp.put("nimi","matematiikka");
-                    tagit.add(tmp);
+                    if(t.compareTo("Kaava") == 0 || t.compareTo("Vakio") == 0)
+                    {
+                        HashMap<String, String> tmp = new HashMap<>();
+                        tmp.put("nimi","kemia");
+                        tagit.add(tmp);
+                    }
                     tulos.addAll(hand.getValueByTag(t, kentatAL, tagit));
                 }else {
                     ArrayList<HashMap<String,String>> tagit = new ArrayList<>();
