@@ -12,26 +12,43 @@
     tools:context="com.example.maza.kaavojapp.MathActivity"
     tools:showIn="@layout/app_bar_math">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Math"
-        android:id="@+id/textView3"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="84dp"
-        android:layout_marginStart="84dp"
-        android:layout_marginTop="145dp" />
-
     <Button
+        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Front page"
-        android:id="@+id/button"
+        android:text="Search"
+        android:id="@+id/Mathnappi"
         android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:onClick="HaeMath" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Mathsearch"
+        android:layout_alignBottom="@+id/Mathnappi"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:onClick="takaisinmath" />
+        android:layout_toLeftOf="@+id/Mathnappi"
+        android:layout_toStartOf="@+id/Mathnappi"
+        android:visibility="visible" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lnlContainer"
+        android:layout_below="@+id/Mathsearch"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1">
+        <ListView
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/lsvTulos"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            />
+    </LinearLayout>
+
 </RelativeLayout>
