@@ -356,10 +356,23 @@ public class SqlHandler extends SQLiteOpenHelper {
 
         String query = "";
 
+        ArrayList<String[]> taulunRakenne = getStructure(kohdetaulu);
+        String halututKentat = "";
+        for(int i = 0; i < taulunRakenne.size(); i++)
+        {
+            halututKentat += "a." + taulunRakenne.get(i)[0];
+
+            if(i < taulunRakenne.size()-1)
+            {
+                halututKentat += ", ";
+            }
+
+        }
+
         for(int i = 0; i < searchParameters.size(); i++) {
 
             //Kommentti koska voin
-            query += "Select * From " + kohdetaulu + " a left join " + linkkitaulu + " as ta on (a." + kohdeIdKentta + " = ta._" + kohdetaulu + "id)" +
+            query += "Select "+ halututKentat +" From " + kohdetaulu + " a left join " + linkkitaulu + " as ta on (a." + kohdeIdKentta + " = ta._" + kohdetaulu + "id)" +
                     " left join " + tableName + "  as t on (ta._tagid = t._tagid) Where t.nimi like '" + searchParameters.get(i).get("nimi") + "'";
             if(i < searchParameters.size()-1)
             {
