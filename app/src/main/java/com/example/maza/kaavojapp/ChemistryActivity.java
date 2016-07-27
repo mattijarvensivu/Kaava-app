@@ -132,14 +132,10 @@ public class ChemistryActivity extends AppCompatActivity
             startActivity(myIntent);
         } else if (id == R.id.nav_manage) {
 
-            HashMap<String,String> tmpHM = new HashMap<>();
-            listView.setAdapter(new resultAdapter(getApplicationContext(), -1, hand.getValue("Alkuaineet",tmpHM)));
-            placeToCenter(listView);
+
 
         } else if (id == R.id.nav_share) {
-            HashMap<String,String> tmpHM = new HashMap<>();
-            listView.setAdapter(new resultAdapter(getApplicationContext(), -1, hand.getValue("Kaava",tmpHM)));
-            placeToCenter(listView);
+
         } else if (id == R.id.nav_send) {
 
         }
@@ -155,7 +151,7 @@ public class ChemistryActivity extends AppCompatActivity
 
         EditText haku = (EditText) findViewById(R.id.Chemistrysearch);
         String hakuparametri = haku.getText().toString();
-        String[] listOfTagTables = new String[]{"AlkuaineetTag","FunktionaalinenryhamTag","KaavaTag","VakioTag"};
+        String[] listOfTagTables = new String[]{"Alkuaineet","Funktionaalinenryham","Kaava","Vakio"};
         String[] listOfTables = new String[]{"Alkuaineet","Funktionaalinenryhma","Hapot","Isotoopit","Kaava","Muuttuja","Vakio"};
 
         Boolean tarkistus= false;
@@ -249,7 +245,14 @@ public class ChemistryActivity extends AppCompatActivity
                 {
                     tulos.addAll(hand.getValueByTag(t, kentatAL));
                 }else {
-                    tulos.addAll(hand.getValue(t, kentat));
+                    ArrayList<HashMap<String,String>> tagit = new ArrayList<>();
+                    if(t.compareTo("Kaava") == 0 || t.compareTo("Vakio") == 0)
+                    {
+                        HashMap<String, String> tmp = new HashMap<>();
+                        tmp.put("nimi","kemia");
+                        tagit.add(tmp);
+                    }
+                    tulos.addAll(hand.getValue(t, kentat,tagit));
                 }
 
                // tulos.addAll(hand.getValue(t, kentat));

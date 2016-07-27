@@ -11,12 +11,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.sql.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Set;
-import java.util.StringTokenizer;
 
 /**
  * Created by janne on 3.6.2016.
@@ -164,7 +161,7 @@ public class SqlHandler extends SQLiteOpenHelper {
 
     }
     //haetaan dataa taulukosta annetuilla parametreillä
-    public ArrayList<Tulos> getValue (String tableName, HashMap<String,String> searchParameters) {
+    public ArrayList<Tulos> getValue (String tableName, HashMap<String,String> searchParameters, ArrayList<HashMap<String, String>> tagit) {
         ArrayList<Tulos> pal = new ArrayList<>();
         ArrayList<String[]> tableS = getStructure(tableName);
 //jos table muuttuja ni hakee ne. Pitää käyttää eri cursoria ni pitää olla tässä. pitää olla if else tai käyttää myös toista cursoria ja hakee kaikki vaikkei pitäis
@@ -210,7 +207,7 @@ public class SqlHandler extends SQLiteOpenHelper {
         } else{
 
 
-            Cursor cur = getCursor(tableName, searchParameters);
+            Cursor cur = getCursor(tableName, searchParameters, tagit);
 
             //käsitellään saatu data
             try {
@@ -243,8 +240,8 @@ public class SqlHandler extends SQLiteOpenHelper {
                     tmp.put("_kaavaid", kaavaid);
                     tmp2.put("_kaavaid", kaavaid);
                     Log.d("Muuttujaids", kaavaid);
-                    ((kaavaTulos)pal.get(k)).addVakiot(getValue("vakio",tmp2));
-                    ((kaavaTulos) pal.get(k)).addMuuttujat(getValue("muuttuja", tmp));
+                    ((kaavaTulos)pal.get(k)).addVakiot(getValue("vakio",tmp2,new ArrayList<HashMap<String, String>>()));
+                    ((kaavaTulos) pal.get(k)).addMuuttujat(getValue("muuttuja", tmp, new ArrayList<HashMap<String, String>>()));
                 }
             }
 
@@ -256,7 +253,7 @@ public class SqlHandler extends SQLiteOpenHelper {
                     //haetaan alkuaineen isotoopit.
                     HashMap<String,String> tmp = new HashMap<>();
                     tmp.put("_alkuaineid",pal.get(i).getValue("_id"));
-                    ((alkuaineTulos)pal.get(i)).addIsotoopit(getValue("isotoopit",tmp));
+                    ((alkuaineTulos)pal.get(i)).addIsotoopit(getValue("isotoopit",tmp, new ArrayList<HashMap<String, String>>()));
                 }
             }
 
@@ -273,7 +270,7 @@ public class SqlHandler extends SQLiteOpenHelper {
                         HashMap<String, String> tmp = new HashMap<>();
                         prevId = pal.get(i).getValue("_alkuaineid");
                         tmp.put("_id", prevId);
-                        cur = getCursor("alkuaineet", tmp); //tehtävä näin. getValue kutsu aiheuttaisi loputtoman loopin
+                        cur = getCursor("alkuaineet", tmp, new ArrayList<HashMap<String, String>>()); //tehtävä näin. getValue kutsu aiheuttaisi loputtoman loopin
                         try {
                             if (cur.moveToFirst()) {
                                 do {
@@ -303,33 +300,10 @@ public class SqlHandler extends SQLiteOpenHelper {
         ArrayList<Tulos> pal = new ArrayList<>();
 
         //haetaan tagi taulua vastaavat kohde ja linkki taulu
-        String linkkitaulu = "";
-        String kohdetaulu = "";
-        String kohdeIdKentta = "";
-        if(tableName.compareTo("AlkuaineetTag")==0){
-            linkkitaulu = "Alkuaineet_tag";
-            kohdetaulu = "Alkuaineet";
-            kohdeIdKentta = "_id";
-        }else if(tableName.compareTo("FunktionaalinenryhmaTag")==0)
-        {
-            linkkitaulu = "Funktionaalinenryhma_tag";
-            kohdetaulu = "Funktionaalinenryhma";
-            kohdeIdKentta = "_ryhmaid";
-        }else if(tableName.compareTo("KaavaTag")==0)
-        {
-            linkkitaulu = "Kaava_tag";
-            kohdetaulu = "Kaava";
-            kohdeIdKentta = "_kaavaid";
-        }
-        else if(tableName.compareTo("VakioTag")==0)
-        {
-            kohdeIdKentta = "_vakioid";
-            linkkitaulu = "Vakio_tag";
-            kohdetaulu = "Vakio";
-        }
 
-        ArrayList<String[]> tableS = getStructure(kohdetaulu);
-        Cursor cur = getTagcursor(tableName, kohdetaulu, linkkitaulu, kohdeIdKentta ,searchParameters);
+
+        ArrayList<String[]> tableS = getStructure(tableName);
+        Cursor cur = getTagcursor(tableName ,searchParameters);
 
 
         try {
@@ -351,12 +325,45 @@ public class SqlHandler extends SQLiteOpenHelper {
         return pal;
     }
 
-    public Cursor getTagcursor(String tableName, String kohdetaulu, String linkkitaulu,String kohdeIdKentta , ArrayList<HashMap<String, String>> searchParameters) {
+    public Cursor getTagcursor(String tableName, ArrayList<HashMap<String, String>> searchParameters) {
         SQLiteDatabase db = getWritableDatabase();
 
-        String query = "SELECT DISTINCT * FROM(SELECT * from (";
+        String query = "SELECT DISTINCT * FROM(" + getTagiStringi(tableName,true,searchParameters) + " UNION  ALL " + getTagiStringi(tableName,false,searchParameters) +")";
 
-        ArrayList<String[]> taulunRakenne = getStructure(kohdetaulu);
+        Log.d("Tag Cursor query",query);
+        Cursor pal = db.rawQuery(query, null);
+        return pal;
+    }
+
+    private String getTagiStringi(String tableName, boolean useIntersection,ArrayList<HashMap<String, String>> searchParameters)
+    {
+        //haetaan taulut ja idKentät
+        String linkkitaulu = "";
+        String tagiTaulu = "";
+        String kohdeIdKentta = "";
+        if(tableName.compareTo("Alkuaineet")==0){
+            linkkitaulu = "Alkuaineet_tag";
+            tagiTaulu = "AlkuaineetTag";
+            kohdeIdKentta = "_id";
+        }else if(tableName.compareTo("Funktionaalinenryhma")==0)
+        {
+            linkkitaulu = "Funktionaalinenryhma_tag";
+            tagiTaulu = "FunktionaalinenryhmaTag";
+            kohdeIdKentta = "_ryhmaid";
+        }else if(tableName.compareTo("Kaava")==0)
+        {
+            linkkitaulu = "Kaava_tag";
+            tagiTaulu = "KaavaTag";
+            kohdeIdKentta = "_kaavaid";
+        }
+        else if(tableName.compareTo("Vakio")==0)
+        {
+            kohdeIdKentta = "_vakioid";
+            linkkitaulu = "Vakio_tag";
+            tagiTaulu = "VakioTag";
+        }
+        //haetaan taulun kenttien arvot
+        ArrayList<String[]> taulunRakenne = getStructure(tableName);
         String halututKentat = "";
         for(int i = 0; i < taulunRakenne.size(); i++)
         {
@@ -368,40 +375,28 @@ public class SqlHandler extends SQLiteOpenHelper {
             }
 
         }
+        //asetetaan väli operaattori
+        String separator = " UNION ";
+        if(useIntersection) {
+           separator = " INTERSECT ";
+        }
 
+        String query = "";
         for(int i = 0; i < searchParameters.size(); i++) {
 
             //Kommentti koska voin
-            query += "Select "+ halututKentat +" From " + kohdetaulu + " a left join " + linkkitaulu + " as ta on (a." + kohdeIdKentta + " = ta._" + kohdetaulu + "id)" +
-                    " left join " + tableName + "  as t on (ta._tagid = t._tagid) Where t.nimi like '" + searchParameters.get(i).get("nimi") + "'";
+            query += "Select "+ halututKentat +" From " + tableName + " a left join " + linkkitaulu + " as ta on (a." + kohdeIdKentta + " = ta._" + tableName + "id)" +
+                    " left join " + tagiTaulu + "  as t on (ta._tagid = t._tagid) Where t.nimi like '" + searchParameters.get(i).get("nimi") + "'";
             if(i < searchParameters.size()-1)
             {
                 //ei olla viimeisessä, lisätään Intersect
-                query += " INTERSECT ";
+                query += separator;
             }
         }
-        query += ") UNION  ALL SELECT * from (";
+
+        return "SELECT * FROM( " + query + " )";
 
 
-        for(int i = 0; i < searchParameters.size(); i++) {
-
-            //Kommentti koska voin
-            query += "Select "+ halututKentat +" From " + kohdetaulu + " a left join " + linkkitaulu + " as ta on (a." + kohdeIdKentta + " = ta._" + kohdetaulu + "id)" +
-                    " left join " + tableName + "  as t on (ta._tagid = t._tagid) Where t.nimi like '" + searchParameters.get(i).get("nimi") + "'";
-            if(i < searchParameters.size()-1)
-            {
-                //ei olla viimeisessä, lisätään Intersect
-                query += " UNION ";
-            }
-        }
-        query += "))";
-
-
-
-
-        Log.d("Tag Cursor query",query);
-        Cursor pal = db.rawQuery(query, null);
-        return pal;
     }
 
 
@@ -412,7 +407,7 @@ public class SqlHandler extends SQLiteOpenHelper {
         HashMap<String,String> tmp = new HashMap<>();
         tmp.put("_tname",tableName);
         //coidaan käyttää perus getCursor metodia
-        Cursor c = getCursor("defaultFields",tmp);
+        Cursor c = getCursor("defaultFields",tmp, new ArrayList<HashMap<String, String>>());
         HashMap<String,String> pal = new HashMap<>();
         if(c.moveToFirst())
         {
@@ -480,11 +475,17 @@ public class SqlHandler extends SQLiteOpenHelper {
 
 
 
-    public Cursor getCursor(String tableName, HashMap<String, String> searchParameters)
+    public Cursor getCursor(String tableName, HashMap<String, String> searchParameters, ArrayList<HashMap<String,String>> tagit)
     {
         ArrayList<String[]> tableS = getStructure(tableName);
+
+        String source = tableName;
+        if(tagit.size() > 0)
+        {
+            source = getTagiStringi(tableName,true,tagit);
+        }
         //luodaan querry
-        String query = "Select * from " + tableName;
+        String query = "Select * from (" + source + ")";
         String searchParamsS = "";
         boolean isFirst = true;
         for(int i = 0; i < tableS.size(); i++)
