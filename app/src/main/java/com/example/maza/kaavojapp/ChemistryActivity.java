@@ -196,9 +196,22 @@ public class ChemistryActivity extends AppCompatActivity
     private ArrayList<Tulos> suoritaHaku(String hakuparametri, String[] taulut, boolean isTag)
     {
         HashMap<String, String> kentat;
+        String tmpHakuPreP = hakuparametri;
+        String tmpHakuPosP = hakuparametri.replaceAll(", ", ",");
+        while(tmpHakuPreP.compareTo(tmpHakuPosP) != 0)
+        {
+            tmpHakuPreP = tmpHakuPosP;
+            tmpHakuPosP = tmpHakuPosP.replaceAll(", ", ",");
+        }
+        tmpHakuPreP = tmpHakuPosP.replaceAll(" ,", ",");
+        while(tmpHakuPreP.compareTo(tmpHakuPosP) != 0)
+        {
+            tmpHakuPreP = tmpHakuPosP;
+            tmpHakuPosP = tmpHakuPosP.replaceAll(" ,", ",");
+        }
         ArrayList<HashMap<String, String>> kentatAL = new ArrayList<>();
         Set<String> kentatNimet;
-        String[] splitattuHP = hakuparametri.split(",");
+        String[] splitattuHP = tmpHakuPosP.split(",");
         ArrayList<Tulos> tulos = new ArrayList<>();
 
         for(String t : taulut)
@@ -216,6 +229,16 @@ public class ChemistryActivity extends AppCompatActivity
                     for(String s: splitattuHP) {
                         HashMap<String, String> tmp = new HashMap<>();
                         for (String k : kentatNimet) {
+                            while(s.charAt(0) == ' ')
+                            {
+                                s = s.substring(1,s.length());
+                            }
+
+                            while(s.charAt(s.length()-1) == ' ')
+                            {
+                                s = s.substring(0,s.length()-1);
+                            }
+
                             tmp.put(k, s);
                         }
                         kentatAL.add(tmp);
