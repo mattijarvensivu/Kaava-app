@@ -354,7 +354,7 @@ public class SqlHandler extends SQLiteOpenHelper {
     public Cursor getTagcursor(String tableName, String kohdetaulu, String linkkitaulu,String kohdeIdKentta , HashMap<String, String> searchParameters) {
         SQLiteDatabase db = getWritableDatabase();
 
-
+        //Kommentti koska voin
         String query = "Select * From "+kohdetaulu + " a left join "+linkkitaulu + " as ta on (a."+ kohdeIdKentta +" = ta._"+ kohdetaulu +"id)"+
         " left join "+ tableName+"  as t on (ta._tagid = t._tagid) Where t.nimi like '" +searchParameters.get("nimi") + "'";
 
