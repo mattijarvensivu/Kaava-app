@@ -296,14 +296,14 @@ public class SqlHandler extends SQLiteOpenHelper {
         return pal;
     }
 
-    public ArrayList<Tulos> getValueByTag (String tableName, ArrayList<HashMap<String,String>> searchParameters) {
+    public ArrayList<Tulos> getValueByTag (String tableName, ArrayList<HashMap<String,String>> searchParameters,  ArrayList<HashMap<String,String>> mustHaveTags) {
         ArrayList<Tulos> pal = new ArrayList<>();
 
         //haetaan tagi taulua vastaavat kohde ja linkki taulu
 
 
         ArrayList<String[]> tableS = getStructure(tableName);
-        Cursor cur = getTagcursor(tableName ,searchParameters);
+        Cursor cur = getTagcursor(tableName ,searchParameters,mustHaveTags);
 
 
         try {
@@ -325,17 +325,23 @@ public class SqlHandler extends SQLiteOpenHelper {
         return pal;
     }
 
-    public Cursor getTagcursor(String tableName, ArrayList<HashMap<String, String>> searchParameters) {
+    public Cursor getTagcursor(String tableName, ArrayList<HashMap<String, String>> searchParameters, ArrayList<HashMap<String, String>> mustHaveTags) {
         SQLiteDatabase db = getWritableDatabase();
 
-        String query = "SELECT DISTINCT * FROM(" + getTagiStringi(tableName,true,searchParameters) + " UNION  ALL " + getTagiStringi(tableName,false,searchParameters) +")";
+        String query = "SELECT DISTINCT * FROM(" + getTagiStringi(tableName,true,searchParameters) + " UNION  ALL " + getTagiStringi(tableName,false,searchParameters);
+
+        if(mustHaveTags.size() > 0)
+        {
+            query += " INTERSECT " + getTagiStringi(tableName,true,mustHaveTags);
+        }
+        query += ")";
 
         Log.d("Tag Cursor query",query);
         Cursor pal = db.rawQuery(query, null);
         return pal;
     }
 
-    private String getTagiStringi(String tableName, boolean useIntersection,ArrayList<HashMap<String, String>> searchParameters)
+    private String getTagiStringi(String tableName, boolean useIntersection,ArrayList<HashMap<String, String>> searchParameters )
     {
         //haetaan taulut ja idKentät
         String linkkitaulu = "";
