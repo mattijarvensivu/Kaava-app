@@ -203,6 +203,7 @@ public class ChemistryActivity extends AppCompatActivity
 
         for(String t : taulut)
         {
+            kentatAL.clear();
             kentat = hand.getDefaultMap(t);
             if(kentat.size() > 0) {
                 kentatNimet = kentat.keySet();
