@@ -40,14 +40,18 @@ public class Tulos {
                 return new happoTulos(values);
             case 8:
                 return new isotooppiTulos(values);
-            case 7:
-                return new funktionaalinenTulos(values);
             case 3:
                 return new kaavaTulos(values); //kaava
             case 4:
+                if(values.get("_ryhmaid") != null)
+                    return new funktionaalinenTulos(values); //funktionaalinen ryhmä
                 return new muuttujaTulos(values);//muuttuja
+
             case 5:
                 return new vakioTulos(values);//vakio
+
+            case 6:
+                return new piikkiTulos(values);
             default:
                 return null;
         }

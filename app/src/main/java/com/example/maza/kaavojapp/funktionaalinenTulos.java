@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -14,10 +15,12 @@ import java.util.HashMap;
  */
 public class funktionaalinenTulos extends Tulos{
 
+    private ArrayList<piikkiTulos> irpiikit;
 
     public funktionaalinenTulos(HashMap<String,String> values) {
         layoutLarge = R.layout.funktional_large;
         layoutSmall = R.layout.funktional_small;
+        irpiikit = new ArrayList<>();
         tiedot = values;
     }
 
@@ -52,23 +55,21 @@ public class funktionaalinenTulos extends Tulos{
 
         ((TextView)pal.findViewById(R.id.txvNom)).setText(tiedot.get("nimifragmentti"));
 
-        String irAlue = tiedot.get("iralku") + " - " + tiedot.get("irloppu");
-        ((TextView)pal.findViewById(R.id.txvIR)).setText(irAlue);
-
-        if(tiedot.get("nmralku").compareTo("0") != 0 || tiedot.get("nmralku").compareTo("0") != 0)
+        //laitetaan piikit näkyville
+        LinearLayout piikit = (LinearLayout)pal.findViewById(R.id.lnlPiikit);
+        for(piikkiTulos p : irpiikit)
         {
-            //on olemassa nmr siirtymä
-            String nmrAlue = tiedot.get("nmralku") +" - " + tiedot.get("nmrloppu") + " pm";
-            ((TextView)pal.findViewById(R.id.txvNMR)).setText(nmrAlue);
-
-        }else
-        {
-            ((LinearLayout)pal.findViewById(R.id.lnlNMR)).removeAllViews();
+            piikit.addView(p.getSmallView(infl,piikit));
         }
 
-        KaavaFactory kf = new KaavaFactory(pal.getContext(),pal.getResources(),(int)Math.ceil(((TextView)pal.findViewById(R.id.txvIR)).getTextSize()/ pal.getResources().getDisplayMetrics().density)); //viimeinen parametri laskee käytetyn teksti koon.
-        ((ImageView)pal.findViewById(R.id.mwIrUnit)).setImageDrawable(kf.getBmD("cm^{-1}"));
-
         return pal;
+    }
+
+    public void setPiikir(ArrayList<Tulos> given)
+    {
+        for(Tulos t: given)
+        {
+            irpiikit.add((piikkiTulos)t);
+        }
     }
 }
