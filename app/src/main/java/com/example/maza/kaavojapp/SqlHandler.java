@@ -321,6 +321,62 @@ public class SqlHandler extends SQLiteOpenHelper {
         } finally {
 
         }
+        if(tableName.compareTo("Kaava")==0)
+        {
+
+            for(int k = 0; k< pal.size();k++)
+            { //haetaan Kaavan muuttujat.
+                String kaavaid = pal.get(k).getValue("_kaavaid");
+                HashMap<String, String> tmp = new HashMap<>();
+                HashMap<String, String> tmp2 = new HashMap<>();
+                tmp.put("_kaavaid", kaavaid);
+                tmp2.put("_kaavaid", kaavaid);
+                Log.d("Muuttujaids", kaavaid);
+                ((kaavaTulos)pal.get(k)).addVakiot(getValue("vakio",tmp2,new ArrayList<HashMap<String, String>>()));
+                ((kaavaTulos) pal.get(k)).addMuuttujat(getValue("muuttuja", tmp, new ArrayList<HashMap<String, String>>()));
+            }
+        }
+/*
+        if(tableName.compareTo("alkuaineet") == 0)
+        {
+            for(int i = 0; i < pal.size(); i++)
+            {
+                //haetaan alkuaineen isotoopit.
+                HashMap<String,String> tmp = new HashMap<>();
+                tmp.put("_alkuaineid",pal.get(i).getValue("_id"));
+                ((alkuaineTulos)pal.get(i)).addIsotoopit(getValue("isotoopit",tmp, new ArrayList<HashMap<String, String>>()));
+            }
+        }
+
+
+        if(tableName.compareTo("isotoopit") == 0) {
+            String symbol = "";
+            String prevId = "-1";
+            for (int i = 0; i < pal.size(); i++) {
+                //tarkistetaan oliko edellinen isotooppi samasta perus alkuaineesta. jos oli niin ei tarvita uutta hakua
+                if (pal.get(i).getValue("_alkuaineid").compareTo(prevId) != 0) {
+                    //Edellinen haettu symboli oli eri id:lle, Joudutaan tekemään haku.
+                    HashMap<String, String> tmp = new HashMap<>();
+                    prevId = pal.get(i).getValue("_alkuaineid");
+                    tmp.put("_id", prevId);
+                    cur = getCursor("alkuaineet", tmp, new ArrayList<HashMap<String, String>>()); //tehtävä näin. getValue kutsu aiheuttaisi loputtoman loopin
+                    try {
+                        if (cur.moveToFirst()) {
+                            do {
+                                symbol = cur.getString(1);
+                            } while (cur.moveToNext());
+
+                        }
+                    } finally {
+
+                    }
+                }
+                ((isotooppiTulos) pal.get(i)).setSymbol(symbol);
+            }
+        }*/
+
+
+
 
         return pal;
     }
