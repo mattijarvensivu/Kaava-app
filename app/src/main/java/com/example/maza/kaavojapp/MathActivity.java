@@ -151,6 +151,11 @@ public class MathActivity extends AppCompatActivity
 
         EditText haku = (EditText) findViewById(R.id.Mathsearch);
         String hakuparametri = haku.getText().toString();
+
+        if (hakuparametri.matches("")) {
+            Toast.makeText(this, "Check the input!", Toast.LENGTH_SHORT).show();
+            return;
+        }
         String[] listOfTagTables = new String[]{"Kaava","Vakio"};
         String[] listOfTables = new String[]{"Kaava","Muuttuja","Vakio"};
 
