@@ -166,7 +166,7 @@ public class SqlHandler extends SQLiteOpenHelper {
         ArrayList<String[]> tableS = getStructure(tableName);
 //jos table muuttuja ni hakee ne. Pitää käyttää eri cursoria ni pitää olla tässä. pitää olla if else tai käyttää myös toista cursoria ja hakee kaikki vaikkei pitäis
         //jos tulee useampia moni-moneen ja haluaa yhellä kutsulla ni if elseen vaan putkeen.
-        if(tableName.compareTo("muuttuja")==0) {
+        if(tableName.compareTo("Muuttuja")==0) {
 
             Cursor cura = getMuuttujacursor(searchParameters);
             tableS = getStructure(tableName);
@@ -186,7 +186,7 @@ public class SqlHandler extends SQLiteOpenHelper {
 
             }
         }else
-        if (tableName.compareTo("vakio") == 0) {
+        if (tableName.compareTo("Vakio") == 0) {
             Cursor cura = getVakiocursor(searchParameters);
             tableS = getStructure(tableName);
             try {
@@ -240,8 +240,8 @@ public class SqlHandler extends SQLiteOpenHelper {
                     tmp.put("_kaavaid", kaavaid);
                     tmp2.put("_kaavaid", kaavaid);
                     Log.d("Muuttujaids", kaavaid);
-                    ((kaavaTulos)pal.get(k)).addVakiot(getValue("vakio",tmp2,new ArrayList<HashMap<String, String>>()));
-                    ((kaavaTulos) pal.get(k)).addMuuttujat(getValue("muuttuja", tmp, new ArrayList<HashMap<String, String>>()));
+                    ((kaavaTulos)pal.get(k)).addVakiot(getValue("Vakio",tmp2,new ArrayList<HashMap<String, String>>()));
+                    ((kaavaTulos) pal.get(k)).addMuuttujat(getValue("Muuttuja", tmp, new ArrayList<HashMap<String, String>>()));
                 }
             }
 
@@ -253,7 +253,7 @@ public class SqlHandler extends SQLiteOpenHelper {
                     //haetaan alkuaineen isotoopit.
                     HashMap<String,String> tmp = new HashMap<>();
                     tmp.put("_alkuaineid",pal.get(i).getValue("_id"));
-                    ((alkuaineTulos)pal.get(i)).addIsotoopit(getValue("isotoopit",tmp, new ArrayList<HashMap<String, String>>()));
+                    ((alkuaineTulos)pal.get(i)).addIsotoopit(getValue("Isotoopit",tmp, new ArrayList<HashMap<String, String>>()));
                 }
             }
 
@@ -332,8 +332,8 @@ public class SqlHandler extends SQLiteOpenHelper {
                 tmp.put("_kaavaid", kaavaid);
                 tmp2.put("_kaavaid", kaavaid);
                 Log.d("Muuttujaids", kaavaid);
-                ((kaavaTulos)pal.get(k)).addVakiot(getValue("vakio",tmp2,new ArrayList<HashMap<String, String>>()));
-                ((kaavaTulos) pal.get(k)).addMuuttujat(getValue("muuttuja", tmp, new ArrayList<HashMap<String, String>>()));
+                ((kaavaTulos)pal.get(k)).addVakiot(getValue("Vakio",tmp2,new ArrayList<HashMap<String, String>>()));
+                ((kaavaTulos) pal.get(k)).addMuuttujat(getValue("Muuttuja", tmp, new ArrayList<HashMap<String, String>>()));
             }
         }
 
@@ -344,7 +344,7 @@ public class SqlHandler extends SQLiteOpenHelper {
                 //haetaan alkuaineen isotoopit.
                 HashMap<String,String> tmp = new HashMap<>();
                 tmp.put("_alkuaineid",pal.get(i).getValue("_id"));
-                ((alkuaineTulos)pal.get(i)).addIsotoopit(getValue("isotoopit",tmp, new ArrayList<HashMap<String, String>>()));
+                ((alkuaineTulos)pal.get(i)).addIsotoopit(getValue("Isotoopit",tmp, new ArrayList<HashMap<String, String>>()));
             }
         }
 

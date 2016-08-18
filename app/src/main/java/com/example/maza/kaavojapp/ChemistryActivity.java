@@ -156,7 +156,7 @@ public class ChemistryActivity extends AppCompatActivity
             return;
         }
 
-        String[] listOfTagTables = new String[]{"Alkuaineet","Funktionaalinenryham","Kaava","Vakio"};
+        String[] listOfTagTables = new String[]{"Alkuaineet","Funktionaalinenryhma","Kaava","Vakio"};
         String[] listOfTables = new String[]{"Alkuaineet","Funktionaalinenryhma","Hapot","Isotoopit","Kaava","Muuttuja","Vakio"};
 
         Boolean tarkistus= false;

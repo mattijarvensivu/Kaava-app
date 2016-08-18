@@ -12,31 +12,43 @@
     tools:context="com.example.maza.kaavojapp.PhysicsActivity"
     tools:showIn="@layout/app_bar_physics">
 
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Physics"
-        android:id="@+id/textView2"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="84dp"
-        android:layout_marginStart="84dp"
-        android:layout_marginTop="145dp" />
-
     <Button
+        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Front page"
-        android:id="@+id/button"
+        android:text="Search"
+        android:id="@+id/Physicsnappi"
         android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:onClick="HaePhysics" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Physicsearch"
+        android:layout_alignBottom="@+id/Physicsnappi"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:onClick="takaisinphysics" />
+        android:layout_toLeftOf="@+id/Physicsnappi"
+        android:layout_toStartOf="@+id/Physicsnappi"
+        android:visibility="visible" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lnlContainer"
+        android:layout_below="@+id/Physicsearch"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1">
+        <ListView
 
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/lsvTulos"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            />
+    </LinearLayout>
 
 </RelativeLayout>
