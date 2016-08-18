@@ -246,7 +246,7 @@ public class SqlHandler extends SQLiteOpenHelper {
             }
 
 
-            if(tableName.compareTo("alkuaineet") == 0)
+            if(tableName.compareTo("Alkuaineet") == 0)
             {
                 for(int i = 0; i < pal.size(); i++)
                 {
@@ -260,7 +260,7 @@ public class SqlHandler extends SQLiteOpenHelper {
             Log.d("minun","loytyi " + pal.size() + " osumaa");
 
             //tarkistetaan oliko haku isotppooi taulusta. jos oli niin haetaan isotooppeja vastaavat symbolit.
-            if(tableName.compareTo("isotoopit") == 0) {
+            if(tableName.compareTo("Isotoopit") == 0) {
                 String symbol = "";
                 String prevId = "-1";
                 for (int i = 0; i < pal.size(); i++) {
@@ -336,8 +336,8 @@ public class SqlHandler extends SQLiteOpenHelper {
                 ((kaavaTulos) pal.get(k)).addMuuttujat(getValue("muuttuja", tmp, new ArrayList<HashMap<String, String>>()));
             }
         }
-/*
-        if(tableName.compareTo("alkuaineet") == 0)
+
+        if(tableName.compareTo("Alkuaineet") == 0)
         {
             for(int i = 0; i < pal.size(); i++)
             {
@@ -349,7 +349,7 @@ public class SqlHandler extends SQLiteOpenHelper {
         }
 
 
-        if(tableName.compareTo("isotoopit") == 0) {
+        if(tableName.compareTo("Isotoopit") == 0) {
             String symbol = "";
             String prevId = "-1";
             for (int i = 0; i < pal.size(); i++) {
@@ -373,7 +373,7 @@ public class SqlHandler extends SQLiteOpenHelper {
                 }
                 ((isotooppiTulos) pal.get(i)).setSymbol(symbol);
             }
-        }*/
+        }
 
 
 
