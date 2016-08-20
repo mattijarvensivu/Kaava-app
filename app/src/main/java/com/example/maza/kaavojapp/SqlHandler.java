@@ -285,6 +285,17 @@ public class SqlHandler extends SQLiteOpenHelper {
                     ((isotooppiTulos) pal.get(i)).setSymbol(symbol);
                 }
             }
+
+            if(tableName.compareTo("Funktionaalinenryhma") == 0)
+            {
+                //haetaan piikit.
+                for(Tulos t : pal)
+                {
+                    HashMap<String,String> piikkiValues = new HashMap<>();
+                    piikkiValues.put("_ryhmaid",t.getValue("_ryhmaid"));
+                    ((funktionaalinenTulos)t).setPiikir(getValue("irpiikit",piikkiValues,null));
+                }
+            }
         }
 
 
@@ -372,6 +383,17 @@ public class SqlHandler extends SQLiteOpenHelper {
                     }
                 }
                 ((isotooppiTulos) pal.get(i)).setSymbol(symbol);
+            }
+        }
+
+        if(tableName.compareTo("Funktionaalinenryhma") == 0)
+        {
+            //haetaan piikit.
+            for(Tulos t : pal)
+            {
+                HashMap<String,String> piikkiValues = new HashMap<>();
+                piikkiValues.put("_ryhmaid",t.getValue("_ryhmaid"));
+                ((funktionaalinenTulos)t).setPiikir(getValue("irpiikit",piikkiValues,null));
             }
         }
 
@@ -542,7 +564,7 @@ public class SqlHandler extends SQLiteOpenHelper {
         ArrayList<String[]> tableS = getStructure(tableName);
 
         String source = tableName;
-        if(tagit.size() > 0)
+        if(tagit != null && tagit.size() > 0)
         {
             source = getTagiStringi(tableName,true,tagit);
         }

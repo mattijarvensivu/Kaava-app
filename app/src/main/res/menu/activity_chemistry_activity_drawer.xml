@@ -4,7 +4,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/mainmenu"
             android:title="Front page" />
         <item
             android:id="@+id/nav_gallery"
@@ -14,23 +14,26 @@
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Physics" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Kemia otsikko 4" />
     </group>
 
 
-    <item android:title="Väliotsikko">
+    <item android:title="Aiheet">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Kemia otsikko 5" />
+                android:id="@+id/Alkuaineet"
+                android:title="Alkuaineet" />
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Kemia otsikko 6" />
+                android:id="@+id/FnkRyhma"
+                android:title="Funktionaalisetryhmät" />
+            <item
+                android:id="@+id/Hapot"
+                android:title="Hapot" />
+            <item
+                android:id="@+id/Kaavat"
+                android:title="Kaavat" />
+            <item
+                android:id="@+id/Vakiot"
+                android:title="Vakiot" />
         </menu>
     </item>
 

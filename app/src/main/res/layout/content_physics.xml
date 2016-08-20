@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,27 +13,39 @@
     tools:context="com.example.maza.kaavojapp.PhysicsActivity"
     tools:showIn="@layout/app_bar_physics">
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Search"
-        android:id="@+id/Physicsnappi"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:onClick="HaePhysics" />
+        android:layout_gravity="center"
+        android:id="@+id/txvOtsikko"
+        android:textColor="#000000"
+        android:textSize="25dp"
+        android:text="Fysiikka"/>
 
-    <EditText
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/Physicsearch"
-        android:layout_alignBottom="@+id/Physicsnappi"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_toLeftOf="@+id/Physicsnappi"
-        android:layout_toStartOf="@+id/Physicsnappi"
-        android:visibility="visible" />
+        android:orientation="horizontal">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/Physicsearch"
+            android:visibility="visible"
+            android:layout_weight="1"/>
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Search"
+            android:id="@+id/Physicsnappi"
+            android:onClick="HaePhysics" />
+
+
+    </LinearLayout>
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -51,4 +64,4 @@
             />
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

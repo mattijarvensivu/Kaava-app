@@ -28,6 +28,8 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -38,6 +40,8 @@ public class ChemistryActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     SqlHandler hand;
     private ListView listView;
+    private String[] listOfTables;
+    private String[] listOfTagTables;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +85,8 @@ public class ChemistryActivity extends AppCompatActivity
             }
         });
         hand = new SqlHandler(getApplicationContext().getApplicationContext(), "", null, 1, true);
+        listOfTagTables = new String[]{"Alkuaineet","Funktionaalinenryhma","Kaava","Vakio"};
+        listOfTables = new String[]{"Alkuaineet","Funktionaalinenryhma","Hapot","Isotoopit","Kaava","Muuttuja","Vakio"};
     }
 
     @Override
@@ -122,27 +128,51 @@ public class ChemistryActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
+            finish();
 
         } else if (id == R.id.nav_gallery) {
             Intent myIntent = new Intent(this, MathActivity.class);
             startActivity(myIntent);
+            finish();
 
         } else if (id == R.id.nav_slideshow) {
             Intent myIntent = new Intent(this, PhysicsActivity.class);
             startActivity(myIntent);
+            finish();
         } else if (id == R.id.nav_manage) {
 
 
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.Alkuaineet) {
+            listOfTagTables = new String[]{"Alkuaineet"};
+            listOfTables = new String[]{"Alkuaineet"};
+            ((TextView)findViewById(R.id.txvOtsikko)).setText("Alkuaineet");
 
-        } else if (id == R.id.nav_send) {
+
+        } else if (id == R.id.FnkRyhma) {
+            listOfTagTables = new String[]{"Funktionaalinenryhma"};
+            listOfTables = new String[]{"Funktionaalinenryhma"};
+            ((TextView)findViewById(R.id.txvOtsikko)).setText("Funktionaalisetryhmät");
+
+        }else if (id == R.id.Kaavat) {
+            listOfTagTables = new String[]{"Kaava"};
+            listOfTables = new String[]{"Kaava"};
+            ((TextView)findViewById(R.id.txvOtsikko)).setText("Kaavat");
+
+        }else if (id == R.id.Vakiot) {
+            listOfTagTables = new String[]{"Vakio"};
+            listOfTables = new String[]{"Vakio"};
+            ((TextView)findViewById(R.id.txvOtsikko)).setText("Vakiot");
+
+        }else if (id == R.id.Hapot) {
+            listOfTagTables = new String[]{};
+            listOfTables = new String[]{"Hapot"};
+            ((TextView)findViewById(R.id.txvOtsikko)).setText("Hapot");
 
         }
-
+        ((LinearLayout) findViewById(R.id.lnlContainer)).removeAllViews();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-        finish();
         return true;
     }
 
@@ -155,9 +185,6 @@ public class ChemistryActivity extends AppCompatActivity
             Toast.makeText(this, "Check the input!", Toast.LENGTH_SHORT).show();
             return;
         }
-
-        String[] listOfTagTables = new String[]{"Alkuaineet","Funktionaalinenryhma","Kaava","Vakio"};
-        String[] listOfTables = new String[]{"Alkuaineet","Funktionaalinenryhma","Hapot","Isotoopit","Kaava","Muuttuja","Vakio"};
 
         Boolean tarkistus= false;
         StringValidator val = new StringValidator();

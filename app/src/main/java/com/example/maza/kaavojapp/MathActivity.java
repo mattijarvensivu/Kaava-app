@@ -38,6 +38,9 @@ public class MathActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     SqlHandler hand;
     private ListView listView;
+    //idea on että aihealueen valinta perustuu tägeihin. Koska käytännössä kaikki matikan tieto on kaava tai vakio taulussa, ei voida käyttää samaa ratkaisua kuin kemiassa. Tämä systeemi joudutaan ehkä lisäämään myös kemian osalle
+    String[] listOfReqTags = new String[]{};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,32 +125,48 @@ public class MathActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
+            finish();
 
         } else if (id == R.id.nav_gallery) {
             Intent myIntent = new Intent(this, PhysicsActivity.class);
             startActivity(myIntent);
+            finish();
 
         } else if (id == R.id.nav_slideshow) {
             Intent myIntent = new Intent(this, ChemistryActivity.class);
             startActivity(myIntent);
-        } else if (id == R.id.nav_manage) {
+            finish();
+        } else if (id == R.id.algebra) {
+            ((TextView)findViewById(R.id.txvOtsikko)).setText("Algebra");
+            listOfReqTags = new String[]{"algebra"};
 
 
+        } else if (id == R.id.trigonometria) {
+            ((TextView)findViewById(R.id.txvOtsikko)).setText("Trigonometria");
+            listOfReqTags = new String[]{"trigonometria"};
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.derivointi) {
+            ((TextView)findViewById(R.id.txvOtsikko)).setText("Derivointi");
+            listOfReqTags = new String[]{"derivointi"};
 
-        } else if (id == R.id.nav_send) {
+        }else if (id == R.id.integrointi) {
+            ((TextView)findViewById(R.id.txvOtsikko)).setText("Integrointi");
+            listOfReqTags = new String[]{"integrointi"};
 
         }
 
+        ((LinearLayout) findViewById(R.id.lnlContainer)).removeAllViews();
+        ((TextView)findViewById(R.id.Mathsearch)).setText("");
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-        finish();
         return true;
     }
 
     public void HaeMath(View v) {
         Log.w("myApp", " Matikka Nappia painettu");
+        String[] listOfTagTables = new String[]{"Kaava","Vakio"};
+        String[] listOfTables = new String[]{"Kaava","Muuttuja","Vakio"};
 
         EditText haku = (EditText) findViewById(R.id.Mathsearch);
         String hakuparametri = haku.getText().toString();
@@ -156,8 +175,6 @@ public class MathActivity extends AppCompatActivity
             Toast.makeText(this, "Check the input!", Toast.LENGTH_SHORT).show();
             return;
         }
-        String[] listOfTagTables = new String[]{"Kaava","Vakio"};
-        String[] listOfTables = new String[]{"Kaava","Muuttuja","Vakio"};
 
         Boolean tarkistus= false;
         StringValidator val = new StringValidator();
@@ -245,10 +262,18 @@ public class MathActivity extends AppCompatActivity
                         kentatAL.add(tmp);
                     }
                 }
+                ArrayList<HashMap<String,String>> tagit = new ArrayList<>();
+                //laitetaan rajoittavat tägit listaan.
+                for(String s:listOfReqTags)
+                {
+                    HashMap<String, String> tmp = new HashMap<>();
+                    tmp.put("nimi",s);
+                    tagit.add(tmp);
+                }
 
                 if(isTag==true)
                 {
-                    ArrayList<HashMap<String,String>> tagit = new ArrayList<>();
+
                     if(t.compareTo("Kaava") == 0 || t.compareTo("Vakio") == 0)
                     {
                         HashMap<String, String> tmp = new HashMap<>();
@@ -257,7 +282,6 @@ public class MathActivity extends AppCompatActivity
                     }
                     tulos.addAll(hand.getValueByTag(t, kentatAL, tagit));
                 }else {
-                    ArrayList<HashMap<String,String>> tagit = new ArrayList<>();
                     if(t.compareTo("Kaava") == 0 || t.compareTo("Vakio") == 0)
                     {
                         HashMap<String, String> tmp = new HashMap<>();

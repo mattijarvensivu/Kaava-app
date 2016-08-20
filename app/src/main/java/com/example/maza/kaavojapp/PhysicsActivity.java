@@ -38,6 +38,8 @@ public class PhysicsActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     SqlHandler hand;
     private ListView listView;
+    //idea on että aihealueen valinta perustuu tägeihin. Koska käytännössä kaikki matikan tieto on kaava tai vakio taulussa, ei voida käyttää samaa ratkaisua kuin kemiassa. Tämä systeemi joudutaan ehkä lisäämään myös kemian osalle
+    String[] listOfReqTags = new String[]{};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,26 +125,32 @@ public class PhysicsActivity extends AppCompatActivity
 
         if (id == R.id.nav_camera) {
 
+            finish();
         } else if (id == R.id.nav_gallery) {
             Intent myIntent = new Intent(this, MathActivity.class);
             startActivity(myIntent);
 
+            finish();
         } else if (id == R.id.nav_slideshow) {
             Intent myIntent = new Intent(this, ChemistryActivity.class);
             startActivity(myIntent);
-        } else if (id == R.id.nav_manage) {
+            finish();
+        } else if (id == R.id.termodynamiikka) {
+            ((TextView)findViewById(R.id.txvOtsikko)).setText("Termodynamiikka");
+            listOfReqTags = new String[]{"termodynamiikka"};
 
 
+        } else if (id == R.id.mekaniikka) {
+            ((TextView)findViewById(R.id.txvOtsikko)).setText("Mekaniikka");
+            listOfReqTags = new String[]{"mekaniikka"};
 
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
 
         }
 
+        ((LinearLayout) findViewById(R.id.lnlContainer)).removeAllViews();
+        ((TextView)findViewById(R.id.Physicsearch)).setText("");
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-        finish();
         return true;
     }
 
@@ -245,10 +253,17 @@ public class PhysicsActivity extends AppCompatActivity
                         kentatAL.add(tmp);
                     }
                 }
+                ArrayList<HashMap<String,String>> tagit = new ArrayList<>();
+                //laitetaan rajoittavat tägit listaan.
+                for(String s:listOfReqTags)
+                {
+                    HashMap<String, String> tmp = new HashMap<>();
+                    tmp.put("nimi",s);
+                    tagit.add(tmp);
+                }
 
                 if(isTag==true)
                 {
-                    ArrayList<HashMap<String,String>> tagit = new ArrayList<>();
                     if(t.compareTo("Kaava") == 0 || t.compareTo("Vakio") == 0)
                     {
                         HashMap<String, String> tmp = new HashMap<>();
@@ -257,7 +272,6 @@ public class PhysicsActivity extends AppCompatActivity
                     }
                     tulos.addAll(hand.getValueByTag(t, kentatAL, tagit));
                 }else {
-                    ArrayList<HashMap<String,String>> tagit = new ArrayList<>();
                     if(t.compareTo("Kaava") == 0 || t.compareTo("Vakio") == 0)
                     {
                         HashMap<String, String> tmp = new HashMap<>();
