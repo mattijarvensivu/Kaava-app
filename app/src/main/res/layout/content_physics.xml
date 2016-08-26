@@ -11,7 +11,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.maza.kaavojapp.PhysicsActivity"
-    tools:showIn="@layout/app_bar_physics">
+    tools:showIn="@layout/app_bar_physics"
+    android:background="@color/physicsblue">
 
     <TextView
         android:layout_width="wrap_content"
