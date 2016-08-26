@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,13 +67,12 @@ public class happoTulos extends Tulos {
         ((TextView)pal.findViewById(R.id.txvNimi)).setText(tiedot.get("nimi"));
         ((TextView)pal.findViewById(R.id.txvName)).setText(tiedot.get("name"));
         ((TextView)pal.findViewById(R.id.txvMoolimassa)).setText(tiedot.get("moolimassa"));
-        ((TextView)pal.findViewById(R.id.txvDensity)).setText(tiedot.get("tiheys"));
-        ((TextView)pal.findViewById(R.id.txvSp)).setText(tiedot.get("sulamispiste"));
-        ((TextView)pal.findViewById(R.id.txvKp)).setText(tiedot.get("kiehumispiste"));
+
         phView.setText(df2.format(calculatePh(1))+"");
         LinearLayout mainLay = (LinearLayout)pal.findViewById(R.id.lnMain);
         try {
-            ((ImageView)pal.findViewById(R.id.imgKuva)).setImageResource(R.drawable.class.getField(tiedot.get("nimi")).getInt(null));
+            //kuvan nimi tulee olla nimi kenttän arvo seuraavin muutoksin. välilyönti on korvattu _ merkillä ja prosentti merkki poistettu
+            ((ImageView)pal.findViewById(R.id.imgKuva)).setImageResource(R.drawable.class.getField(tiedot.get("nimi").replaceAll(" ","_").replaceAll("%","")).getInt(null));
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (NoSuchFieldException e) {
@@ -129,10 +129,43 @@ public class happoTulos extends Tulos {
             }
         });
 
+        //käsitellään tiheys
+        String dens = tiedot.get("tiheys");
+        if(dens.compareTo("-1") == 0)
+        {
+            dens = "Ei määritelty";
+
+            ((ViewGroup)pal.findViewById(R.id.mwDenUnit).getParent()).removeView(pal.findViewById(R.id.mwDenUnit));
+
+        }
+        ((TextView)pal.findViewById(R.id.txvDensity)).setText(dens);
+
+        //käsitellään sulamis ja kiehumis pisteet
+        String mp = tiedot.get("sulamispiste");
+        String bp = tiedot.get("kiehumispiste");
+        if(mp.compareTo("-1") == 0)
+        {
+            mp = "Ei määritelty"; //Onko olemassa tilanne että aine hajoaa ennenkuin se sulaa?
+            ((ViewGroup)pal.findViewById(R.id.mwSpUnit).getParent()).removeView(pal.findViewById(R.id.mwSpUnit));
+        }
+        if(bp.compareTo("-1") == 0)
+        {
+            if(mp.compareTo("Ei määritelty") == 0) {
+                bp = "Ei määritelty";
+            }else{
+                bp = "Hajoaa";
+            }
+            ((ViewGroup)pal.findViewById(R.id.mwKpUnit).getParent()).removeView(pal.findViewById(R.id.mwKpUnit));
+        }
+
+        ((TextView)pal.findViewById(R.id.txvSp)).setText(mp);
+        ((TextView)pal.findViewById(R.id.txvKp)).setText(bp);
+
         return pal;
     }
 
-    //lasketaan tämän hapon pH annetulla konsentraatiolla. consent, eli hapon konsentraatio tulee antaa yksikössä mol/l. ATM käsittelee kaikkia happoja yhden arvoisina!
+    //lasketaan tämän hapon pH annetulla konsentraatiolla. consent, eli hapon konsentraatio tulee antaa yksikössä mol/l.
+    //Tämä pätee niin mono- kuin polyproottisiin happoihin. Polyproottisissa hapoissa ensimmäinen dissosiaatio dominoi.
     public double calculatePh (float consent)
     {
         if (consent == 0) return -1;
