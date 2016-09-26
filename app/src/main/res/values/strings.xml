@@ -19,5 +19,25 @@
     <string name="search">Search</string>
     <string name="check_input">Check the input!</string>
     <string name="back">Back</string>
+    <string name="naming">Naming</string>
+    <string name="hapetus_luvut">Oxidation number</string>
+    <string name="elektronega">Elektronegativity:</string>
+    <string name="olomuoto">State of matter</string>
+    <string name="sulamis">Melting point</string>
+    <string name="kiehumis">boiling point</string>
+    <string name="tiheys">Density</string>
+    <string name="ominaislampo">Specific heat capasity</string>
+    <string name="lammonjohta">Thermal conductivity</string>
+    <string name="teoreettinen">Theoretical</string>
+    <string name="kokeellinen">Experimental</string>
+    <string name="ionisaatioene">Ionization energies</string>
+    <string name="yleisimmat_isotoopit">Common isotopes</string>
+    <string name="IR_absor">IR absorption frequensies</string>
+    <string name="konsentraatio">Concentration</string>
+    <string name="ph_konsentraatio">pH in concentration</string>
+    <string name="happovakiot">Acid constants</string>
+    <string name="puoliintumisaika">Period of decay</string>
+    <string name="suhteellinenosuus">Relative portion in nature</string>
+    <string name="hajoamistavat">Ways of decay</string>
 
 </resources>

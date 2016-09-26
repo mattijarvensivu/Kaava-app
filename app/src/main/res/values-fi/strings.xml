@@ -18,4 +18,25 @@
     <string name="title_activity_physics">Fysiikka Activity</string>
     <string name="check_input">Tarkasta syöte</string>
     <string name="back">Takaisin</string>
+    <string name="naming">Nimeäminen</string>
+    <string name="IR_absor">IR absorptio taajuudet:</string>
+    <string name="elektronega">Elektronegatiivisuus</string>
+    <string name="hajoamistavat">Hajoamistavat</string>
+    <string name="hapetus_luvut">Hapetusluvut</string>
+    <string name="happovakiot">Happovakiot</string>
+    <string name="ionisaatioene">Ionisaatioenergiat</string>
+    <string name="kiehumis">Kiehumispiste</string>
+    <string name="kokeellinen">Kokeellinen</string>
+    <string name="konsentraatio">Konsentraatio</string>
+    <string name="lammonjohta">Lämmönjohtavuus</string>
+    <string name="olomuoto">Olomuoto</string>
+    <string name="ominaislampo">Ominaislämpö</string>
+    <string name="ph_konsentraatio">pH konsentraatio</string>
+    <string name="puoliintumisaika">Puoliintumisaika</string>
+    <string name="suhteellinenosuus">Suhteellinen osuus luonnossa</string>
+    <string name="sulamis">Sulamispiste</string>
+    <string name="teoreettinen">Teoreettinen</string>
+    <string name="tiheys">Tiheys</string>
+    <string name="yleisimmat_isotoopit">Yleisimmät isotoopit:</string>
+
 </resources>
