@@ -32,7 +32,7 @@
     <string name="kokeellinen">Experimental</string>
     <string name="ionisaatioene">Ionization energies</string>
     <string name="yleisimmat_isotoopit">Common isotopes</string>
-    <string name="IR_absor">IR absorption frequensies</string>
+    <string name="IR_absor">IR absorption frequencies</string>
     <string name="konsentraatio">Concentration</string>
     <string name="ph_konsentraatio">pH in concentration</string>
     <string name="happovakiot">Acid constants</string>
