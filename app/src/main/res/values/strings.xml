@@ -8,4 +8,16 @@
     <string name="title_activity_math">MathActivity</string>
     <string name="title_activity_physics">PhysicsActivity</string>
     <string name="title_activity_chemistry_actitvity">ChemistryActitvity</string>
+    <string name="front_page">Front Page</string>
+    <string name="math_string">Math</string>
+    <string name="chemistry_string">Chemistry</string>
+    <string name="physics_string">Physics</string>
+    <string name="chemistry_elements">Elements</string>
+    <string name="chemistry_acids">Acids</string>
+    <string name="chemistry_functional">Functional groups</string>
+    <string name="formulas">Formulas</string>
+    <string name="search">Search</string>
+    <string name="check_input">Check the input!</string>
+    <string name="back">Back</string>
+
 </resources>

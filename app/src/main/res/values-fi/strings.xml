@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Kaavojapp</string>
+    <string name="action_settings">Valikko</string>
+    <string name="chemistry_acids">Hapot</string>
+    <string name="chemistry_elements">Alkuaineet</string>
+    <string name="chemistry_functional">Funktionaalisetryhmät</string>
+    <string name="chemistry_string">Kemia</string>
+    <string name="formulas">Kaavat</string>
+    <string name="front_page">Etusivu</string>
+    <string name="math_string">Matikka</string>
+    <string name="navigation_drawer_close">Sulje navigointi valikko</string>
+    <string name="navigation_drawer_open">Avaa navigointi valikko</string>
+    <string name="physics_string">Fysiikka</string>
+    <string name="search">Hae</string>
+    <string name="title_activity_chemistry_actitvity">Kemia Activity</string>
+    <string name="title_activity_math">Matikka Activity</string>
+    <string name="title_activity_physics">Fysiikka Activity</string>
+    <string name="check_input">Tarkasta syöte</string>
+    <string name="back">Takaisin</string>
+</resources>
