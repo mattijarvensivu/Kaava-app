@@ -100,12 +100,12 @@ public class MainActivity extends AppCompatActivity
             Intent myIntent = new Intent(this, ChemistryActivity.class);
             startActivity(myIntent);
 
-        } else if (id == R.id.nav_manage) {
-            Toast.makeText(this, "Voidaan pistää meneen jonnekkin", Toast.LENGTH_LONG).show();
+        //} else if (id == R.id.nav_manage) {
+       //     Toast.makeText(this, "Voidaan pistää meneen jonnekkin", Toast.LENGTH_LONG).show();
 
-        } else if (id == R.id.nav_share) {
-            Toast.makeText(this, "Voidaan pistää meneen jonnekkin 2", Toast.LENGTH_LONG).show();
-        } else if (id == R.id.nav_send) {
+       // } else if (id == R.id.nav_share) {
+        //    Toast.makeText(this, "Voidaan pistää meneen jonnekkin 2", Toast.LENGTH_LONG).show();
+       // } else if (id == R.id.nav_send) {
 
             SqlHandler handler = new SqlHandler(getApplicationContext().getApplicationContext(), "", null, 1, true);
             //http://blog.reigndesign.com/blog/using-your-own-sqlite-database-in-android-applications/ alkaa

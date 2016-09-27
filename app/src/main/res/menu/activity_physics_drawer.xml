@@ -5,26 +5,26 @@
         <item
             android:id="@+id/nav_camera"
             android:icon="@drawable/mainmenu"
-            android:title="Front page" />
+            android:title="@string/front_page" />
         <item
             android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Math" />
+            android:icon="@drawable/matikkaicon"
+            android:title="@string/math_string" />
         <item
             android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Chemistry" />
+            android:icon="@drawable/chemistryicon"
+            android:title="@string/chemistry_string" />
 
     </group>
 
-    <item android:title="Väliotsikko">
+    <item android:title="@string/aiheet">
         <menu>
             <item
                 android:id="@+id/termodynamiikka"
-                android:title="Termodynamiikka" />
+                android:title="@string/termodynamiikka" />
             <item
                 android:id="@+id/mekaniikka"
-                android:title="Mekaniikka" />
+                android:title="@string/mekaniikka" />
         </menu>
     </item>
 

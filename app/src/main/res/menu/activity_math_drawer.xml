@@ -5,35 +5,35 @@
         <item
             android:id="@+id/nav_camera"
             android:icon="@drawable/mainmenu"
-            android:title="Front page" />
+            android:title="@string/front_page" />
         <item
             android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Physics" />
+            android:icon="@drawable/physicsicon"
+            android:title="@string/physics_string" />
         <item
             android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Chemistry" />
+            android:icon="@drawable/chemistryicon"
+            android:title="@string/chemistry_string" />
 
     </group>
 
-    <item android:title="Aiheet">
+    <item android:title="@string/aiheet">
         <menu>
 
             <item
                 android:id="@+id/algebra"
-                android:title="Algebra" />
+                android:title="@string/algebra" />
 
             <item
                 android:id="@+id/trigonometria"
-                android:title="Trigonometria" />
+                android:title="@string/trigonometria" />
             <item
                 android:id="@+id/derivointi"
-                android:title="Derivointi" />
+                android:title="@string/derivointi" />
 
             <item
                 android:id="@+id/integrointi"
-                android:title="Integrointi" />
+                android:title="@string/integrointi" />
 
         </menu>
     </item>

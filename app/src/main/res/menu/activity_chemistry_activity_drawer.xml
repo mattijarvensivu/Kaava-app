@@ -5,35 +5,35 @@
         <item
             android:id="@+id/nav_camera"
             android:icon="@drawable/mainmenu"
-            android:title="Front page" />
+            android:title="@string/front_page" />
         <item
             android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Math" />
+            android:icon="@drawable/matikkaicon"
+            android:title="@string/math_string" />
         <item
             android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Physics" />
+            android:icon="@drawable/physicsicon"
+            android:title="@string/physics_string" />
     </group>
 
 
-    <item android:title="Aiheet">
+    <item android:title="@string/aiheet">
         <menu>
             <item
                 android:id="@+id/Alkuaineet"
-                android:title="Alkuaineet" />
+                android:title="@string/chemistry_elements" />
             <item
                 android:id="@+id/FnkRyhma"
-                android:title="Funktionaalisetryhmät" />
+                android:title="@string/chemistry_functional" />
             <item
                 android:id="@+id/Hapot"
-                android:title="Hapot" />
+                android:title="@string/chemistry_acids" />
             <item
                 android:id="@+id/Kaavat"
-                android:title="Kaavat" />
+                android:title="@string/formulas" />
             <item
                 android:id="@+id/Vakiot"
-                android:title="Vakiot" />
+                android:title="@string/vakiot" />
         </menu>
     </item>
 

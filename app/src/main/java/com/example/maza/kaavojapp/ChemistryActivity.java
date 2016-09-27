@@ -139,7 +139,7 @@ public class ChemistryActivity extends AppCompatActivity
             Intent myIntent = new Intent(this, PhysicsActivity.class);
             startActivity(myIntent);
             finish();
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_camera) {
 
 
 

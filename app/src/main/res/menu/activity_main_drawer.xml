@@ -4,33 +4,26 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Math" />
+            android:icon="@drawable/matikkaicon"
+            android:title="@string/math_string" />
         <item
             android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Physics" />
+            android:icon="@drawable/physicsicon"
+            android:title="@string/physics_string" />
         <item
             android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Chemistry" />
+            android:icon="@drawable/chemistryicon"
+            android:title="@string/chemistry_string" />
         <item
-            android:id="@+id/nav_manage"
+            android:id="@+id/nav_share"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Jotain" />
+            android:title="@string/options" />
+
     </group>
 
-    <item android:title="Väliotsikko">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Jotain 2" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Jotain 3" />
-        </menu>
-    </item>
+
+
+
+
 
 </menu>
