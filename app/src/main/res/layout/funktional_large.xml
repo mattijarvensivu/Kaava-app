@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:textColor="#000000"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Nimeäminen: "/>
+            android:text="@string/naming"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:textColor="#000000"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="IR absorptio taajuudet:"
+        android:text="@string/IR_absor"
         />
 
     <LinearLayout

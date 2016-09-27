@@ -137,20 +137,20 @@ public class MathActivity extends AppCompatActivity
             startActivity(myIntent);
             finish();
         } else if (id == R.id.algebra) {
-            ((TextView)findViewById(R.id.txvOtsikko)).setText("Algebra");
+            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.algebra));
             listOfReqTags = new String[]{"algebra"};
 
 
         } else if (id == R.id.trigonometria) {
-            ((TextView)findViewById(R.id.txvOtsikko)).setText("Trigonometria");
+            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.trigonometria));
             listOfReqTags = new String[]{"trigonometria"};
 
         } else if (id == R.id.derivointi) {
-            ((TextView)findViewById(R.id.txvOtsikko)).setText("Derivointi");
+            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.derivointi));
             listOfReqTags = new String[]{"derivointi"};
 
         }else if (id == R.id.integrointi) {
-            ((TextView)findViewById(R.id.txvOtsikko)).setText("Integrointi");
+            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.integrointi));
             listOfReqTags = new String[]{"integrointi"};
 
         }
@@ -172,7 +172,7 @@ public class MathActivity extends AppCompatActivity
         String hakuparametri = haku.getText().toString();
 
         if (hakuparametri.matches("")) {
-            Toast.makeText(this, "Check the input!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.check_input), Toast.LENGTH_SHORT).show();
             return;
         }
 

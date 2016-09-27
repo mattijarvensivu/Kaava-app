@@ -38,5 +38,14 @@
     <string name="teoreettinen">Teoreettinen</string>
     <string name="tiheys">Tiheys</string>
     <string name="yleisimmat_isotoopit">Yleisimmät isotoopit:</string>
-
+    <string name="moolimassa">Moolimassa: </string>
+    <string name="ph1mliuos">pH 1M liuoksessa: </string>
+    <string name="symboli">Symbooli</string>
+    <string name="vakiot">Vakiot</string>
+    <string name="hapot">Hapot</string>
+    <string name="algebra">Algebra</string>
+    <string name="trigonometria">Trigonometria</string>
+    <string name="integrointi">Integrointi</string>
+    <string name="termodynamiikka">Termodynamiikka</string>
+    <string name="mekaniikka">Mekaniikka</string>
 </resources>

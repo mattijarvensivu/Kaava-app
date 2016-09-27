@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#000000"
-        android:text="Moolimassa: "/>
+        android:text="@string/moolimassa"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="#000000"
-            android:text="Tiheys: "/>
+            android:text="@string/tiheys"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -87,7 +87,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="#000000"
-            android:text="Konsentraatio: "/>
+            android:text="@string/konsentraatio"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -120,7 +120,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="#000000"
-            android:text="pH konsentraatiossa: "/>
+            android:text="@string/ph_konsentraatio"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -139,7 +139,7 @@
             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="#000000"
-            android:text="Sulamis piste: "/>
+            android:text="@string/sulamis"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -164,7 +164,7 @@
             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="#000000"
-            android:text="Kiehumis piste: "/>
+            android:text="@string/kiehumis"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -185,7 +185,7 @@
         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#000000"
-        android:text="Happo vakiot: "/>
+        android:text="@string/happovakiot"/>
 
 
 </LinearLayout>

@@ -136,12 +136,12 @@ public class PhysicsActivity extends AppCompatActivity
             startActivity(myIntent);
             finish();
         } else if (id == R.id.termodynamiikka) {
-            ((TextView)findViewById(R.id.txvOtsikko)).setText("Termodynamiikka");
+            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.termodynamiikka));
             listOfReqTags = new String[]{"termodynamiikka"};
 
 
         } else if (id == R.id.mekaniikka) {
-            ((TextView)findViewById(R.id.txvOtsikko)).setText("Mekaniikka");
+            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.mekaniikka));
             listOfReqTags = new String[]{"mekaniikka"};
 
 
@@ -161,7 +161,7 @@ public class PhysicsActivity extends AppCompatActivity
         String hakuparametri = haku.getText().toString();
 
         if (hakuparametri.matches("")) {
-            Toast.makeText(this, "Check the input!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.check_input), Toast.LENGTH_SHORT).show();
             return;
         }
         String[] listOfTagTables = new String[]{"Kaava","Vakio"};

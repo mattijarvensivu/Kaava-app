@@ -146,28 +146,28 @@ public class ChemistryActivity extends AppCompatActivity
         } else if (id == R.id.Alkuaineet) {
             listOfTagTables = new String[]{"Alkuaineet"};
             listOfTables = new String[]{"Alkuaineet"};
-            ((TextView)findViewById(R.id.txvOtsikko)).setText("Alkuaineet");
+            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.chemistry_elements));
 
 
         } else if (id == R.id.FnkRyhma) {
             listOfTagTables = new String[]{"Funktionaalinenryhma"};
             listOfTables = new String[]{"Funktionaalinenryhma"};
-            ((TextView)findViewById(R.id.txvOtsikko)).setText("Funktionaalisetryhmät");
+            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.chemistry_functional));
 
         }else if (id == R.id.Kaavat) {
             listOfTagTables = new String[]{"Kaava"};
             listOfTables = new String[]{"Kaava"};
-            ((TextView)findViewById(R.id.txvOtsikko)).setText("Kaavat");
+            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.formulas));
 
         }else if (id == R.id.Vakiot) {
             listOfTagTables = new String[]{"Vakio"};
             listOfTables = new String[]{"Vakio"};
-            ((TextView)findViewById(R.id.txvOtsikko)).setText("Vakiot");
+            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.vakiot));
 
         }else if (id == R.id.Hapot) {
             listOfTagTables = new String[]{};
             listOfTables = new String[]{"Hapot"};
-            ((TextView)findViewById(R.id.txvOtsikko)).setText("Hapot");
+            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.hapot));
 
         }
         ((LinearLayout) findViewById(R.id.lnlContainer)).removeAllViews();
@@ -182,7 +182,7 @@ public class ChemistryActivity extends AppCompatActivity
         EditText haku = (EditText) findViewById(R.id.Chemistrysearch);
         String hakuparametri = haku.getText().toString();
         if (hakuparametri.matches("")) {
-            Toast.makeText(this, "Check the input!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.check_input), Toast.LENGTH_SHORT).show();
             return;
         }
 

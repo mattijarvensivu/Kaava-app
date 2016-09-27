@@ -39,5 +39,15 @@
     <string name="puoliintumisaika">Period of decay</string>
     <string name="suhteellinenosuus">Relative portion in nature</string>
     <string name="hajoamistavat">Ways of decay</string>
-
+    <string name="moolimassa"> Molar mass</string>
+    <string name="ph1mliuos">at 1M solution: </string>
+    <string name="symboli">Symbol</string>
+    <string name="vakiot">Constants</string>
+    <string name="hapot">Acids</string>
+    <string name="algebra">Algebra</string>
+    <string name="trigonometria">Trigonometry</string>
+    <string name="derivointi">Derivation</string>
+    <string name="integrointi">Integration</string>
+    <string name="termodynamiikka">Thermodynamics</string>
+    <string name="mekaniikka">Mechanics</string>
 </resources>
