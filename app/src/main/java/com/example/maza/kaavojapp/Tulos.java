@@ -40,11 +40,11 @@ public class Tulos {
                 return new happoTulos(values);
             case 8:
                 return new isotooppiTulos(values);
-            case 3:
-                return new kaavaTulos(values); //kaava
             case 4:
                 if(values.get("_ryhmaid") != null)
                     return new funktionaalinenTulos(values); //funktionaalinen ryhmä
+                if(values.get("_kaavaid") != null)
+                    return new kaavaTulos(values); //kaava
                 return new muuttujaTulos(values);//muuttuja
 
             case 5:

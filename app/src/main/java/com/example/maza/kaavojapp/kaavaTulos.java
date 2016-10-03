@@ -1,5 +1,6 @@
 package com.example.maza.kaavojapp;
 
+import android.os.Debug;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +41,7 @@ public class kaavaTulos extends Tulos{
 
     public View getSmallView (LayoutInflater infl, ViewGroup paren)
     {
+        Log.d("minun","Piirretään " + tiedot.get("_kaavaid") + " small viewiä");
         View pal = infl.inflate(layoutSmall, paren, false);
 
         //asetetaan tiedot paikoilleen
@@ -78,6 +80,16 @@ public class kaavaTulos extends Tulos{
             View tmp2 = vakiot.get(j).getSmallView(infl, VakioLL);
             VakioLL.addView(tmp2);
 
+        }
+
+        //asetetaan kuva
+        try {
+            if(tiedot.get("kuva")!= null)
+            ((ImageView)pal.findViewById(R.id.imgKuva)).setImageResource(R.drawable.class.getField(tiedot.get("kuva")).getInt(null));
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
         }
 
 

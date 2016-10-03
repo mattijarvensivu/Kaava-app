@@ -19,6 +19,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -40,6 +41,8 @@ public class MathActivity extends AppCompatActivity
     private ListView listView;
     //idea on että aihealueen valinta perustuu tägeihin. Koska käytännössä kaikki matikan tieto on kaava tai vakio taulussa, ei voida käyttää samaa ratkaisua kuin kemiassa. Tämä systeemi joudutaan ehkä lisäämään myös kemian osalle
     String[] listOfReqTags = new String[]{};
+    String[] listOfTagTables = new String[]{"Kaava","Vakio"};
+    String[] listOfTables = new String[]{"Kaava","Muuttuja","Vakio"};
 
 
     @Override
@@ -66,7 +69,18 @@ public class MathActivity extends AppCompatActivity
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        {
+            @Override
+            //muutetaan standardi metodia niin että se sulkee näppäimistön kun sivupalkki avataan
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(drawerView.getWindowToken(), 0);
+
+            }
+        };
+
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
@@ -144,6 +158,10 @@ public class MathActivity extends AppCompatActivity
         } else if (id == R.id.trigonometria) {
             ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.trigonometria));
             listOfReqTags = new String[]{"trigonometria"};
+            //Testiä: näytetään kaikki trigonometrian kaavat!
+            //toiminnallisuus voisi olla tämä, toteutus joku parempi
+            ((EditText)findViewById(R.id.Mathsearch)).setText("trigonometria");
+
 
         } else if (id == R.id.derivointi) {
             ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.derivointi));
@@ -156,17 +174,21 @@ public class MathActivity extends AppCompatActivity
         }
 
         ((LinearLayout) findViewById(R.id.lnlContainer)).removeAllViews();
-        ((TextView)findViewById(R.id.Mathsearch)).setText("");
+        //((TextView)findViewById(R.id.Mathsearch)).setText("");
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+
+        //testausta
+        HaeMath(null); //nyt toastaa jos kenttä on tyhjä. Tämähän pitäisi sitäpaitsi ajaa vain kun vaihdetaan kategoriaa. Jos pidetään tämä ratkaisu malli, voitaisiin nämä kaksi riviä laittaa iffin sisään
+        ((EditText)findViewById(R.id.Mathsearch)).setText("");
+
+
         return true;
     }
 
     public void HaeMath(View v) {
         Log.w("myApp", " Matikka Nappia painettu");
-        String[] listOfTagTables = new String[]{"Kaava","Vakio"};
-        String[] listOfTables = new String[]{"Kaava","Muuttuja","Vakio"};
 
         EditText haku = (EditText) findViewById(R.id.Mathsearch);
         String hakuparametri = haku.getText().toString();
@@ -184,7 +206,8 @@ public class MathActivity extends AppCompatActivity
 
             // Tarkistus mistä taulusta haetaan täytyy tehä
             ArrayList<Tulos> tulos = suoritaHaku(hakuparametri,listOfTagTables,true);
-            if(tulos.size()==0 && hakuparametri.length()!=0) {
+            //haku ei ilmeisesti tapahtunut tägiä käyttäen. Yritetään hakea kentän perusteella
+            if(tulos.size()==0 && hakuparametri.length()!=0) { //onko tuon haku parametrin tarkistus turha? eikös 0 pituiset kosahda tuohon missä toastataan check input?
                 tulos = suoritaHaku(hakuparametri, listOfTables, false);
             }
             //Jos haku tyhjä haetaan osahaulla
