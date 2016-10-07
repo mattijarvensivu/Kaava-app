@@ -323,6 +323,7 @@ public class MathActivity extends AppCompatActivity
 
         }
         //asetetaan jokaiselle tulokselle suosikkiStatuksen muutos listeneri.
+        ArrayList<Tulos> uusi = new ArrayList<>();
         for (Tulos t : tulos) {
             t.setOnSuosikkiToggleListener(new suosikkiToggleListener() {
                 @Override
@@ -332,11 +333,18 @@ public class MathActivity extends AppCompatActivity
                     hand.muutaSuosikkiStatus(t);
                 }
             });
+            if(t.isSuosikki)
+            {
+                //tulos on suosikki. asetetaan kärkeen
+                uusi.add(0,t);
+            }else {
+                uusi.add(t);
+            }
 
         }
 
 
-        return tulos;
+        return uusi;
 
     }
 
