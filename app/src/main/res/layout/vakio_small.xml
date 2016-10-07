@@ -3,35 +3,47 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/txvSymbol"
-        android:text="A"
-        android:textSize="15dp"
-        android:textColor="#000000"
-        android:layout_marginRight="7dp"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/txvKuvaus"
-        android:text="Aaaa"
-        android:textSize="15dp"
-        android:textColor="#000000"
-        android:layout_marginRight="7dp"/>
+        android:orientation="horizontal"
+        android:layout_weight="1">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txvSymbol"
+            android:text="A"
+            android:textSize="15dp"
+            android:textColor="#000000"
+            android:layout_marginRight="7dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txvKuvaus"
+            android:text="Aaaa"
+            android:textSize="15dp"
+            android:textColor="#000000"
+            android:layout_marginRight="7dp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/txvArvo"
-        android:text="Aaaa"
-        android:textSize="15dp"
-        android:textColor="#000000"
-        android:layout_marginRight="7dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txvArvo"
+            android:text="Aaaa"
+            android:textSize="15dp"
+            android:textColor="#000000"
+            android:layout_marginRight="7dp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/mvYksikko"/>
+    </LinearLayout>
 
     <ImageView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/mvYksikko"/>
+        android:id="@+id/imgSuosikki"
+        android:layout_weight="9"/>
 
 </LinearLayout>

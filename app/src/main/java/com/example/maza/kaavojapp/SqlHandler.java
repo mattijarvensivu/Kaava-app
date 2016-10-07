@@ -11,9 +11,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.sql.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by janne on 3.6.2016.
@@ -117,6 +120,46 @@ public class SqlHandler extends SQLiteOpenHelper {
      * This is done by transfering bytestream.
      * */
     private void copyDataBase() throws IOException{
+        boolean writeSuosikit = false;
+        HashMap<String, ArrayList<Integer>> suosikit = new HashMap<>();
+        ArrayList<String> linkit = new ArrayList<>(); //ei periaatteessa tarvita mutta helpompi kirjoittaa
+        if(checkDataBase()) { //tarksitetaan onko tietokanta olemassa.
+            //tietokanta on olemassa
+            writeSuosikit = true;
+            //otetaan suosikki asetukset talteen.
+            //haetaan defaultFieldsistä kaikki taulut joilla on tägitaulu, ja sen linkkitaulu
+            SQLiteDatabase d = getReadableDatabase();
+            String querryDefault = "SELECT _tname,linkkiTaulu,tagiTaulu FROM defaultFields WHERE linkkiTaulu NOT NULL";
+            Cursor curDef = d.rawQuery(querryDefault, null);
+            if (curDef.moveToFirst()) {
+                do {
+                    String linkki = curDef.getString(1);
+                    suosikit.put(linkki, new ArrayList<Integer>());
+                    //haetaan tätä linkkitaulua vastaavasta tägitaulusta suosikki tägin id
+                    String querrySuos = "SELECT _tagid FROM " + curDef.getString(2) + " WHERE nimi LIKE \"suosikki\"";
+                    Cursor curS = d.rawQuery(querrySuos, null);
+                    int sId = -1;
+                    if (curS.moveToFirst()) {
+                        do {
+                            sId = curS.getInt(0);
+                            suosikit.get(linkki).add(sId); //tallennetaan id listan ensimmäiseen alkioon. Tämä muistettava hashmappia lukiessa!
+                            linkit.add(linkki);
+                        } while (curS.moveToNext());
+                    }
+                    //etsitään kaikki ne idt joilla on suosikki tägi
+                    String querryIdt = "SELECT " + findPrimaryKeyName(curDef.getString(0)) + " FROM " + linkki + " WHERE _tagid = " + sId;
+                    Cursor curIdt = d.rawQuery(querryIdt, null);
+                    if (curIdt.moveToFirst()) {
+                        //luetaan idt muistiin
+                        do {
+                            suosikit.get(linkki).add(curIdt.getInt(0));
+                        } while (curIdt.moveToNext());
+                    }
+
+                } while (curDef.moveToNext());
+            }
+            d.close(); //tarvitaanko?
+        }
 
         Log.d("minun","creating database");
         //Open your local db as the input stream
@@ -132,7 +175,6 @@ public class SqlHandler extends SQLiteOpenHelper {
         byte[] buffer = new byte[1024];
         int length;
         while ((length = myInput.read(buffer))>0){
-            Log.d("minun","writing");
             myOutput.write(buffer, 0, length);
         }
 
@@ -141,13 +183,26 @@ public class SqlHandler extends SQLiteOpenHelper {
         myOutput.close();
         myInput.close();
 
+        if(writeSuosikit) { //Suosikit otettiin ylös. Viedään ne takaisin päivitettyyn tietokantaan
+            //Nyt pitää kirjoittaa suosikit takaisin omiin linkki tauluihinsa.
+            SQLiteDatabase dn = getWritableDatabase();
+            for (int i = 0; i < linkit.size(); i++) {
+                for (int j = 1; j < suosikit.get(linkit.get(i)).size(); j++) {
+                    String querry = "INSERT INTO " + linkit.get(i) + " VALUES (" + suosikit.get(linkit.get(i)).get(j) + " , " + suosikit.get(linkit.get(i)).get(0) + ")";
+                    dn.execSQL(querry);
+                }
+            }
+            dn.close();
+        }
+
+
     }
 
     public void openDataBase() throws SQLException {
 
         //Open the database
         String myPath = DB_PATH + DB_NAME;
-        myDataBase = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
+        myDataBase = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
 
     }
     //http://blog.reigndesign.com/blog/using-your-own-sqlite-database-in-android-applications/ loppuu
@@ -164,144 +219,31 @@ public class SqlHandler extends SQLiteOpenHelper {
     public ArrayList<Tulos> getValue (String tableName, HashMap<String,String> searchParameters, ArrayList<HashMap<String, String>> tagit) {
         ArrayList<Tulos> pal = new ArrayList<>();
         ArrayList<String[]> tableS = getStructure(tableName);
-//jos table muuttuja ni hakee ne. Pitää käyttää eri cursoria ni pitää olla tässä. pitää olla if else tai käyttää myös toista cursoria ja hakee kaikki vaikkei pitäis
-        //jos tulee useampia moni-moneen ja haluaa yhellä kutsulla ni if elseen vaan putkeen.
-        if(tableName.compareTo("Muuttuja")==0) {
-
-            Cursor cura = getMuuttujacursor(searchParameters);
-            tableS = getStructure(tableName);
-            try {
-                if (cura.moveToFirst()) {
-                    do {
-                        HashMap<String, String> tmp = new HashMap<String, String>();
-                        for (int i = 0; i < tableS.size(); i++) {
-
-                            tmp.put(tableS.get(i)[0], cura.getString(i));
-                        }
-                        pal.add(Tulos.getTulos(tmp));
-                    } while (cura.moveToNext());
-
-                }
-            } finally {
-
-            }
-        }else
-        if (tableName.compareTo("Vakio") == 0) {
-            Cursor cura = getVakiocursor(searchParameters);
-            tableS = getStructure(tableName);
-            try {
-                if (cura.moveToFirst()) {
-                    do {
-                        HashMap<String, String> tmp = new HashMap<String, String>();
-                        for (int i = 0; i < tableS.size(); i++) {
-
-                            tmp.put(tableS.get(i)[0], cura.getString(i));
-                        }
-                        pal.add(Tulos.getTulos(tmp));
-                    } while (cura.moveToNext());
-
-                }
-            } finally {
-
-            }
-        } else{
 
 
-            Cursor cur = getCursor(tableName, searchParameters, tagit);
+        Cursor cur = getCursor(tableName, searchParameters, tagit);
 
-            //käsitellään saatu data
-            try {
-                if (cur.moveToFirst()) {
-                    do {
-                        HashMap<String, String> tmp = new HashMap<String, String>();
-                        for (int i = 0; i < tableS.size(); i++) {
+        //käsitellään saatu data
+        try {
+            if (cur.moveToFirst()) {
+                //etsitään tämän taulun avain kenttä
+                HashMap<String,String> idTmp = new HashMap<>();
+                idTmp.put("_tname",tableName);
+                Cursor idCur = getCursor("defaultFields",idTmp,null);
+                do {
+                    HashMap<String, String> tmp = new HashMap<String, String>();
+                    for (int i = 0; i < tableS.size(); i++) {
 
-                            tmp.put(tableS.get(i)[0], cur.getString(i));
-                        }
-                        pal.add(Tulos.getTulos(tmp));
-                    } while (cur.moveToNext());
-
-                }
-            } finally {
-
-            }
-
-            //tarkistetaan että oliko haettu arvo alkuaineet taulussa. jos oli niin haetaan jokaiselle tulokselle isotoopit.
-
-
-            if(tableName.compareTo("Kaava")==0)
-            {
-
-                for(int k = 0; k< pal.size();k++)
-                { //haetaan Kaavan muuttujat.
-                    String kaavaid = pal.get(k).getValue("_kaavaid");
-                    HashMap<String, String> tmp = new HashMap<>();
-                    HashMap<String, String> tmp2 = new HashMap<>();
-                    tmp.put("_kaavaid", kaavaid);
-                    tmp2.put("_kaavaid", kaavaid);
-                    Log.d("Muuttujaids", kaavaid);
-                    ((kaavaTulos)pal.get(k)).addVakiot(getValue("Vakio",tmp2,new ArrayList<HashMap<String, String>>()));
-                    ((kaavaTulos) pal.get(k)).addMuuttujat(getValue("Muuttuja", tmp, new ArrayList<HashMap<String, String>>()));
-                }
-            }
-
-
-            if(tableName.compareTo("Alkuaineet") == 0)
-            {
-                for(int i = 0; i < pal.size(); i++)
-                {
-                    //haetaan alkuaineen isotoopit.
-                    HashMap<String,String> tmp = new HashMap<>();
-                    tmp.put("_alkuaineid",pal.get(i).getValue("_id"));
-                    ((alkuaineTulos)pal.get(i)).addIsotoopit(getValue("Isotoopit",tmp, new ArrayList<HashMap<String, String>>()));
-                }
-            }
-
-            Log.d("minun","loytyi " + pal.size() + " osumaa");
-
-            //tarkistetaan oliko haku isotppooi taulusta. jos oli niin haetaan isotooppeja vastaavat symbolit.
-            if(tableName.compareTo("Isotoopit") == 0) {
-                String symbol = "";
-                String prevId = "-1";
-                for (int i = 0; i < pal.size(); i++) {
-                    //tarkistetaan oliko edellinen isotooppi samasta perus alkuaineesta. jos oli niin ei tarvita uutta hakua
-                    if (pal.get(i).getValue("_alkuaineid").compareTo(prevId) != 0) {
-                        //Edellinen haettu symboli oli eri id:lle, Joudutaan tekemään haku.
-                        HashMap<String, String> tmp = new HashMap<>();
-                        prevId = pal.get(i).getValue("_alkuaineid");
-                        tmp.put("_id", prevId);
-                        cur = getCursor("alkuaineet", tmp, new ArrayList<HashMap<String, String>>()); //tehtävä näin. getValue kutsu aiheuttaisi loputtoman loopin
-                        try {
-                            if (cur.moveToFirst()) {
-                                do {
-                                    symbol = cur.getString(1);
-                                } while (cur.moveToNext());
-
-                            }
-                        } finally {
-
-                        }
+                        tmp.put(tableS.get(i)[0], cur.getString(i));
                     }
-                    ((isotooppiTulos) pal.get(i)).setSymbol(symbol);
-                }
-            }
+                    pal.add(Tulos.getTulos(tmp));
+                } while (cur.moveToNext());
 
-            if(tableName.compareTo("Funktionaalinenryhma") == 0)
-            {
-                //haetaan piikit.
-                for(Tulos t : pal)
-                {
-                    HashMap<String,String> piikkiValues = new HashMap<>();
-                    piikkiValues.put("_ryhmaid",t.getValue("_ryhmaid"));
-                    ((funktionaalinenTulos)t).setPiikir(getValue("irpiikit",piikkiValues,null));
-                }
             }
+        } finally {
+
         }
-
-
-
-
-
+        gatherAditionalData(pal);
 
 
         return pal;
@@ -320,6 +262,10 @@ public class SqlHandler extends SQLiteOpenHelper {
         try {
             if (cur.moveToFirst()) {
                 do {
+                    HashMap<String,String> idTmp = new HashMap<>();
+                    idTmp.put("_tname",tableName);
+                    Cursor idCur = getCursor("defaultFields",idTmp,null);
+                    String keyField = null;
                     HashMap<String, String> tmp = new HashMap<String, String>();
                     for (int i = 0; i < tableS.size(); i++) {
 
@@ -332,74 +278,7 @@ public class SqlHandler extends SQLiteOpenHelper {
         } finally {
 
         }
-        if(tableName.compareTo("Kaava")==0)
-        {
-
-            for(int k = 0; k< pal.size();k++)
-            { //haetaan Kaavan muuttujat.
-                String kaavaid = pal.get(k).getValue("_kaavaid");
-                HashMap<String, String> tmp = new HashMap<>();
-                HashMap<String, String> tmp2 = new HashMap<>();
-                tmp.put("_kaavaid", kaavaid);
-                tmp2.put("_kaavaid", kaavaid);
-                Log.d("Muuttujaids", kaavaid);
-                ((kaavaTulos)pal.get(k)).addVakiot(getValue("Vakio",tmp2,new ArrayList<HashMap<String, String>>()));
-                ((kaavaTulos) pal.get(k)).addMuuttujat(getValue("Muuttuja", tmp, new ArrayList<HashMap<String, String>>()));
-            }
-        }
-
-        if(tableName.compareTo("Alkuaineet") == 0)
-        {
-            for(int i = 0; i < pal.size(); i++)
-            {
-                //haetaan alkuaineen isotoopit.
-                HashMap<String,String> tmp = new HashMap<>();
-                tmp.put("_alkuaineid",pal.get(i).getValue("_id"));
-                ((alkuaineTulos)pal.get(i)).addIsotoopit(getValue("Isotoopit",tmp, new ArrayList<HashMap<String, String>>()));
-            }
-        }
-
-
-        if(tableName.compareTo("Isotoopit") == 0) {
-            String symbol = "";
-            String prevId = "-1";
-            for (int i = 0; i < pal.size(); i++) {
-                //tarkistetaan oliko edellinen isotooppi samasta perus alkuaineesta. jos oli niin ei tarvita uutta hakua
-                if (pal.get(i).getValue("_alkuaineid").compareTo(prevId) != 0) {
-                    //Edellinen haettu symboli oli eri id:lle, Joudutaan tekemään haku.
-                    HashMap<String, String> tmp = new HashMap<>();
-                    prevId = pal.get(i).getValue("_alkuaineid");
-                    tmp.put("_id", prevId);
-                    cur = getCursor("alkuaineet", tmp, new ArrayList<HashMap<String, String>>()); //tehtävä näin. getValue kutsu aiheuttaisi loputtoman loopin
-                    try {
-                        if (cur.moveToFirst()) {
-                            do {
-                                symbol = cur.getString(1);
-                            } while (cur.moveToNext());
-
-                        }
-                    } finally {
-
-                    }
-                }
-                ((isotooppiTulos) pal.get(i)).setSymbol(symbol);
-            }
-        }
-
-        if(tableName.compareTo("Funktionaalinenryhma") == 0)
-        {
-            //haetaan piikit.
-            for(Tulos t : pal)
-            {
-                HashMap<String,String> piikkiValues = new HashMap<>();
-                piikkiValues.put("_ryhmaid",t.getValue("_ryhmaid"));
-                ((funktionaalinenTulos)t).setPiikir(getValue("irpiikit",piikkiValues,null));
-            }
-        }
-
-
-
-
+        gatherAditionalData(pal);
         return pal;
     }
 
@@ -419,6 +298,7 @@ public class SqlHandler extends SQLiteOpenHelper {
         return pal;
     }
 
+    //Mitä tekee?
     private String getTagiStringi(String tableName, boolean useIntersection,ArrayList<HashMap<String, String>> searchParameters )
     {
         //haetaan taulut ja idKentät
@@ -445,7 +325,10 @@ public class SqlHandler extends SQLiteOpenHelper {
             kohdeIdKentta = "_vakioid";
             linkkitaulu = "Vakio_tag";
             tagiTaulu = "VakioTag";
+        }else {
+            return tableName; //mikäli annetulla taululla ei ole olemassa tägitauluja, passataan taulun nimi takaisin. Koska tällä metodilla muodostetaan joukko, pitäisi tämän toimiä...
         }
+
         //haetaan taulun kenttien arvot
         ArrayList<String[]> taulunRakenne = getStructure(tableName);
         String halututKentat = "";
@@ -469,7 +352,11 @@ public class SqlHandler extends SQLiteOpenHelper {
         for(int i = 0; i < searchParameters.size(); i++) {
 
             //Kommentti koska voin
+            /*
             query += "Select "+ halututKentat +" From " + tableName + " a left join " + linkkitaulu + " as ta on (a." + kohdeIdKentta + " = ta._" + tableName + "id)" +
+                    " left join " + tagiTaulu + "  as t on (ta._tagid = t._tagid) Where t.nimi like '" + searchParameters.get(i).get("nimi") + "'";
+            */
+            query += "Select "+ getKentat(tableName) +" From " + tableName + " a left join " + linkkitaulu + " as ta on (a." + kohdeIdKentta + " = ta." + findPrimaryKeyName(tableName) + ")" +
                     " left join " + tagiTaulu + "  as t on (ta._tagid = t._tagid) Where t.nimi like '" + searchParameters.get(i).get("nimi") + "'";
             if(i < searchParameters.size()-1)
             {
@@ -539,25 +426,6 @@ public class SqlHandler extends SQLiteOpenHelper {
         return pal;
     }
 
-    public Cursor getMuuttujacursor( HashMap<String, String> searchParameters){
-        SQLiteDatabase db = getWritableDatabase();
-        //Log.d("KAAVAID", kaavaid);
-        String query= "Select * From Muuttuja m left join Muuttuja_Kaava as mk on (m._muuttujaid = mk._muuttujaid)" +
-                " left join Kaava as k on (mk._kaavaid = k._kaavaid) Where k._kaavaid = " +  searchParameters.get("_kaavaid") ;
-        Log.d("minun",query);
-        Cursor pal = db.rawQuery(query, null); // itse haku täpahtuu tässä
-        return pal;
-    }
-    public Cursor getVakiocursor(HashMap<String, String> searchParameters){
-        SQLiteDatabase db = getWritableDatabase();
-        String query= "Select v._vakioid, v.nimi, v.yksikko, v.arvo, v.symbol From Vakio v left join Vakio_Kaava as vk on (v._vakioid = vk._vakioid)"+
-                "left join Kaava as k on (vk._kaavaid = k._kaavaid) Where k._kaavaid =" +  searchParameters.get("_kaavaid") ;
-        Log.d("minun",query);
-        Cursor pal = db.rawQuery(query, null); // itse haku täpahtuu tässä
-        return pal;
-    }
-
-
 
     public Cursor getCursor(String tableName, HashMap<String, String> searchParameters, ArrayList<HashMap<String,String>> tagit)
     {
@@ -600,6 +468,241 @@ public class SqlHandler extends SQLiteOpenHelper {
         Log.d("minun",query + searchParamsS);
         Cursor pal = db.rawQuery(query + searchParamsS, null); // itse haku täpahtuu tässä
         return pal;
+    }
+
+    public void muutaSuosikkiStatus(Tulos t)
+    {
+        //Luodaan querry.
+        String querry = "INSERT INTO ";
+        if(!t.isSuosikki)
+        {
+            querry = "DELETE FROM ";
+        }
+        querry += t.linkkiTaulu;
+        String id = t.getValue(findPrimaryKeyName(t.getType())); //haetaan tuloksen id.
+        if(t.isSuosikki)
+        {
+            querry += " VALUES (" + id + ",(SELECT _tagid FROM "+ t.tagiTaulu +" WHERE nimi LIKE \"suosikki\") )";
+        }else{
+            querry += " WHERE " + findPrimaryKeyName(t.getType()) + " = " + id + " AND _tagid = (SELECT _tagid FROM "+ t.tagiTaulu +" WHERE nimi LIKE \"suosikki\")";
+        }
+
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL(querry);
+
+
+
+
+    }
+
+    //haetaan annettuun ID:hen liittyvät tägit
+    private ArrayList<String> getTags(String idVal, String tableName)
+    {
+        ArrayList<String> pal = new ArrayList<>();
+
+        //nää vois ehkä laittaa defaultFields tauluun.
+        String linkkitaulu = "";
+        String tagiTaulu = "";
+        if(tableName.compareTo("Alkuaineet")==0){
+            linkkitaulu = "Alkuaineet_tag";
+            tagiTaulu = "AlkuaineetTag";
+        }else if(tableName.compareTo("Funktionaalinenryhma")==0)
+        {
+            linkkitaulu = "Funktionaalinenryhma_tag";
+            tagiTaulu = "FunktionaalinenryhmaTag";
+        }else if(tableName.compareTo("Kaava")==0)
+        {
+            linkkitaulu = "Kaava_tag";
+            tagiTaulu = "KaavaTag";
+        }
+        else if(tableName.compareTo("Vakio")==0)
+        {
+            linkkitaulu = "Vakio_tag";
+            tagiTaulu = "VakioTag";
+        }else{
+            return null; // Tämä nappaa kiinni mikäli yritetään tägejä tulokselle jolla niitä ei ole
+        }
+
+        String query = "SELECT nimi FROM " + tagiTaulu + " AS k JOIN (SELECT * FROM " + linkkitaulu + " WHERE " + findPrimaryKeyName(tableName) + " = " + idVal +" ) as l ON k._tagid = l._tagid";
+        //String query = "SELECT nimi FROM " + tagiTaulu + " AS k JOIN (SELECT * FROM " + linkkitaulu + " WHERE _" + tableName + "id = " + idVal +" ) as l ON k._tagid = l._tagid";
+
+        //suoritetaan haku
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cur = db.rawQuery(query, null);
+
+        //Luetaan tägit kursorista array listiin
+
+        if(cur.moveToFirst())
+        {
+            do{
+                pal.add(cur.getString(0));
+            }while (cur.moveToNext());
+        }
+
+        Log.d("Tagi","id: " + idVal + " table: " + tableName + " number of tags: " + pal.size());
+        return pal;
+    }
+
+    //estii annetun taulun primary keyn käyttäen pragma table_info komentoa
+    private String findPrimaryKeyName(String tName)
+    {
+        String querry = "pragma table_info(" + tName + ")";
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cur = db.rawQuery(querry, null); // itse haku täpahtuu tässä
+        boolean jatketaan = true;
+        String pal = "";
+        try {
+            if (cur.moveToFirst()) {
+                do {
+                    //etsitään se rivi joka vastaa primaryKeytä
+                    if(cur.getInt(5) == 1)
+                    {
+                        pal = cur.getString(1);
+                        jatketaan = false;
+                    }
+                } while (cur.moveToNext() && jatketaan);
+
+            }
+        } finally {
+            //cur.close(); //kuinka paha teko jättää nämä auki?
+            //db.close();
+
+        }
+
+        return pal;
+    }
+
+    //haetaan tulokseen liittyvä ylimääräinen data, esim isotoopit tai kaavojen muuttujat ja vakiot.
+    private void gatherAditionalData(ArrayList<Tulos> data)
+    {
+        //isotooppeja varten
+        String symbol = "";
+        String prevId = "-1";
+        String[] tagillisetArray = {"Alkuaineet", "Kaava", "Funktionaalinenryhma","Vakio"}; //tässä määritellään ne joilla on tägi taulu. Ehkä tämän tiedon voisi viedä tietokantaan... vaikka defaultFields tauluun?
+        ArrayList tagilliset = new ArrayList(Arrays.asList(tagillisetArray));
+
+        for(Tulos t: data) {
+            if (t.getType().compareTo("Alkuaineet") == 0) {
+                //haetaan alkuaineen isotoopit.
+                HashMap<String, String> tmp = new HashMap<>();
+                tmp.put("_alkuaineid", t.getValue("_id"));
+                ((alkuaineTulos)t).addIsotoopit(getValue("isotoopit", tmp, null));
+            }else if(t.getType().compareTo("Kaava")==0)
+            {
+
+
+                String kaavaid = t.getValue("_kaavaid");
+                ArrayList<String> idt = findMuuttujat(Integer.parseInt(kaavaid)); //haetaan kaavaan liittyvien muuttujien idt
+                ArrayList<Tulos> arvot = new ArrayList<>();
+                for(String s:idt)
+                {
+                    //haetaan id:n pohjalta muuttuja
+                    HashMap<String,String> tmp = new HashMap<>();
+                    tmp.put("_muuttujaid",s);
+                    arvot.addAll(getValue("Muuttuja",tmp,null));
+                }
+                ((kaavaTulos)t).addMuuttujat(arvot);
+                idt = findVakio(Integer.parseInt(kaavaid)); //haetaan kaavaan liittyvien vakion idt
+                arvot = new ArrayList<>();
+                for(String s:idt)
+                {
+                    //haetaan id:n pohjalta muuttuja
+                    HashMap<String,String> tmp = new HashMap<>();
+                    tmp.put("_vakioid",s);
+                    arvot.addAll(getValue("Vakio",tmp,null));
+                }
+                ((kaavaTulos)t).addVakiot(arvot);
+            } else if(t.getType().compareTo("Isotoopit") == 0) {
+                //tarkistetaan oliko edellinen isotooppi samasta perus alkuaineesta. jos oli niin ei tarvita uutta hakua
+                if (t.getValue("_alkuaineid").compareTo(prevId) != 0) {
+                    //Edellinen haettu symboli oli eri id:lle, Joudutaan tekemään haku.
+                    HashMap<String, String> tmp = new HashMap<>();
+                    prevId = t.getValue("_alkuaineid");
+                    tmp.put("_id", prevId);
+                    Cursor cur = getCursor("alkuaineet", tmp,null); //tehtävä näin. getValue kutsu aiheuttaisi loputtoman loopin
+                    try {
+                        if (cur.moveToFirst()) {
+                            do {
+                                symbol = cur.getString(1);
+                            } while (cur.moveToNext());
+
+                        }
+                    } finally {
+
+                    }
+                }
+                ((isotooppiTulos) t).setSymbol(symbol);
+            }else if(t.getType().compareTo("Funktionaalinenryhma") == 0)
+            {
+                //haetaan funktionaalisen ryhmän piikit
+                HashMap<String,String> tmp = new HashMap<>();
+                tmp.put("_ryhmaid",t.getValue("_ryhmaid"));
+                ((funktionaalinenTulos)t).setPiikit(getValue("irpiikit",tmp,null));
+
+            }
+
+            //katsotaan tuleeko lisätä tägejä. i.e. onko
+            if(tagilliset.indexOf(t.getType()) >= 0)
+            {
+                //ikävän näköinen kutsu. Avataanpa hieman.
+                t.setTagit(getTags( //haetaan tägit. Tarvitaan tuloksen id ja taulun nimi
+                        t.getValue( //haetaan tuloksen id sen hashmapistä. Täytyy tuntea avain kentän nimi
+                                findPrimaryKeyName( //On olemassa metodi jolla primary key löydetään
+                                        t.getType())) //PK:n löytämiseksi tarvitaan tuloksen taulu. Se on sen type.
+                        ,t.getType())); //vielä tarvitaan taulun nimi
+            }
+        }
+
+    }
+
+    //Nämä metodit hakevat kaavan muuttujat tai vakiot
+    private ArrayList<String> findMuuttujat(int kaavaId)
+    {
+        return findLinkitettyKomponentti(kaavaId,true);
+    }
+
+    private ArrayList<String> findVakio(int kaavaId)
+    {
+        return findLinkitettyKomponentti(kaavaId,false);
+    }
+
+    private ArrayList<String> findLinkitettyKomponentti(int kaavaid, boolean isMuuttuja)
+    {
+        ArrayList<String> pal = new ArrayList<>();
+        String tableName = "Vakio";
+        if(isMuuttuja)
+        {
+            tableName = "Muuttuja";
+        }
+        String query = "SELECT k._"+tableName+"id FROM " + tableName + " AS k JOIN (SELECT * FROM " + tableName + "_kaava WHERE _kaavaid = " + kaavaid +" ) as l ON k._"+tableName+"id = l._"+tableName+"id";
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cur = db.rawQuery(query, null);
+
+        if(cur.moveToFirst())
+        {
+            do{
+                pal.add(cur.getString(0));
+            }while(cur.moveToNext());
+        }
+        return pal;
+
+    }
+
+    private String getKentat(String tableName)
+    {
+        ArrayList<String[]> taulunRakenne = getStructure(tableName);
+        String halututKentat = "";
+        for(int i = 0; i < taulunRakenne.size(); i++)
+        {
+            halututKentat += "a." + taulunRakenne.get(i)[0];
+
+            if(i < taulunRakenne.size()-1)
+            {
+                halututKentat += ", ";
+            }
+
+        }
+        return halututKentat;
     }
 
 

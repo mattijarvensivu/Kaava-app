@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import maximsblog.blogspot.com.jlatexmath.core.AjLatexMath;
@@ -28,12 +29,17 @@ public class vakioTulos extends Tulos{
         layoutLarge = -1;
         layoutSmall = R.layout.vakio_small;
         tiedot = values;
+
+        type = "Vakio";
+        tagiTaulu = "VakioTag";
+        linkkiTaulu = "Vakio_tag";
+
     }
 
     @Override
     //tuottaa Viewin annetulla inflaterillä ja isännällä. Tässä viewissä näytetään nopea yhteen veto tuloksesta
     public View getSmallView (LayoutInflater infl, ViewGroup paren) {
-        View pal = infl.inflate(layoutSmall, paren, false);
+        View pal = super.getSmallView(infl, paren);
 
         ((TextView)pal.findViewById(R.id.txvSymbol)).setText(tiedot.get("symbol"));
         ((TextView)pal.findViewById(R.id.txvKuvaus)).setText(tiedot.get("nimi"));

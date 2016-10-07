@@ -212,7 +212,7 @@ public class ChemistryActivity extends AppCompatActivity
         tulos = suoritaHaku("%"+hakuparametri+"%",listOfTables,false);
             for(int i = 0; i < tulos.size(); i++)
             {
-                if(tulos.get(i).getType() == 1)
+                if(tulos.get(i).getType().compareTo("Alkuaineet") == 0)
                 {
                     ((alkuaineTulos)tulos.get(i)).boldaa(hakuparametri);
                 }
@@ -306,6 +306,17 @@ public class ChemistryActivity extends AppCompatActivity
 
                // tulos.addAll(hand.getValue(t, kentat));
             }
+
+        }
+        for (Tulos t : tulos) {
+            t.setOnSuosikkiToggleListener(new suosikkiToggleListener() {
+                @Override
+                //nuo argumentit on aika ikävät koska en saanu passattua suoraan t muuttujaa... se ois pitäny declarata finaaliks.
+                public void onToggleSuosikki(Tulos t) {
+
+                    hand.muutaSuosikkiStatus(t);
+                }
+            });
 
         }
 

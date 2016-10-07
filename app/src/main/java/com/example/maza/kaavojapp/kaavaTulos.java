@@ -29,6 +29,7 @@ public class kaavaTulos extends Tulos{
     private ArrayList<Tulos> muuttujat;
     //private String kaikkimuuttujat;
 
+
     public kaavaTulos(HashMap<String,String> values) {
         layoutLarge = R.layout.kaava_large;
         layoutSmall = R.layout.kaava_small;
@@ -36,19 +37,25 @@ public class kaavaTulos extends Tulos{
         muuttujat = new ArrayList<>();
         vakiot = new ArrayList<>();
 
+        tagiTaulu = "KaavaTag";
+        linkkiTaulu = "Kaava_tag";
+        type = "Kaava";
+
+
     }
 
 
     public View getSmallView (LayoutInflater infl, ViewGroup paren)
     {
-        Log.d("minun","Piirretään " + tiedot.get("_kaavaid") + " small viewiä");
-        View pal = infl.inflate(layoutSmall, paren, false);
+       View pal = super.getSmallView(infl,paren);
 
         //asetetaan tiedot paikoilleen
         ((TextView)pal.findViewById(R.id.kaava_nimi)).setText(tiedot.get("nimi"));
 
         KaavaFactory kf = new KaavaFactory(pal.getContext(),pal.getResources(),(int)Math.ceil(((TextView)pal.findViewById(R.id.kaava_nimi)).getTextSize()/ pal.getResources().getDisplayMetrics().density)); //viimeinen parametri laskee käytetyn teksti koon.
         ((ImageView)pal.findViewById(R.id.kaava_lause_small)).setImageDrawable(kf.getBmD(tiedot.get("lause")));
+
+
 
         return pal;
     }
@@ -114,6 +121,8 @@ public class kaavaTulos extends Tulos{
             //this.kaikkimuuttujat += muuttujat.get(i).getValue("symbol") + " = " +  muuttujat.get(i).getValue("kuvaus") + "  "+  muuttujat.get(i).getValue("yksikkö")+"\n";
         }
     }
+
+
 
 }
 

@@ -137,6 +137,7 @@ public class MathActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        boolean haetaan = true; //suoritetaanko haku "suosikki" tägillä
 
         if (id == R.id.nav_camera) {
             finish();
@@ -144,11 +145,13 @@ public class MathActivity extends AppCompatActivity
         } else if (id == R.id.nav_gallery) {
             Intent myIntent = new Intent(this, PhysicsActivity.class);
             startActivity(myIntent);
+            haetaan = false;
             finish();
 
         } else if (id == R.id.nav_slideshow) {
             Intent myIntent = new Intent(this, ChemistryActivity.class);
             startActivity(myIntent);
+            haetaan = false;
             finish();
         } else if (id == R.id.algebra) {
             ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.algebra));
@@ -158,9 +161,6 @@ public class MathActivity extends AppCompatActivity
         } else if (id == R.id.trigonometria) {
             ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.trigonometria));
             listOfReqTags = new String[]{"trigonometria"};
-            //Testiä: näytetään kaikki trigonometrian kaavat!
-            //toiminnallisuus voisi olla tämä, toteutus joku parempi
-            ((EditText)findViewById(R.id.Mathsearch)).setText("trigonometria");
 
 
         } else if (id == R.id.derivointi) {
@@ -180,8 +180,11 @@ public class MathActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
 
         //testausta
-        HaeMath(null); //nyt toastaa jos kenttä on tyhjä. Tämähän pitäisi sitäpaitsi ajaa vain kun vaihdetaan kategoriaa. Jos pidetään tämä ratkaisu malli, voitaisiin nämä kaksi riviä laittaa iffin sisään
-        ((EditText)findViewById(R.id.Mathsearch)).setText("");
+        if(haetaan) {
+            ((EditText) findViewById(R.id.Mathsearch)).setText("suosikki");
+            HaeMath(null); //nyt toastaa jos kenttä on tyhjä. Tämähän pitäisi sitäpaitsi ajaa vain kun vaihdetaan kategoriaa. Jos pidetään tämä ratkaisu malli, voitaisiin nämä kaksi riviä laittaa iffin sisään
+            ((EditText) findViewById(R.id.Mathsearch)).setText("");
+        }
 
 
         return true;
@@ -238,6 +241,7 @@ public class MathActivity extends AppCompatActivity
     {
         HashMap<String, String> kentat;
         String tmpHakuPreP = hakuparametri;
+        //syödään turhat välit pilkkujen ympäriltä pois
         String tmpHakuPosP = hakuparametri.replaceAll(", ", ",");
         while(tmpHakuPreP.compareTo(tmpHakuPosP) != 0)
         {
@@ -316,6 +320,18 @@ public class MathActivity extends AppCompatActivity
 
                 // tulos.addAll(hand.getValue(t, kentat));
             }
+
+        }
+        //asetetaan jokaiselle tulokselle suosikkiStatuksen muutos listeneri.
+        for (Tulos t : tulos) {
+            t.setOnSuosikkiToggleListener(new suosikkiToggleListener() {
+                @Override
+                //nuo argumentit on aika ikävät koska en saanu passattua suoraan t muuttujaa... se ois pitäny declarata finaaliks.
+                public void onToggleSuosikki(Tulos t) {
+
+                    hand.muutaSuosikkiStatus(t);
+                }
+            });
 
         }
 

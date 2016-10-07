@@ -41,14 +41,17 @@ public class alkuaineTulos extends Tulos {
         layoutSmall = R.layout.alkuaine_small;
         tiedot = values;
         isotoopit = new ArrayList<>();
-        type = 1;
+
+        type = "Alkuaineet";
+        tagiTaulu = "AlkuaineetTag";
+        linkkiTaulu = "Alkuaineet_tag";
     }
 
     @Override
     //tuottaa Viewin annetulla inflaterillä ja isännällä. Tässä viewissä näytetään nopea yhteen veto tuloksesta
     public View getSmallView (LayoutInflater infl, ViewGroup paren)
     {
-        View pal = infl.inflate(layoutSmall, paren, false);
+        View pal = super.getSmallView(infl, paren);
         //asetetaan tiedot paikoilleen
         ((TextView)pal.findViewById(R.id.txvNumber)).setText(tiedot.get("jarjestyluku"));
         ((TextView)pal.findViewById(R.id.txvName)).setText(Html.fromHtml(tiedot.get("nimi")));

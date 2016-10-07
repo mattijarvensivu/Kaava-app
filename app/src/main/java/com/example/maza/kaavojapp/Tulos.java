@@ -5,7 +5,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -18,10 +20,21 @@ public class Tulos {
     protected int layoutSmall;
     protected int layoutLarge;
     protected HashMap<String,String> tiedot;
-    protected int type = 0;
+    protected String type = "raw";
+    protected boolean isSuosikki = false;
+
+    protected String taulu;
+    protected String tagiTaulu;
+    protected String linkkiTaulu;
+
+    protected suosikkiToggleListener suosikkiToggle;
+
+    protected ArrayList<String> tagit;
+
 
     public Tulos()
     {
+
 
     }
 
@@ -58,15 +71,33 @@ public class Tulos {
 
     }
 
-    public int getType()
+    public void setOnSuosikkiToggleListener(suosikkiToggleListener s)
+    {
+        suosikkiToggle = s;
+    }
+
+    public String getType()
     {
         return type;
     }
 
+    //super metodi jonka tehtävä on huolehtia suosikki tähdestä.
     public View getSmallView(LayoutInflater infl, ViewGroup paren)
     {
-        Log.d("minun","ollaan super tulos metodissa");
-        return null;
+        View pal = infl.inflate(layoutSmall, paren, false);
+        //laitetaan tähdelle onClick logiikka
+        ImageView tahti = (ImageView)pal.findViewById(R.id.imgSuosikki);
+        if(tahti != null) {
+            tahti.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    toggleSuosikki(v);
+                }
+            });
+        }
+
+        setTahti(pal);
+        return pal;
     }
 
     public View getLargeView(LayoutInflater infl, ViewGroup paren)
@@ -81,5 +112,48 @@ public class Tulos {
 
     }
 
+    //palautetaan onko tämä asetettu suosikiksi.
+    //nimeäminen vähän so-so. Vaarana on että sekoitetaan itse muuttujaan. Jos rupee ahistaan niin sitten muutetaan
+    //TARVITAANKO!!!
+    public boolean isSuosikki()
+    {
+        return isSuosikki;
+    }
 
+    //asetetaan tägit. Samalla tarkistetaan onko tämä suosikki (onko tällä suosikki tägi)
+    public void setTagit(ArrayList<String> tagit)
+    {
+
+        this.tagit = tagit;
+        if(tagit.indexOf("suosikki") >= 0) isSuosikki = true;
+    }
+
+    //asetetaan oikea tähden grafiikka
+    protected void setTahti(View target)
+    {
+        //haetaan oikea tähti
+        int tahti = R.drawable.tyhjatahti;
+        if(isSuosikki) tahti = R.drawable.taysitahti;
+
+        //asetetaan tähti näkyviin
+        ImageView tahtiImage = (ImageView)target.findViewById(R.id.imgSuosikki);
+        if(tahtiImage == null) return; //tarkistetaan että tähti on olemassa.
+        if(suosikkiToggle == null) return; //katsotaan onko listeneri togglelle. Jos ei ole, oletetaan ettei ole mahdolista asettää tätä suosikiksi
+        tahtiImage.setImageResource(tahti);
+    }
+
+    //tähden tilaa on muutettu. Toimitaan.
+    protected void toggleSuosikki(View v)
+    {
+        isSuosikki = !isSuosikki;
+        setTahti(v);
+        suosikkiToggle.onToggleSuosikki(this); //kerrotaan listenerille että suosikki status on muuttunut
+    }
+
+
+}
+
+interface suosikkiToggleListener
+{
+    void onToggleSuosikki(Tulos kohde);
 }

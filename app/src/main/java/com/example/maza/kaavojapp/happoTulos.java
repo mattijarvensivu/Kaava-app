@@ -16,6 +16,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import maximsblog.blogspot.com.jlatexmath.core.AjLatexMath;
@@ -35,6 +36,8 @@ public class happoTulos extends Tulos {
         tiedot = vals;
         layoutSmall = R.layout.happo_small;
         layoutLarge = R.layout.happo_large;
+
+        type = "Happo";
     }
 
     @Override

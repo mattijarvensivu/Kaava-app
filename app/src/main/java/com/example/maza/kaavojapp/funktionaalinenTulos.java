@@ -22,12 +22,16 @@ public class funktionaalinenTulos extends Tulos{
         layoutSmall = R.layout.funktional_small;
         irpiikit = new ArrayList<>();
         tiedot = values;
+
+        type = "Funktionaalinenryhma";
+        tagiTaulu = "FunktionaalinenryhmaTag";
+        linkkiTaulu = "Funktionaalinenryhma_tag";
     }
 
     @Override
     //tuottaa Viewin annetulla inflaterillä ja isännällä. Tässä viewissä näytetään nopea yhteen veto tuloksesta
     public View getSmallView (LayoutInflater infl, ViewGroup paren) {
-        View pal = infl.inflate(layoutSmall, paren, false);
+        View pal = super.getSmallView(infl, paren);
         //laitetaan kuva paikoilleen
         try {
             ((ImageView)pal.findViewById(R.id.imgKuva)).setImageResource(R.drawable.class.getField(tiedot.get("nimi")).getInt(null));
@@ -65,7 +69,7 @@ public class funktionaalinenTulos extends Tulos{
         return pal;
     }
 
-    public void setPiikir(ArrayList<Tulos> given)
+    public void setPiikit(ArrayList<Tulos> given)
     {
         for(Tulos t: given)
         {
