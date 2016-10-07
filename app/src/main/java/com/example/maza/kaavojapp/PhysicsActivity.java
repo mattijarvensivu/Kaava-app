@@ -42,6 +42,9 @@ public class PhysicsActivity extends AppCompatActivity
     //idea on että aihealueen valinta perustuu tägeihin. Koska käytännössä kaikki matikan tieto on kaava tai vakio taulussa, ei voida käyttää samaa ratkaisua kuin kemiassa. Tämä systeemi joudutaan ehkä lisäämään myös kemian osalle
     String[] listOfReqTags = new String[]{};
 
+    //näillä palataan takaisin largeViewistä
+    boolean inLargeView = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,9 +73,10 @@ public class PhysicsActivity extends AppCompatActivity
             @Override
             //muutetaan standardi metodia niin että se sulkee näppäimistön kun sivupalkki avataan
             public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
                 InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(drawerView.getWindowToken(), 0);
+                super.onDrawerOpened(drawerView);
+
 
             }
         };
@@ -90,6 +94,7 @@ public class PhysicsActivity extends AppCompatActivity
                 Context con = getApplicationContext();
                 ViewGroup prnt = (ViewGroup) findViewById(R.id.lnlContainer); //haetaan isäntä, eli komponentti mihin tuo tiedot sisältävä komponentti tulee
                 placeToCenter(((Tulos) parent.getItemAtPosition(position)).getLargeView((LayoutInflater) con.getSystemService(Context.LAYOUT_INFLATER_SERVICE), prnt));
+                inLargeView = true;
             }
         });
         hand = new SqlHandler(getApplicationContext().getApplicationContext(), "", null, 1, true);
@@ -100,7 +105,11 @@ public class PhysicsActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        } else if(inLargeView)
+        {
+            inLargeView = false;
+            placeToCenter(listView);
+        }else {
             super.onBackPressed();
         }
     }
@@ -165,6 +174,7 @@ public class PhysicsActivity extends AppCompatActivity
     }
 
     public void HaePhysics(View v) {
+        inLargeView = false;
         Log.w("myApp", " Fysiikka Nappia painettu");
 
         EditText haku = (EditText) findViewById(R.id.Physicsearch);

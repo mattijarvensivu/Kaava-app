@@ -44,6 +44,9 @@ public class MathActivity extends AppCompatActivity
     String[] listOfTagTables = new String[]{"Kaava","Vakio"};
     String[] listOfTables = new String[]{"Kaava","Muuttuja","Vakio"};
 
+    //näillä palataan takaisin largeViewistä
+    boolean inLargeView = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,9 +77,10 @@ public class MathActivity extends AppCompatActivity
             @Override
             //muutetaan standardi metodia niin että se sulkee näppäimistön kun sivupalkki avataan
             public void onDrawerOpened(View drawerView) {
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(drawerView.getWindowToken(), 0);
                 super.onDrawerOpened(drawerView);
-                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(drawerView.getWindowToken(), 0);
+
 
             }
         };
@@ -95,6 +99,7 @@ public class MathActivity extends AppCompatActivity
                 Context con = getApplicationContext();
                 ViewGroup prnt = (ViewGroup) findViewById(R.id.lnlContainer); //haetaan isäntä, eli komponentti mihin tuo tiedot sisältävä komponentti tulee
                 placeToCenter(((Tulos) parent.getItemAtPosition(position)).getLargeView((LayoutInflater) con.getSystemService(Context.LAYOUT_INFLATER_SERVICE), prnt));
+                inLargeView = true;
             }
         });
         hand = new SqlHandler(getApplicationContext().getApplicationContext(), "", null, 1, true);
@@ -105,7 +110,12 @@ public class MathActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        }else if(inLargeView)
+        {
+            inLargeView = false;
+            placeToCenter(listView);
+        }
+        else {
             super.onBackPressed();
         }
     }
@@ -193,6 +203,7 @@ public class MathActivity extends AppCompatActivity
     public void HaeMath(View v) {
         Log.w("myApp", " Matikka Nappia painettu");
 
+        inLargeView = false;
         EditText haku = (EditText) findViewById(R.id.Mathsearch);
         String hakuparametri = haku.getText().toString();
 
@@ -355,6 +366,7 @@ public class MathActivity extends AppCompatActivity
         LinearLayout contai = (LinearLayout) findViewById(R.id.lnlContainer);
         contai.removeAllViews();
         contai.addView(target);
+
     }
 
 

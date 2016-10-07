@@ -44,6 +44,9 @@ public class ChemistryActivity extends AppCompatActivity
     private String[] listOfTables;
     private String[] listOfTagTables;
 
+    //näillä palataan takaisin largeViewistä
+    boolean inLargeView = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,9 +75,10 @@ public class ChemistryActivity extends AppCompatActivity
             @Override
             //muutetaan standardi metodia niin että se sulkee näppäimistön kun sivupalkki avataan
             public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
                 InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(drawerView.getWindowToken(), 0);
+                super.onDrawerOpened(drawerView);
+
 
             }
         };
@@ -92,6 +96,7 @@ public class ChemistryActivity extends AppCompatActivity
                 Context con = getApplicationContext();
                 ViewGroup prnt = (ViewGroup) findViewById(R.id.lnlContainer); //haetaan isäntä, eli komponentti mihin tuo tiedot sisältävä komponentti tulee
                 placeToCenter(((Tulos) parent.getItemAtPosition(position)).getLargeView((LayoutInflater) con.getSystemService(Context.LAYOUT_INFLATER_SERVICE), prnt));
+                inLargeView = true;
             }
         });
         hand = new SqlHandler(getApplicationContext().getApplicationContext(), "", null, 1, true);
@@ -104,6 +109,10 @@ public class ChemistryActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+        }else if(inLargeView)
+        {
+            inLargeView = false;
+            placeToCenter(listView);
         } else {
             super.onBackPressed();
         }
@@ -187,6 +196,7 @@ public class ChemistryActivity extends AppCompatActivity
     }
 
     public void HaeChemistry(View v) {
+        inLargeView = false;
         Log.w("myApp", "Nappia painettu");
 
         EditText haku = (EditText) findViewById(R.id.Chemistrysearch);
