@@ -2,11 +2,14 @@ package com.example.maza.kaavojapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +36,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Set;
 
 public class PhysicsActivity extends AppCompatActivity
@@ -129,8 +133,15 @@ public class PhysicsActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if(id==R.id.english_language){
+            Toast.makeText(this, "Your Language is now English", Toast.LENGTH_LONG).show();
+
+            setLocale("en");
+        }
+        else if(id==R.id.finnish_language){
+            Toast.makeText(this, "Kielesi on nyt suomi", Toast.LENGTH_LONG).show();
+
+            setLocale("fi");
         }
 
         return super.onOptionsItemSelected(item);
@@ -320,7 +331,17 @@ public class PhysicsActivity extends AppCompatActivity
         contai.addView(target);
     }
 
-
+    public void setLocale(String lang) {
+        Locale myLocale = new Locale(lang);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = myLocale;
+        res.updateConfiguration(conf, dm);
+        Intent refresh = new Intent(this, PhysicsActivity.class);
+        startActivity(refresh);
+        finish();
+    }
 
 }
 

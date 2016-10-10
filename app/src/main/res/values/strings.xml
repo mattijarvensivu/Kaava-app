@@ -55,5 +55,7 @@
     <string name="options">Options</string>
     <string name="elektronirakenne">Electrons structure: </string>
     <string name="atomisade">Atomic radius: </string>
+    <string name="english">English</string>
+    <string name="finnish">Finnish</string>
 
 </resources>

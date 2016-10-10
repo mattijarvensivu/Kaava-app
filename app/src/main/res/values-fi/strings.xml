@@ -53,5 +53,7 @@
     <string name="options">Asetukset</string>
     <string name="elektronirakenne">Elektronirakenne</string>
     <string name="atomisade">Atomisäde:</string>
+    <string name="english">Englanti</string>
+    <string name="finnish">Suomi</string>
 
 </resources>
