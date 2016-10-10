@@ -49,7 +49,7 @@ public class Tulos {
         {
             case 23: //kyseesssä alkuaine
                 return new alkuaineTulos(values);
-            case 11: //kyseessä happo. Ei kuitenkaan vielä kuva kenttää
+            case 13: //kyseessä happo.
                 return new happoTulos(values);
             case 8:
                 return new isotooppiTulos(values);

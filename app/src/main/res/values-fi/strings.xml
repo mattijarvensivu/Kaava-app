@@ -23,7 +23,8 @@
     <string name="elektronega">Elektronegatiivisuus: </string>
     <string name="hajoamistavat">Hajoamistavat: </string>
     <string name="hapetus_luvut">Hapetusluvut: </string>
-    <string name="happovakiot">Happovakiot: </string>
+    <string name="happovakiot">pKa</string>
+    <string name="emäsvakiot">pKb</string>
     <string name="ionisaatioene">Ionisaatioenergiat (kJ/mol) </string>
     <string name="kiehumis">Kiehumispiste: </string>
     <string name="kokeellinen">Kokeellinen: </string>

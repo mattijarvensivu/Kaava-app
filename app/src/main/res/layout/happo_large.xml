@@ -185,6 +185,7 @@
         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#000000"
+        android:id="@+id/txvHappoVakioLabel"
         android:text="@string/happovakiot"/>
 
 

@@ -35,7 +35,8 @@
     <string name="IR_absor">IR absorption frequencies: </string>
     <string name="konsentraatio">Concentration: </string>
     <string name="ph_konsentraatio">pH in concentration: </string>
-    <string name="happovakiot">Acid constants</string>
+    <string name="happovakiot">pKa</string>
+    <string name="emäsvakiot">pKb</string>
     <string name="puoliintumisaika">Period of decay: </string>
     <string name="suhteellinenosuus">Relative portion in nature: </string>
     <string name="hajoamistavat">Ways of decay: </string>

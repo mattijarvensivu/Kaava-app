@@ -126,6 +126,7 @@ public class SqlHandler extends SQLiteOpenHelper {
         if(checkDataBase()) { //tarksitetaan onko tietokanta olemassa.
             //tietokanta on olemassa
             writeSuosikit = true;
+
             //otetaan suosikki asetukset talteen.
             //haetaan defaultFieldsistä kaikki taulut joilla on tägitaulu, ja sen linkkitaulu
             SQLiteDatabase d = getReadableDatabase();
@@ -159,6 +160,7 @@ public class SqlHandler extends SQLiteOpenHelper {
                 } while (curDef.moveToNext());
             }
             d.close(); //tarvitaanko?
+
         }
 
         Log.d("minun","creating database");

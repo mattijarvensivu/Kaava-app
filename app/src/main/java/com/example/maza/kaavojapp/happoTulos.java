@@ -54,6 +54,14 @@ public class happoTulos extends Tulos {
         KaavaFactory kf = new KaavaFactory(pal.getContext(),pal.getResources(),(int)Math.ceil(((TextView)pal.findViewById(R.id.txvNimi)).getTextSize()/ pal.getResources().getDisplayMetrics().density)); //viimeinen parametri laskee käytetyn teksti koon.
         ((ImageView)pal.findViewById(R.id.mvKaava)).setImageDrawable(kf.getBmD(tiedot.get("kaava")));
 
+        //asetetaan pKa/pKb labeli oikeaksi
+        //jos on happo, ovat labelit valmiiksi oikein
+        if(tiedot.get("isHappo").compareTo("1") != 0)
+        {
+            //kyseessä on emäs
+            ((TextView)pal.findViewById(R.id.txvHappoVakioLabel)).setText(R.string.emäsvakiot);
+        }
+
         return pal;
     }
 
@@ -74,12 +82,12 @@ public class happoTulos extends Tulos {
         phView.setText(df2.format(calculatePh(1))+"");
         LinearLayout mainLay = (LinearLayout)pal.findViewById(R.id.lnMain);
         try {
-            //kuvan nimi tulee olla nimi kenttän arvo seuraavin muutoksin. välilyönti on korvattu _ merkillä ja prosentti merkki poistettu
-            ((ImageView)pal.findViewById(R.id.imgKuva)).setImageResource(R.drawable.class.getField(tiedot.get("nimi").replaceAll(" ","_").replaceAll("%","")).getInt(null));
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
+            if(tiedot.get("kuva").compareTo("-") != 0)
+            ((ImageView)pal.findViewById(R.id.imgKuva)).setImageResource(R.drawable.class.getField(tiedot.get("kuva")).getInt(null));
+        } catch (IllegalAccessException e1) {
+            e1.printStackTrace();
+        } catch (NoSuchFieldException e1) {
+            e1.printStackTrace();
         }
 
         //asetetaan yksikkö kuvat
@@ -164,6 +172,14 @@ public class happoTulos extends Tulos {
         ((TextView)pal.findViewById(R.id.txvSp)).setText(mp);
         ((TextView)pal.findViewById(R.id.txvKp)).setText(bp);
 
+        //asetetaan pKa/pKb labeli oikeaksi
+        //jos on happo, ovat labelit valmiiksi oikein
+        if(tiedot.get("isHappo").compareTo("1") != 0)
+        {
+            //kyseessä on emäs
+            ((TextView)pal.findViewById(R.id.txvHappoVakioLabel)).setText(R.string.emäsvakiot);
+        }
+
         return pal;
     }
 
@@ -172,10 +188,16 @@ public class happoTulos extends Tulos {
     public double calculatePh (float consent)
     {
         if (consent == 0) return -1;
-        double Ka = Math.pow(10, -1*Double.parseDouble(tiedot.get("happovakio1")));
+        double Ka = Math.pow(10, -1*Double.parseDouble(tiedot.get("happovakio1"))); //jos on emäs niin silloin tämä on oikeasti Kb
         double nom = Math.sqrt(Math.pow(Ka,2) + 4*consent*Ka);
         double cons = Math.max((Ka-nom)/-2,(Ka+nom)/-2);
-        return Math.log10(1/cons);
+        double pal = Math.log10(1/cons);
+        //jos on emäs, laskettiin pOH. pH = 14 - pOH
+        if(tiedot.get("isHappo").compareTo("0") == 0)
+        {
+            pal = 14 - pal;
+        }
+        return pal;
     }
 
 
