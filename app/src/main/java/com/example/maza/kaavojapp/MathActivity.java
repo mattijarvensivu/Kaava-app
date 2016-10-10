@@ -191,7 +191,7 @@ public class MathActivity extends AppCompatActivity
 
         //testausta
         if(haetaan) {
-            ((EditText) findViewById(R.id.Mathsearch)).setText("suosikki");
+            ((EditText) findViewById(R.id.Mathsearch)).setText("");
             HaeMath(null); //nyt toastaa jos kenttä on tyhjä. Tämähän pitäisi sitäpaitsi ajaa vain kun vaihdetaan kategoriaa. Jos pidetään tämä ratkaisu malli, voitaisiin nämä kaksi riviä laittaa iffin sisään
             ((EditText) findViewById(R.id.Mathsearch)).setText("");
         }
@@ -207,10 +207,13 @@ public class MathActivity extends AppCompatActivity
         EditText haku = (EditText) findViewById(R.id.Mathsearch);
         String hakuparametri = haku.getText().toString();
 
+
+
         if (hakuparametri.matches("")) {
             Toast.makeText(this, getString(R.string.check_input), Toast.LENGTH_SHORT).show();
             return;
         }
+
 
         Boolean tarkistus= false;
         StringValidator val = new StringValidator();
