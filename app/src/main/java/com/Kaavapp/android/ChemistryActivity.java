@@ -28,6 +28,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
@@ -53,9 +57,31 @@ public class ChemistryActivity extends AppCompatActivity
 
         // get data with own made queryData method
 
+
+
+
+
         setContentView(R.layout.activity_chemistry_activity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
+        MobileAds.initialize(getApplicationContext(), "ca-app-pub-3940256099942544/6300978111");
+
+
+        //ads
+
+
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                //Kaikki emulaattorit testin vuoksi
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                //Mun oma laiteid testi adien vuoksi (Otetaan pois kun oikeet adit)
+                .addTestDevice("358267051453788")
+                .build();
+        mAdView.loadAd(adRequest);
+
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
