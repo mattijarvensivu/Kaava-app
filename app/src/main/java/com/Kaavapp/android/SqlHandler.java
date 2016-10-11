@@ -21,7 +21,7 @@ import java.util.HashMap;
  */
 public class SqlHandler extends SQLiteOpenHelper {
 
-    private static String DB_PATH = "/data/data/com.example.kaavojapp/databases/";
+    private static String DB_PATH = "/data/data/com.Kaavapp.android/databases/";
 
     private static String DB_NAME = "Kaavapp.db";
 
@@ -194,6 +194,7 @@ public class SqlHandler extends SQLiteOpenHelper {
             }
             dn.close();
         }
+
 
 
     }
