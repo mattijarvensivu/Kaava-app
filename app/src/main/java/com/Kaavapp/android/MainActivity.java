@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        MobileAds.initialize(getApplicationContext(), "ca-app-pub-3940256099942544/6300978111");
+        MobileAds.initialize(getApplicationContext(), "ca-app-pub-4707921089851609~9967794573");
 
 
         //ads
