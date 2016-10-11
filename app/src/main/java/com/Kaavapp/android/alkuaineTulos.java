@@ -1,31 +1,18 @@
-package com.example.maza.kaavojapp;
+package com.Kaavapp.android;
 
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.text.Html;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import java.sql.Array;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import maximsblog.blogspot.com.jlatexmath.core.AjLatexMath;
-import maximsblog.blogspot.com.jlatexmath.core.TeXConstants;
-import maximsblog.blogspot.com.jlatexmath.core.TeXFormula;
-import maximsblog.blogspot.com.jlatexmath.core.TeXIcon;
 
 
 /**

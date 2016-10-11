@@ -1,4 +1,4 @@
-package com.example.maza.kaavojapp;
+package com.Kaavapp.android;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -11,19 +11,17 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.sql.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by janne on 3.6.2016.
  */
 public class SqlHandler extends SQLiteOpenHelper {
 
-    private static String DB_PATH = "/data/data/com.example.maza.kaavojapp/databases/";
+    private static String DB_PATH = "/data/data/com.example.kaavojapp/databases/";
 
     private static String DB_NAME = "Kaavapp.db";
 

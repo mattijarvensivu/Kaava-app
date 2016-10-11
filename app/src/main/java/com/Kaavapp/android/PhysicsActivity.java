@@ -1,11 +1,9 @@
-package com.example.maza.kaavojapp;
+package com.Kaavapp.android;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -26,28 +24,21 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Set;
 
-public class ChemistryActivity extends AppCompatActivity
+public class PhysicsActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     SqlHandler hand;
-
     private ListView listView;
-    private String[] listOfTables;
-    private String[] listOfTagTables;
+    //idea on että aihealueen valinta perustuu tägeihin. Koska käytännössä kaikki matikan tieto on kaava tai vakio taulussa, ei voida käyttää samaa ratkaisua kuin kemiassa. Tämä systeemi joudutaan ehkä lisäämään myös kemian osalle
+    String[] listOfReqTags = new String[]{};
 
     //näillä palataan takaisin largeViewistä
     boolean inLargeView = false;
@@ -61,7 +52,7 @@ public class ChemistryActivity extends AppCompatActivity
 
         // get data with own made queryData method
 
-        setContentView(R.layout.activity_chemistry_activity);
+        setContentView(R.layout.activity_physics);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -92,7 +83,7 @@ public class ChemistryActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-       listView = (ListView)  findViewById(R.id.lsvTulos);
+        listView = (ListView)  findViewById(R.id.lsvTulos);
         //lisätää listViewiin tapahtuma kun klikataan jotakin sen kohtaa
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -105,8 +96,6 @@ public class ChemistryActivity extends AppCompatActivity
             }
         });
         hand = new SqlHandler(getApplicationContext().getApplicationContext(), "", null, 1, true);
-        listOfTagTables = new String[]{"Alkuaineet","Funktionaalinenryhma","Kaava","Vakio"};
-        listOfTables = new String[]{"Alkuaineet","Funktionaalinenryhma","Hapot","Isotoopit","Kaava","Muuttuja","Vakio"};
     }
 
     @Override
@@ -114,11 +103,11 @@ public class ChemistryActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        }else if(inLargeView)
+        } else if(inLargeView)
         {
             inLargeView = false;
             placeToCenter(listView);
-        } else {
+        }else {
             super.onBackPressed();
         }
     }
@@ -126,7 +115,7 @@ public class ChemistryActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.chemistry_actitvity, menu);
+        getMenuInflater().inflate(R.menu.physics, menu);
         return true;
     }
 
@@ -159,64 +148,49 @@ public class ChemistryActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            finish();
 
+            finish();
         } else if (id == R.id.nav_gallery) {
             Intent myIntent = new Intent(this, MathActivity.class);
             startActivity(myIntent);
-            finish();
 
+            finish();
         } else if (id == R.id.nav_slideshow) {
-            Intent myIntent = new Intent(this, PhysicsActivity.class);
+            Intent myIntent = new Intent(this, ChemistryActivity.class);
             startActivity(myIntent);
             finish();
-        } else if (id == R.id.nav_camera) {
+        } else if (id == R.id.termodynamiikka) {
+            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.termodynamiikka));
+            listOfReqTags = new String[]{"termodynamiikka"};
 
 
+        } else if (id == R.id.mekaniikka) {
+            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.mekaniikka));
+            listOfReqTags = new String[]{"mekaniikka"};
 
-        } else if (id == R.id.Alkuaineet) {
-            listOfTagTables = new String[]{"Alkuaineet"};
-            listOfTables = new String[]{"Alkuaineet"};
-            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.chemistry_elements));
-
-
-        } else if (id == R.id.FnkRyhma) {
-            listOfTagTables = new String[]{"Funktionaalinenryhma"};
-            listOfTables = new String[]{"Funktionaalinenryhma"};
-            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.chemistry_functional));
-
-        }else if (id == R.id.Kaavat) {
-            listOfTagTables = new String[]{"Kaava"};
-            listOfTables = new String[]{"Kaava"};
-            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.formulas));
-
-        }else if (id == R.id.Vakiot) {
-            listOfTagTables = new String[]{"Vakio"};
-            listOfTables = new String[]{"Vakio"};
-            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.vakiot));
-
-        }else if (id == R.id.Hapot) {
-            listOfTagTables = new String[]{};
-            listOfTables = new String[]{"Hapot"};
-            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.hapot));
 
         }
+
         ((LinearLayout) findViewById(R.id.lnlContainer)).removeAllViews();
+        ((TextView)findViewById(R.id.Physicsearch)).setText("");
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
-    public void HaeChemistry(View v) {
+    public void HaePhysics(View v) {
         inLargeView = false;
-        Log.w("myApp", "Nappia painettu");
+        Log.w("myApp", " Fysiikka Nappia painettu");
 
-        EditText haku = (EditText) findViewById(R.id.Chemistrysearch);
+        EditText haku = (EditText) findViewById(R.id.Physicsearch);
         String hakuparametri = haku.getText().toString();
+
         if (hakuparametri.matches("")) {
             Toast.makeText(this, getString(R.string.check_input), Toast.LENGTH_SHORT).show();
             return;
         }
+        String[] listOfTagTables = new String[]{"Kaava","Vakio"};
+        String[] listOfTables = new String[]{"Kaava","Muuttuja","Vakio"};
 
         Boolean tarkistus= false;
         StringValidator val = new StringValidator();
@@ -229,17 +203,17 @@ public class ChemistryActivity extends AppCompatActivity
             if(tulos.size()==0 && hakuparametri.length()!=0) {
                 tulos = suoritaHaku(hakuparametri, listOfTables, false);
             }
-        //Jos haku tyhjä haetaan osahaulla
-        if(tulos.size()==0 && hakuparametri.length()!=0){
-        tulos = suoritaHaku("%"+hakuparametri+"%",listOfTables,false);
-            for(int i = 0; i < tulos.size(); i++)
-            {
-                if(tulos.get(i).getType().compareTo("Alkuaineet") == 0)
-                {
-                    ((alkuaineTulos)tulos.get(i)).boldaa(hakuparametri);
-                }
+            //Jos haku tyhjä haetaan osahaulla
+            if(tulos.size()==0 && hakuparametri.length()!=0){
+                tulos = suoritaHaku("%"+hakuparametri+"%",listOfTables,false);
+                // for(int i = 0; i < tulos.size(); i++)
+                // {
+                //    if(tulos.get(i).getType() == 1)
+                //   {
+                //       ((alkuaineTulos)tulos.get(i)).boldaa(hakuparametri);
+                //   }
+                // }
             }
-        }
 
             placeToCenter(listView); //laitetaan listViewi keskelle
 
@@ -304,41 +278,36 @@ public class ChemistryActivity extends AppCompatActivity
                         kentatAL.add(tmp);
                     }
                 }
+                ArrayList<HashMap<String,String>> tagit = new ArrayList<>();
+                //laitetaan rajoittavat tägit listaan.
+                for(String s:listOfReqTags)
+                {
+                    HashMap<String, String> tmp = new HashMap<>();
+                    tmp.put("nimi",s);
+                    tagit.add(tmp);
+                }
 
                 if(isTag==true)
                 {
-                    ArrayList<HashMap<String,String>> tagit = new ArrayList<>();
                     if(t.compareTo("Kaava") == 0 || t.compareTo("Vakio") == 0)
                     {
                         HashMap<String, String> tmp = new HashMap<>();
-                        tmp.put("nimi","kemia");
+                        tmp.put("nimi","fysiikka");
                         tagit.add(tmp);
                     }
                     tulos.addAll(hand.getValueByTag(t, kentatAL, tagit));
                 }else {
-                    ArrayList<HashMap<String,String>> tagit = new ArrayList<>();
                     if(t.compareTo("Kaava") == 0 || t.compareTo("Vakio") == 0)
                     {
                         HashMap<String, String> tmp = new HashMap<>();
-                        tmp.put("nimi","kemia");
+                        tmp.put("nimi","fysiikka");
                         tagit.add(tmp);
                     }
                     tulos.addAll(hand.getValue(t, kentat,tagit));
                 }
 
-               // tulos.addAll(hand.getValue(t, kentat));
+                // tulos.addAll(hand.getValue(t, kentat));
             }
-
-        }
-        for (Tulos t : tulos) {
-            t.setOnSuosikkiToggleListener(new suosikkiToggleListener() {
-                @Override
-                //nuo argumentit on aika ikävät koska en saanu passattua suoraan t muuttujaa... se ois pitäny declarata finaaliks.
-                public void onToggleSuosikki(Tulos t) {
-
-                    hand.muutaSuosikkiStatus(t);
-                }
-            });
 
         }
 
@@ -363,7 +332,7 @@ public class ChemistryActivity extends AppCompatActivity
         Configuration conf = res.getConfiguration();
         conf.locale = myLocale;
         res.updateConfiguration(conf, dm);
-        Intent refresh = new Intent(this, ChemistryActivity.class);
+        Intent refresh = new Intent(this, PhysicsActivity.class);
         startActivity(refresh);
         finish();
     }

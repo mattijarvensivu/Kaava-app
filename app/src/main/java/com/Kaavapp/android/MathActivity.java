@@ -1,11 +1,9 @@
-package com.example.maza.kaavojapp;
+package com.Kaavapp.android;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -26,28 +24,27 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Set;
 
-public class PhysicsActivity extends AppCompatActivity
+public class MathActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     SqlHandler hand;
     private ListView listView;
     //idea on että aihealueen valinta perustuu tägeihin. Koska käytännössä kaikki matikan tieto on kaava tai vakio taulussa, ei voida käyttää samaa ratkaisua kuin kemiassa. Tämä systeemi joudutaan ehkä lisäämään myös kemian osalle
     String[] listOfReqTags = new String[]{};
+    String[] listOfTagTables = new String[]{"Kaava","Vakio"};
+    String[] listOfTables = new String[]{"Kaava","Muuttuja","Vakio"};
 
     //näillä palataan takaisin largeViewistä
     boolean inLargeView = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +55,7 @@ public class PhysicsActivity extends AppCompatActivity
 
         // get data with own made queryData method
 
-        setContentView(R.layout.activity_physics);
+        setContentView(R.layout.activity_math);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -73,7 +70,8 @@ public class PhysicsActivity extends AppCompatActivity
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        {
             @Override
             //muutetaan standardi metodia niin että se sulkee näppäimistön kun sivupalkki avataan
             public void onDrawerOpened(View drawerView) {
@@ -84,6 +82,7 @@ public class PhysicsActivity extends AppCompatActivity
 
             }
         };
+
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
@@ -109,11 +108,12 @@ public class PhysicsActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else if(inLargeView)
+        }else if(inLargeView)
         {
             inLargeView = false;
             placeToCenter(listView);
-        }else {
+        }
+        else {
             super.onBackPressed();
         }
     }
@@ -121,7 +121,7 @@ public class PhysicsActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.physics, menu);
+        getMenuInflater().inflate(R.menu.math, menu);
         return true;
     }
 
@@ -152,51 +152,73 @@ public class PhysicsActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        boolean haetaan = true; //suoritetaanko haku "suosikki" tägillä
 
         if (id == R.id.nav_camera) {
-
             finish();
+
         } else if (id == R.id.nav_gallery) {
-            Intent myIntent = new Intent(this, MathActivity.class);
+            Intent myIntent = new Intent(this, PhysicsActivity.class);
             startActivity(myIntent);
-
+            haetaan = false;
             finish();
+
         } else if (id == R.id.nav_slideshow) {
             Intent myIntent = new Intent(this, ChemistryActivity.class);
             startActivity(myIntent);
+            haetaan = false;
             finish();
-        } else if (id == R.id.termodynamiikka) {
-            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.termodynamiikka));
-            listOfReqTags = new String[]{"termodynamiikka"};
+        } else if (id == R.id.algebra) {
+            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.algebra));
+            listOfReqTags = new String[]{"algebra"};
 
 
-        } else if (id == R.id.mekaniikka) {
-            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.mekaniikka));
-            listOfReqTags = new String[]{"mekaniikka"};
+        } else if (id == R.id.trigonometria) {
+            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.trigonometria));
+            listOfReqTags = new String[]{"trigonometria"};
 
+
+        } else if (id == R.id.derivointi) {
+            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.derivointi));
+            listOfReqTags = new String[]{"derivointi"};
+
+        }else if (id == R.id.integrointi) {
+            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.integrointi));
+            listOfReqTags = new String[]{"integrointi"};
 
         }
 
         ((LinearLayout) findViewById(R.id.lnlContainer)).removeAllViews();
-        ((TextView)findViewById(R.id.Physicsearch)).setText("");
+        //((TextView)findViewById(R.id.Mathsearch)).setText("");
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+
+        //testausta
+        if(haetaan) {
+            ((EditText) findViewById(R.id.Mathsearch)).setText("");
+            HaeMath(null); //nyt toastaa jos kenttä on tyhjä. Tämähän pitäisi sitäpaitsi ajaa vain kun vaihdetaan kategoriaa. Jos pidetään tämä ratkaisu malli, voitaisiin nämä kaksi riviä laittaa iffin sisään
+            ((EditText) findViewById(R.id.Mathsearch)).setText("");
+        }
+
+
         return true;
     }
 
-    public void HaePhysics(View v) {
-        inLargeView = false;
-        Log.w("myApp", " Fysiikka Nappia painettu");
+    public void HaeMath(View v) {
+        Log.w("myApp", " Matikka Nappia painettu");
 
-        EditText haku = (EditText) findViewById(R.id.Physicsearch);
+        inLargeView = false;
+        EditText haku = (EditText) findViewById(R.id.Mathsearch);
         String hakuparametri = haku.getText().toString();
+
+
 
         if (hakuparametri.matches("")) {
             Toast.makeText(this, getString(R.string.check_input), Toast.LENGTH_SHORT).show();
             return;
         }
-        String[] listOfTagTables = new String[]{"Kaava","Vakio"};
-        String[] listOfTables = new String[]{"Kaava","Muuttuja","Vakio"};
+
 
         Boolean tarkistus= false;
         StringValidator val = new StringValidator();
@@ -206,19 +228,20 @@ public class PhysicsActivity extends AppCompatActivity
 
             // Tarkistus mistä taulusta haetaan täytyy tehä
             ArrayList<Tulos> tulos = suoritaHaku(hakuparametri,listOfTagTables,true);
-            if(tulos.size()==0 && hakuparametri.length()!=0) {
+            //haku ei ilmeisesti tapahtunut tägiä käyttäen. Yritetään hakea kentän perusteella
+            if(tulos.size()==0 && hakuparametri.length()!=0) { //onko tuon haku parametrin tarkistus turha? eikös 0 pituiset kosahda tuohon missä toastataan check input?
                 tulos = suoritaHaku(hakuparametri, listOfTables, false);
             }
             //Jos haku tyhjä haetaan osahaulla
             if(tulos.size()==0 && hakuparametri.length()!=0){
                 tulos = suoritaHaku("%"+hakuparametri+"%",listOfTables,false);
-                // for(int i = 0; i < tulos.size(); i++)
-                // {
+               // for(int i = 0; i < tulos.size(); i++)
+               // {
                 //    if(tulos.get(i).getType() == 1)
-                //   {
-                //       ((alkuaineTulos)tulos.get(i)).boldaa(hakuparametri);
-                //   }
-                // }
+                 //   {
+                 //       ((alkuaineTulos)tulos.get(i)).boldaa(hakuparametri);
+                 //   }
+               // }
             }
 
             placeToCenter(listView); //laitetaan listViewi keskelle
@@ -237,6 +260,7 @@ public class PhysicsActivity extends AppCompatActivity
     {
         HashMap<String, String> kentat;
         String tmpHakuPreP = hakuparametri;
+        //syödään turhat välit pilkkujen ympäriltä pois
         String tmpHakuPosP = hakuparametri.replaceAll(", ", ",");
         while(tmpHakuPreP.compareTo(tmpHakuPosP) != 0)
         {
@@ -295,10 +319,11 @@ public class PhysicsActivity extends AppCompatActivity
 
                 if(isTag==true)
                 {
+
                     if(t.compareTo("Kaava") == 0 || t.compareTo("Vakio") == 0)
                     {
                         HashMap<String, String> tmp = new HashMap<>();
-                        tmp.put("nimi","fysiikka");
+                        tmp.put("nimi","matematiikka");
                         tagit.add(tmp);
                     }
                     tulos.addAll(hand.getValueByTag(t, kentatAL, tagit));
@@ -306,7 +331,7 @@ public class PhysicsActivity extends AppCompatActivity
                     if(t.compareTo("Kaava") == 0 || t.compareTo("Vakio") == 0)
                     {
                         HashMap<String, String> tmp = new HashMap<>();
-                        tmp.put("nimi","fysiikka");
+                        tmp.put("nimi","matematiikka");
                         tagit.add(tmp);
                     }
                     tulos.addAll(hand.getValue(t, kentat,tagit));
@@ -316,9 +341,29 @@ public class PhysicsActivity extends AppCompatActivity
             }
 
         }
+        //asetetaan jokaiselle tulokselle suosikkiStatuksen muutos listeneri.
+        ArrayList<Tulos> uusi = new ArrayList<>();
+        for (Tulos t : tulos) {
+            t.setOnSuosikkiToggleListener(new suosikkiToggleListener() {
+                @Override
+                //nuo argumentit on aika ikävät koska en saanu passattua suoraan t muuttujaa... se ois pitäny declarata finaaliks.
+                public void onToggleSuosikki(Tulos t) {
+
+                    hand.muutaSuosikkiStatus(t);
+                }
+            });
+            if(t.isSuosikki)
+            {
+                //tulos on suosikki. asetetaan kärkeen
+                uusi.add(0,t);
+            }else {
+                uusi.add(t);
+            }
+
+        }
 
 
-        return tulos;
+        return uusi;
 
     }
 
@@ -329,6 +374,7 @@ public class PhysicsActivity extends AppCompatActivity
         LinearLayout contai = (LinearLayout) findViewById(R.id.lnlContainer);
         contai.removeAllViews();
         contai.addView(target);
+
     }
 
     public void setLocale(String lang) {
@@ -338,7 +384,7 @@ public class PhysicsActivity extends AppCompatActivity
         Configuration conf = res.getConfiguration();
         conf.locale = myLocale;
         res.updateConfiguration(conf, dm);
-        Intent refresh = new Intent(this, PhysicsActivity.class);
+        Intent refresh = new Intent(this, MathActivity.class);
         startActivity(refresh);
         finish();
     }

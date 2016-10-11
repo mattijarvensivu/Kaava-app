@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1051081499661",
+    "firebase_url": "https://kaavapp-1b79d.firebaseio.com",
+    "project_id": "kaavapp-1b79d",
+    "storage_bucket": "kaavapp-1b79d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1051081499661:android:b570177ca3d26697",
+        "android_client_info": {
+          "package_name": "com.Kaavapp.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1051081499661-b5d88k0c2p4611bne38ojeo12rh57qu6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.Kaavapp.android",
+            "certificate_hash": "CE71387FCB672C929A3898C1896E8C6C317610CB"
+          }
+        },
+        {
+          "client_id": "1051081499661-mhr70b5gnu6kq90in5ejdav7ff9j2j5i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZ7KiZ88YI8msWKOJS335c1FjNVJ5D54E"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1051081499661-mhr70b5gnu6kq90in5ejdav7ff9j2j5i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

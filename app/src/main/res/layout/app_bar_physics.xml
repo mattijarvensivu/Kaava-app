@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.example.maza.kaavojapp.PhysicsActivity">
+    tools:context="com.Kaavapp.android.PhysicsActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

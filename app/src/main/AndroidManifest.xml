@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.maza.kaavojapp">
-
+    package="com.Kaavapp.android">
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
-            android:name=".MainActivity"
+            android:name="com.Kaavapp.android.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -19,15 +21,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MathActivity"
+            android:name="com.Kaavapp.android.MathActivity"
             android:label="@string/title_activity_math"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".PhysicsActivity"
+            android:name="com.Kaavapp.android.PhysicsActivity"
             android:label="@string/title_activity_physics"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ChemistryActivity"
+            android:name="com.Kaavapp.android.ChemistryActivity"
             android:label="@string/title_activity_chemistry_actitvity"
             android:windowSoftInputMode="stateHidden"
             android:theme="@style/AppTheme.NoActionBar"></activity>

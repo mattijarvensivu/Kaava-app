@@ -1,4 +1,4 @@
-package com.example.maza.kaavojapp;
+package com.Kaavapp.android;
 
 import org.junit.Test;
 
