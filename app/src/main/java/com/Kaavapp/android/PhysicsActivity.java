@@ -67,7 +67,7 @@ public class PhysicsActivity extends AppCompatActivity
         //ads
 
 
-        AdView mAdView = (AdView) findViewById(R.id.adView);
+        AdView mAdView = (AdView) findViewById(R.id.adViewPhysics);
         AdRequest adRequest = new AdRequest.Builder()
                 //Kaikki emulaattorit testin vuoksi
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
