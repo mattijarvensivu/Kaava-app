@@ -147,6 +147,7 @@ public class SqlHandler extends SQLiteOpenHelper {
                                 linkit.add(linkki);
                             } while (curS.moveToNext());
                         }
+                        curS.close();
                         //etsitään kaikki ne idt joilla on suosikki tägi
                         String querryIdt = "SELECT " + findPrimaryKeyName(curDef.getString(0)) + " FROM " + linkki + " WHERE _tagid = " + sId;
                         Cursor curIdt = d.rawQuery(querryIdt, null);
@@ -156,9 +157,11 @@ public class SqlHandler extends SQLiteOpenHelper {
                                 suosikit.get(linkki).add(curIdt.getInt(0));
                             } while (curIdt.moveToNext());
                         }
+                        curIdt.close();
 
                     } while (curDef.moveToNext());
                 }
+                curDef.close();
                 d.close(); //tarvitaanko?
 
             }
@@ -248,6 +251,7 @@ public class SqlHandler extends SQLiteOpenHelper {
 
             }
         } finally {
+            cur.close();
 
         }
         gatherAditionalData(pal);
@@ -283,7 +287,7 @@ public class SqlHandler extends SQLiteOpenHelper {
 
             }
         } finally {
-
+            cur.close();
         }
         gatherAditionalData(pal);
         return pal;
@@ -305,7 +309,6 @@ public class SqlHandler extends SQLiteOpenHelper {
         return pal;
     }
 
-    //Mitä tekee?
     private String getTagiStringi(String tableName, boolean useIntersection,ArrayList<HashMap<String, String>> searchParameters )
     {
         //haetaan taulut ja idKentät
@@ -394,6 +397,7 @@ public class SqlHandler extends SQLiteOpenHelper {
             }while(c.moveToNext());
         }
 
+        c.close();
         return pal;
     }
 
@@ -427,7 +431,7 @@ public class SqlHandler extends SQLiteOpenHelper {
 
             }
         }finally {
-            //cur.close(); //tarvitaanko?
+            cur.close(); //tarvitaanko?
             //db.close();
         }
         return pal;
@@ -545,7 +549,7 @@ public class SqlHandler extends SQLiteOpenHelper {
                 pal.add(cur.getString(0));
             }while (cur.moveToNext());
         }
-
+        cur.close();
         Log.d("Tagi","id: " + idVal + " table: " + tableName + " number of tags: " + pal.size());
         return pal;
     }
@@ -571,7 +575,7 @@ public class SqlHandler extends SQLiteOpenHelper {
 
             }
         } finally {
-            //cur.close(); //kuinka paha teko jättää nämä auki?
+            cur.close(); //Ei saa jättää näitä roikkumaan auki. Varsinkin jos on metodi jota kutsutaan useita kertoja haun aikana!
             //db.close();
 
         }
@@ -635,6 +639,7 @@ public class SqlHandler extends SQLiteOpenHelper {
 
                         }
                     } finally {
+                        cur.close();
 
                     }
                 }
@@ -691,6 +696,7 @@ public class SqlHandler extends SQLiteOpenHelper {
                 pal.add(cur.getString(0));
             }while(cur.moveToNext());
         }
+        cur.close();
         return pal;
 
     }
