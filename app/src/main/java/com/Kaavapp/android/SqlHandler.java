@@ -121,44 +121,50 @@ public class SqlHandler extends SQLiteOpenHelper {
         boolean writeSuosikit = false;
         HashMap<String, ArrayList<Integer>> suosikit = new HashMap<>();
         ArrayList<String> linkit = new ArrayList<>(); //ei periaatteessa tarvita mutta helpompi kirjoittaa
-        if(checkDataBase()) { //tarksitetaan onko tietokanta olemassa.
-            //tietokanta on olemassa
-            writeSuosikit = true;
+        try {
 
-            //otetaan suosikki asetukset talteen.
-            //haetaan defaultFieldsistä kaikki taulut joilla on tägitaulu, ja sen linkkitaulu
-            SQLiteDatabase d = getReadableDatabase();
-            String querryDefault = "SELECT _tname,linkkiTaulu,tagiTaulu FROM defaultFields WHERE linkkiTaulu NOT NULL";
-            Cursor curDef = d.rawQuery(querryDefault, null);
-            if (curDef.moveToFirst()) {
-                do {
-                    String linkki = curDef.getString(1);
-                    suosikit.put(linkki, new ArrayList<Integer>());
-                    //haetaan tätä linkkitaulua vastaavasta tägitaulusta suosikki tägin id
-                    String querrySuos = "SELECT _tagid FROM " + curDef.getString(2) + " WHERE nimi LIKE \"suosikki\"";
-                    Cursor curS = d.rawQuery(querrySuos, null);
-                    int sId = -1;
-                    if (curS.moveToFirst()) {
-                        do {
-                            sId = curS.getInt(0);
-                            suosikit.get(linkki).add(sId); //tallennetaan id listan ensimmäiseen alkioon. Tämä muistettava hashmappia lukiessa!
-                            linkit.add(linkki);
-                        } while (curS.moveToNext());
-                    }
-                    //etsitään kaikki ne idt joilla on suosikki tägi
-                    String querryIdt = "SELECT " + findPrimaryKeyName(curDef.getString(0)) + " FROM " + linkki + " WHERE _tagid = " + sId;
-                    Cursor curIdt = d.rawQuery(querryIdt, null);
-                    if (curIdt.moveToFirst()) {
-                        //luetaan idt muistiin
-                        do {
-                            suosikit.get(linkki).add(curIdt.getInt(0));
-                        } while (curIdt.moveToNext());
-                    }
+            if (checkDataBase()) { //tarksitetaan onko tietokanta olemassa.
+                //tietokanta on olemassa
+                writeSuosikit = true;
 
-                } while (curDef.moveToNext());
+                //otetaan suosikki asetukset talteen.
+                //haetaan defaultFieldsistä kaikki taulut joilla on tägitaulu, ja sen linkkitaulu
+                SQLiteDatabase d = getReadableDatabase();
+                String querryDefault = "SELECT _tname,linkkiTaulu,tagiTaulu FROM defaultFields WHERE linkkiTaulu NOT NULL";
+                Cursor curDef = d.rawQuery(querryDefault, null);
+                if (curDef.moveToFirst()) {
+                    do {
+                        String linkki = curDef.getString(1);
+                        suosikit.put(linkki, new ArrayList<Integer>());
+                        //haetaan tätä linkkitaulua vastaavasta tägitaulusta suosikki tägin id
+                        String querrySuos = "SELECT _tagid FROM " + curDef.getString(2) + " WHERE nimi LIKE \"suosikki\"";
+                        Cursor curS = d.rawQuery(querrySuos, null);
+                        int sId = -1;
+                        if (curS.moveToFirst()) {
+                            do {
+                                sId = curS.getInt(0);
+                                suosikit.get(linkki).add(sId); //tallennetaan id listan ensimmäiseen alkioon. Tämä muistettava hashmappia lukiessa!
+                                linkit.add(linkki);
+                            } while (curS.moveToNext());
+                        }
+                        //etsitään kaikki ne idt joilla on suosikki tägi
+                        String querryIdt = "SELECT " + findPrimaryKeyName(curDef.getString(0)) + " FROM " + linkki + " WHERE _tagid = " + sId;
+                        Cursor curIdt = d.rawQuery(querryIdt, null);
+                        if (curIdt.moveToFirst()) {
+                            //luetaan idt muistiin
+                            do {
+                                suosikit.get(linkki).add(curIdt.getInt(0));
+                            } while (curIdt.moveToNext());
+                        }
+
+                    } while (curDef.moveToNext());
+                }
+                d.close(); //tarvitaanko?
+
             }
-            d.close(); //tarvitaanko?
-
+        }catch (SQLiteException e)
+        {
+            Log.d("minun", "Tapahtui sqlVirhe!");
         }
 
         Log.d("minun","creating database");
