@@ -208,6 +208,14 @@ public class MathActivity extends AppCompatActivity
             ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.integrointi));
             listOfReqTags = new String[]{"integrointi"};
 
+        }else if (id == R.id.vektori) {
+            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.vektori));
+            listOfReqTags = new String[]{"vektori"};
+
+        }else if (id == R.id.tilastotiede) {
+            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.tilastotiede));
+            listOfReqTags = new String[]{"tilastotiede"};
+
         }
 
         ((LinearLayout) findViewById(R.id.lnlContainer)).removeAllViews();
