@@ -718,6 +718,42 @@ public class SqlHandler extends SQLiteOpenHelper {
         return halututKentat;
     }
 
+    //tämän tehtävä on hankkia ja lajitella ionitulokset, ei muodostaa suola tuloksia.
+    public ArrayList<ioniTulos>[] fidSolubility(ioniTulos it)
+    {
+        ArrayList<ioniTulos>[] pal = new ArrayList[4];
+        String[] liukoisuusTaulut = {"vesiliukoinen","osittainliukoinen","niukkaliukoinen","reagoi"};
+        String valintaKentta = "kationiid"; //kenttä joka haetaan liukoisuus taulusta
+        String kohdeKentta = "anioniid"; //kenttä joknka perusteella haku tehdään
+        if(it.isKationi())
+        {
+            //varaus on negatiivinen, kyseessä on kationi. Vastin ioni on siis anioni
+            valintaKentta = "anioniid";
+            kohdeKentta = "kationiid";
+        }
+        String querry = "";
+        SQLiteDatabase db = getReadableDatabase();
+        ArrayList<String[]> tableS = getStructure("ionit");
+        for(int i = 0; i < liukoisuusTaulut.length; i++) {
+            pal[i] = new ArrayList<>();
+            querry = "SELECT _ionid, kaava, varaus FROM(SELECT * FROM ionit AS i JOIN (SELECT " + valintaKentta + " FROM " + liukoisuusTaulut[i] + " WHERE " + kohdeKentta + " = " + it.getValue("_ionid") + ") AS l ON i._ionid = l."+ valintaKentta +")";
+            Cursor c = db.rawQuery(querry, null);
+            if(c.moveToFirst())
+            {
+                do{
+                    HashMap<String, String> tmp = new HashMap<>();
+                    for(int j = 0; j < tableS.size(); j++)
+                    {
+                        tmp.put(tableS.get(j)[0],c.getString(j));
+                    }
+                    pal[i].add(new ioniTulos(tmp));
+                }while (c.moveToNext());
+            }
+        }
+
+        return pal;
+    }
+
 
 
 

@@ -60,5 +60,10 @@
     <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
     <string name="vektori">Vectors</string>
     <string name="tilastotiede">Statistics</string>
+    <string name="liukoinen">Soluable</string>
+    <string name="osittain">Partly soluable</string>
+    <string name="niukka">Insoluable</string>
+    <string name="reagoi">Reacts</string>
+    <string name="suolat">Salts</string>
 
 </resources>
