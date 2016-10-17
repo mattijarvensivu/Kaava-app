@@ -179,6 +179,7 @@ public class ChemistryActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
+            haetaan = false;
             finish();
 
         } else if (id == R.id.nav_gallery) {
@@ -248,9 +249,9 @@ public class ChemistryActivity extends AppCompatActivity
 
         if(haetaan) {
             ((LinearLayout) findViewById(R.id.lnlContainer)).removeAllViews();
-            ((EditText) findViewById(R.id.Mathsearch)).setText("");
+            ((EditText) findViewById(R.id.Chemistrysearch)).setText("%");
             HaeChemistry(null); //nyt toastaa jos kenttä on tyhjä. Tämähän pitäisi sitäpaitsi ajaa vain kun vaihdetaan kategoriaa. Jos pidetään tämä ratkaisu malli, voitaisiin nämä kaksi riviä laittaa iffin sisään
-            ((EditText) findViewById(R.id.Mathsearch)).setText("");
+            ((EditText) findViewById(R.id.Chemistrysearch)).setText("");
         }
 
         return true;

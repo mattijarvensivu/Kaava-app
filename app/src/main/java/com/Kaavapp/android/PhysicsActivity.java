@@ -168,18 +168,21 @@ public class PhysicsActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        boolean haetaan = true;
 
         if (id == R.id.nav_camera) {
 
+            haetaan = false;
             finish();
         } else if (id == R.id.nav_gallery) {
             Intent myIntent = new Intent(this, MathActivity.class);
             startActivity(myIntent);
-
+            haetaan = false;
             finish();
         } else if (id == R.id.nav_slideshow) {
             Intent myIntent = new Intent(this, ChemistryActivity.class);
             startActivity(myIntent);
+            haetaan = false;
             finish();
         } else if (id == R.id.termodynamiikka) {
             ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.termodynamiikka));
@@ -197,6 +200,14 @@ public class PhysicsActivity extends AppCompatActivity
         ((TextView)findViewById(R.id.Physicsearch)).setText("");
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+
+        if(haetaan) {
+            ((LinearLayout) findViewById(R.id.lnlContainer)).removeAllViews();
+            ((EditText) findViewById(R.id.Physicsearch)).setText("%");
+            HaePhysics(null); //nyt toastaa jos kenttä on tyhjä. Tämähän pitäisi sitäpaitsi ajaa vain kun vaihdetaan kategoriaa. Jos pidetään tämä ratkaisu malli, voitaisiin nämä kaksi riviä laittaa iffin sisään
+            ((EditText) findViewById(R.id.Physicsearch)).setText("");
+        }
+
         return true;
     }
 

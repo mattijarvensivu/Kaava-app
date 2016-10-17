@@ -177,6 +177,7 @@ public class MathActivity extends AppCompatActivity
         boolean haetaan = true; //suoritetaanko haku "suosikki" tägillä
 
         if (id == R.id.nav_camera) {
+            haetaan = false;
             finish();
 
         } else if (id == R.id.nav_gallery) {
@@ -226,7 +227,7 @@ public class MathActivity extends AppCompatActivity
 
         //testausta
         if(haetaan) {
-            ((EditText) findViewById(R.id.Mathsearch)).setText("");
+            ((EditText) findViewById(R.id.Mathsearch)).setText("%");
             HaeMath(null); //nyt toastaa jos kenttä on tyhjä. Tämähän pitäisi sitäpaitsi ajaa vain kun vaihdetaan kategoriaa. Jos pidetään tämä ratkaisu malli, voitaisiin nämä kaksi riviä laittaa iffin sisään
             ((EditText) findViewById(R.id.Mathsearch)).setText("");
         }
