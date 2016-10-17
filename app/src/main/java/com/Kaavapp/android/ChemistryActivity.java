@@ -40,6 +40,7 @@ import java.util.Set;
 public class ChemistryActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     SqlHandler hand;
+    suolat suolatHolder;
 
     private ListView listView;
     private String[] listOfTables;
@@ -173,6 +174,7 @@ public class ChemistryActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        boolean haetaan = true;
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
@@ -182,11 +184,13 @@ public class ChemistryActivity extends AppCompatActivity
         } else if (id == R.id.nav_gallery) {
             Intent myIntent = new Intent(this, MathActivity.class);
             startActivity(myIntent);
+            haetaan = false;
             finish();
 
         } else if (id == R.id.nav_slideshow) {
             Intent myIntent = new Intent(this, PhysicsActivity.class);
             startActivity(myIntent);
+            haetaan = false;
             finish();
         } else if (id == R.id.nav_camera) {
 
@@ -218,10 +222,37 @@ public class ChemistryActivity extends AppCompatActivity
             listOfTables = new String[]{"Hapot"};
             ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.hapot));
 
+        }else if (id == R.id.Suolat) {
+            haetaan = false;
+            if(suolatHolder == null)
+            {
+                String[] kohde = {"ionit"};
+                ArrayList<Tulos> ionit = suoritaHaku("%",kohde, false);
+                AdapterView.OnItemClickListener l = new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        suolatHolder.setSuolat(hand.fidSolubility(suolatHolder.getAtPosition(position)),suolatHolder.getAtPosition(position));
+                        placeToCenter(suolatHolder.getList());
+
+                    }
+                };
+                suolatHolder = new suolat(ionit,l,getApplicationContext());
+
+            }
+            suolatHolder.setIonit();
+            placeToCenter(suolatHolder.getList());
         }
-        ((LinearLayout) findViewById(R.id.lnlContainer)).removeAllViews();
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+
+        if(haetaan) {
+            ((LinearLayout) findViewById(R.id.lnlContainer)).removeAllViews();
+            ((EditText) findViewById(R.id.Mathsearch)).setText("");
+            HaeChemistry(null); //nyt toastaa jos kenttä on tyhjä. Tämähän pitäisi sitäpaitsi ajaa vain kun vaihdetaan kategoriaa. Jos pidetään tämä ratkaisu malli, voitaisiin nämä kaksi riviä laittaa iffin sisään
+            ((EditText) findViewById(R.id.Mathsearch)).setText("");
+        }
+
         return true;
     }
 

@@ -121,44 +121,53 @@ public class SqlHandler extends SQLiteOpenHelper {
         boolean writeSuosikit = false;
         HashMap<String, ArrayList<Integer>> suosikit = new HashMap<>();
         ArrayList<String> linkit = new ArrayList<>(); //ei periaatteessa tarvita mutta helpompi kirjoittaa
-        if(checkDataBase()) { //tarksitetaan onko tietokanta olemassa.
-            //tietokanta on olemassa
-            writeSuosikit = true;
+        try {
 
-            //otetaan suosikki asetukset talteen.
-            //haetaan defaultFieldsistä kaikki taulut joilla on tägitaulu, ja sen linkkitaulu
-            SQLiteDatabase d = getReadableDatabase();
-            String querryDefault = "SELECT _tname,linkkiTaulu,tagiTaulu FROM defaultFields WHERE linkkiTaulu NOT NULL";
-            Cursor curDef = d.rawQuery(querryDefault, null);
-            if (curDef.moveToFirst()) {
-                do {
-                    String linkki = curDef.getString(1);
-                    suosikit.put(linkki, new ArrayList<Integer>());
-                    //haetaan tätä linkkitaulua vastaavasta tägitaulusta suosikki tägin id
-                    String querrySuos = "SELECT _tagid FROM " + curDef.getString(2) + " WHERE nimi LIKE \"suosikki\"";
-                    Cursor curS = d.rawQuery(querrySuos, null);
-                    int sId = -1;
-                    if (curS.moveToFirst()) {
-                        do {
-                            sId = curS.getInt(0);
-                            suosikit.get(linkki).add(sId); //tallennetaan id listan ensimmäiseen alkioon. Tämä muistettava hashmappia lukiessa!
-                            linkit.add(linkki);
-                        } while (curS.moveToNext());
-                    }
-                    //etsitään kaikki ne idt joilla on suosikki tägi
-                    String querryIdt = "SELECT " + findPrimaryKeyName(curDef.getString(0)) + " FROM " + linkki + " WHERE _tagid = " + sId;
-                    Cursor curIdt = d.rawQuery(querryIdt, null);
-                    if (curIdt.moveToFirst()) {
-                        //luetaan idt muistiin
-                        do {
-                            suosikit.get(linkki).add(curIdt.getInt(0));
-                        } while (curIdt.moveToNext());
-                    }
+            if (checkDataBase()) { //tarksitetaan onko tietokanta olemassa.
+                //tietokanta on olemassa
+                writeSuosikit = true;
 
-                } while (curDef.moveToNext());
+                //otetaan suosikki asetukset talteen.
+                //haetaan defaultFieldsistä kaikki taulut joilla on tägitaulu, ja sen linkkitaulu
+                SQLiteDatabase d = getReadableDatabase();
+                String querryDefault = "SELECT _tname,linkkiTaulu,tagiTaulu FROM defaultFields WHERE linkkiTaulu NOT NULL";
+                Cursor curDef = d.rawQuery(querryDefault, null);
+                if (curDef.moveToFirst()) {
+                    do {
+                        String linkki = curDef.getString(1);
+                        suosikit.put(linkki, new ArrayList<Integer>());
+                        //haetaan tätä linkkitaulua vastaavasta tägitaulusta suosikki tägin id
+                        String querrySuos = "SELECT _tagid FROM " + curDef.getString(2) + " WHERE nimi LIKE \"suosikki\"";
+                        Cursor curS = d.rawQuery(querrySuos, null);
+                        int sId = -1;
+                        if (curS.moveToFirst()) {
+                            do {
+                                sId = curS.getInt(0);
+                                suosikit.get(linkki).add(sId); //tallennetaan id listan ensimmäiseen alkioon. Tämä muistettava hashmappia lukiessa!
+                                linkit.add(linkki);
+                            } while (curS.moveToNext());
+                        }
+                        curS.close();
+                        //etsitään kaikki ne idt joilla on suosikki tägi
+                        String querryIdt = "SELECT " + findPrimaryKeyName(curDef.getString(0)) + " FROM " + linkki + " WHERE _tagid = " + sId;
+                        Cursor curIdt = d.rawQuery(querryIdt, null);
+                        if (curIdt.moveToFirst()) {
+                            //luetaan idt muistiin
+                            do {
+                                suosikit.get(linkki).add(curIdt.getInt(0));
+                            } while (curIdt.moveToNext());
+                        }
+                        curIdt.close();
+
+                    } while (curDef.moveToNext());
+                }
+                curDef.close();
+                d.close(); //tarvitaanko?
+
             }
-            d.close(); //tarvitaanko?
-
+        }catch (SQLiteException e)
+        {
+            Log.d("minun", "Tapahtui sqlVirhe!");
         }
 
         Log.d("minun","creating database");
@@ -242,6 +251,7 @@ public class SqlHandler extends SQLiteOpenHelper {
 
             }
         } finally {
+            cur.close();
 
         }
         gatherAditionalData(pal);
@@ -277,7 +287,7 @@ public class SqlHandler extends SQLiteOpenHelper {
 
             }
         } finally {
-
+            cur.close();
         }
         gatherAditionalData(pal);
         return pal;
@@ -299,7 +309,6 @@ public class SqlHandler extends SQLiteOpenHelper {
         return pal;
     }
 
-    //Mitä tekee?
     private String getTagiStringi(String tableName, boolean useIntersection,ArrayList<HashMap<String, String>> searchParameters )
     {
         //haetaan taulut ja idKentät
@@ -388,6 +397,7 @@ public class SqlHandler extends SQLiteOpenHelper {
             }while(c.moveToNext());
         }
 
+        c.close();
         return pal;
     }
 
@@ -421,7 +431,7 @@ public class SqlHandler extends SQLiteOpenHelper {
 
             }
         }finally {
-            //cur.close(); //tarvitaanko?
+            cur.close(); //tarvitaanko?
             //db.close();
         }
         return pal;
@@ -539,7 +549,7 @@ public class SqlHandler extends SQLiteOpenHelper {
                 pal.add(cur.getString(0));
             }while (cur.moveToNext());
         }
-
+        cur.close();
         Log.d("Tagi","id: " + idVal + " table: " + tableName + " number of tags: " + pal.size());
         return pal;
     }
@@ -565,7 +575,7 @@ public class SqlHandler extends SQLiteOpenHelper {
 
             }
         } finally {
-            //cur.close(); //kuinka paha teko jättää nämä auki?
+            cur.close(); //Ei saa jättää näitä roikkumaan auki. Varsinkin jos on metodi jota kutsutaan useita kertoja haun aikana!
             //db.close();
 
         }
@@ -629,6 +639,7 @@ public class SqlHandler extends SQLiteOpenHelper {
 
                         }
                     } finally {
+                        cur.close();
 
                     }
                 }
@@ -685,6 +696,7 @@ public class SqlHandler extends SQLiteOpenHelper {
                 pal.add(cur.getString(0));
             }while(cur.moveToNext());
         }
+        cur.close();
         return pal;
 
     }
@@ -704,6 +716,42 @@ public class SqlHandler extends SQLiteOpenHelper {
 
         }
         return halututKentat;
+    }
+
+    //tämän tehtävä on hankkia ja lajitella ionitulokset, ei muodostaa suola tuloksia.
+    public ArrayList<ioniTulos>[] fidSolubility(ioniTulos it)
+    {
+        ArrayList<ioniTulos>[] pal = new ArrayList[4];
+        String[] liukoisuusTaulut = {"vesiliukoinen","osittainliukoinen","niukkaliukoinen","reagoi"};
+        String valintaKentta = "kationiid"; //kenttä joka haetaan liukoisuus taulusta
+        String kohdeKentta = "anioniid"; //kenttä joknka perusteella haku tehdään
+        if(it.isKationi())
+        {
+            //varaus on negatiivinen, kyseessä on kationi. Vastin ioni on siis anioni
+            valintaKentta = "anioniid";
+            kohdeKentta = "kationiid";
+        }
+        String querry = "";
+        SQLiteDatabase db = getReadableDatabase();
+        ArrayList<String[]> tableS = getStructure("ionit");
+        for(int i = 0; i < liukoisuusTaulut.length; i++) {
+            pal[i] = new ArrayList<>();
+            querry = "SELECT _ionid, kaava, varaus FROM(SELECT * FROM ionit AS i JOIN (SELECT " + valintaKentta + " FROM " + liukoisuusTaulut[i] + " WHERE " + kohdeKentta + " = " + it.getValue("_ionid") + ") AS l ON i._ionid = l."+ valintaKentta +")";
+            Cursor c = db.rawQuery(querry, null);
+            if(c.moveToFirst())
+            {
+                do{
+                    HashMap<String, String> tmp = new HashMap<>();
+                    for(int j = 0; j < tableS.size(); j++)
+                    {
+                        tmp.put(tableS.get(j)[0],c.getString(j));
+                    }
+                    pal[i].add(new ioniTulos(tmp));
+                }while (c.moveToNext());
+            }
+        }
+
+        return pal;
     }
 
 

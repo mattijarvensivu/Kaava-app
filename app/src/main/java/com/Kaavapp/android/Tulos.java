@@ -47,6 +47,8 @@ public class Tulos {
         //jos halutaan kuitenkin luoda spesifit tulos luokat, en keksi parempaa tapaa toteuttaa tätä.
         switch (values.size())
         {
+            case 3: //kyseesssä ioni
+                return new ioniTulos(values);
             case 23: //kyseesssä alkuaine
                 return new alkuaineTulos(values);
             case 13: //kyseessä happo.

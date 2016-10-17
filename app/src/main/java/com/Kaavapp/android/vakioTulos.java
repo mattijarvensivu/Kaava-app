@@ -31,16 +31,21 @@ public class vakioTulos extends Tulos{
     public View getSmallView (LayoutInflater infl, ViewGroup paren) {
         View pal = super.getSmallView(infl, paren);
 
-        ((TextView)pal.findViewById(R.id.txvSymbol)).setText(tiedot.get("symbol"));
+
         ((TextView)pal.findViewById(R.id.txvKuvaus)).setText(tiedot.get("nimi"));
         ((TextView)pal.findViewById(R.id.txvArvo)).setText(tiedot.get("arvo"));
+
+        KaavaFactory kf = new KaavaFactory(pal.getContext(),pal.getResources(),(int)Math.ceil(((TextView)pal.findViewById(R.id.txvArvo)).getTextSize()/ pal.getResources().getDisplayMetrics().density)); //viimeinen parametri laskee käytetyn teksti koon.
+
+        //((TextView)pal.findViewById(R.id.txvSymbol)).setText(tiedot.get("symbol"));
+        ((TextView)pal.findViewById(R.id.txvSymbol)).setText(tiedot.get("symbol"));
 
         String yksikkoStr = tiedot.get("yksikko");
 
         if(yksikkoStr.compareTo("-") != 0) {
             ImageView yksikko = (ImageView) pal.findViewById(R.id.mvYksikko);
 
-            KaavaFactory kf = new KaavaFactory(pal.getContext(),pal.getResources(),(int)Math.ceil(((TextView)pal.findViewById(R.id.txvSymbol)).getTextSize()/ pal.getResources().getDisplayMetrics().density)); //viimeinen parametri laskee käytetyn teksti koon.
+
             ((ImageView) pal.findViewById(R.id.mvYksikko)).setImageDrawable(kf.getBmD(tiedot.get("yksikko")));
         }
         return pal;

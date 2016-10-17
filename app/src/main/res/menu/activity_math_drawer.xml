@@ -35,6 +35,14 @@
                 android:id="@+id/integrointi"
                 android:title="@string/integrointi" />
 
+            <item
+                android:id="@+id/vektori"
+                android:title="@string/vektori" />
+
+            <item
+                android:id="@+id/tilastotiede"
+                android:title="@string/tilastotiede" />
+
         </menu>
     </item>
 

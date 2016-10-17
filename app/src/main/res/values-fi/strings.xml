@@ -56,5 +56,12 @@
     <string name="english">Englanti</string>
     <string name="finnish">Suomi</string>
     <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="vektori">Vektori</string>
+    <string name="tilastotiede">Tilastotiede</string>
+    <string name="liukoinen">Liukenee</string>
+    <string name="osittain">Liukenee osittain</string>
+    <string name="niukka">Niukka liukoinen</string>
+    <string name="reagoi">Reagoi</string>
+    <string name="sulat">Suolat</string>
 
 </resources>
