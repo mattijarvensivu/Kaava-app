@@ -40,7 +40,6 @@ import java.util.Set;
 public class ChemistryActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     SqlHandler hand;
-    suolat suolatHolder;
 
     private ListView listView;
     private String[] listOfTables;
@@ -125,7 +124,9 @@ public class ChemistryActivity extends AppCompatActivity
         });
         hand = new SqlHandler(getApplicationContext().getApplicationContext(), "", null, 1, true);
         listOfTagTables = new String[]{"Alkuaineet","Funktionaalinenryhma","Kaava","Vakio"};
-        listOfTables = new String[]{"Alkuaineet","Funktionaalinenryhma","Hapot","Isotoopit","Kaava","Muuttuja","Vakio"};
+        listOfTables = new String[]{"Alkuaineet","Funktionaalinenryhma","Hapot","Isotoopit","Kaava","Muuttuja","Vakio","ionit"};
+
+
     }
 
     @Override
@@ -224,24 +225,9 @@ public class ChemistryActivity extends AppCompatActivity
             ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.hapot));
 
         }else if (id == R.id.Suolat) {
-            haetaan = false;
-            if(suolatHolder == null)
-            {
-                String[] kohde = {"ionit"};
-                ArrayList<Tulos> ionit = suoritaHaku("%",kohde, false);
-                AdapterView.OnItemClickListener l = new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        suolatHolder.setSuolat(hand.fidSolubility(suolatHolder.getAtPosition(position)),suolatHolder.getAtPosition(position));
-                        placeToCenter(suolatHolder.getList());
+            listOfTagTables = new String[]{};
+            listOfTables = new String[]{"ionit"};
 
-                    }
-                };
-                suolatHolder = new suolat(ionit,l,getApplicationContext());
-
-            }
-            suolatHolder.setIonit();
-            placeToCenter(suolatHolder.getList());
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -250,7 +236,7 @@ public class ChemistryActivity extends AppCompatActivity
         if(haetaan) {
             ((LinearLayout) findViewById(R.id.lnlContainer)).removeAllViews();
             ((EditText) findViewById(R.id.Chemistrysearch)).setText("%");
-            HaeChemistry(null); //nyt toastaa jos kenttä on tyhjä. Tämähän pitäisi sitäpaitsi ajaa vain kun vaihdetaan kategoriaa. Jos pidetään tämä ratkaisu malli, voitaisiin nämä kaksi riviä laittaa iffin sisään
+            HaeChemistry(null);
             ((EditText) findViewById(R.id.Chemistrysearch)).setText("");
         }
 

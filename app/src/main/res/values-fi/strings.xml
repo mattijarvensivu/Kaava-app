@@ -62,6 +62,22 @@
     <string name="osittain">Liukenee osittain</string>
     <string name="niukka">Niukka liukoinen</string>
     <string name="reagoi">Reagoi</string>
-    <string name="sulat">Suolat</string>
+    <string name="suolat">Suolat</string>
+    <string name="eiTietoa">Ei tietoa</string>
+    <string name="kiintea">Kiinteä</string>
+    <string name="neste">Neste</string>
+    <string name="kaasu">Kaasu</string>
+    <string name="alkaaliMetalli">Alkaalimetalli</string>
+    <string name="maaAlkaaliMetalli">Maa-alkaalimetalli</string>
+    <string name="siirtymaMetalli">Siirtymämetalli</string>
+    <string name="muuMetalli">Muu metalli</string>
+    <string name="puoliMetalli">Puolimetalli</string>
+    <string name="lantanoidi">Lantanoidi</string>
+    <string name="aktanoidi">Aktanoidi</string>
+    <string name="epametalli">Epämetalli</string>
+    <string name="halogeeni">Halogeeni</string>
+    <string name="jalokaasu">Jalokaasu</string>
+
+
 
 </resources>

@@ -204,7 +204,7 @@ public class PhysicsActivity extends AppCompatActivity
         if(haetaan) {
             ((LinearLayout) findViewById(R.id.lnlContainer)).removeAllViews();
             ((EditText) findViewById(R.id.Physicsearch)).setText("%");
-            HaePhysics(null); //nyt toastaa jos kenttä on tyhjä. Tämähän pitäisi sitäpaitsi ajaa vain kun vaihdetaan kategoriaa. Jos pidetään tämä ratkaisu malli, voitaisiin nämä kaksi riviä laittaa iffin sisään
+            HaePhysics(null);
             ((EditText) findViewById(R.id.Physicsearch)).setText("");
         }
 

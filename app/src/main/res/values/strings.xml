@@ -37,9 +37,9 @@
     <string name="ph_konsentraatio">pH in concentration: </string>
     <string name="happovakiot">pKa</string>
     <string name="emäsvakiot">pKb</string>
-    <string name="puoliintumisaika">Period of decay: </string>
+    <string name="puoliintumisaika">Half life: </string>
     <string name="suhteellinenosuus">Relative portion in nature: </string>
-    <string name="hajoamistavat">Ways of decay: </string>
+    <string name="hajoamistavat">Decay paths: </string>
     <string name="moolimassa"> Molar mass: </string>
     <string name="ph1mliuos">at 1M solution: </string>
     <string name="symboli">Symbol</string>
@@ -65,5 +65,19 @@
     <string name="niukka">Insoluable</string>
     <string name="reagoi">Reacts</string>
     <string name="suolat">Salts</string>
+    <string name="eiTietoa">No data</string>
+    <string name="kiintea">Solid</string>
+    <string name="neste">Liquid</string>
+    <string name="kaasu">Gas</string>
+    <string name="alkaaliMetalli">Alkali metal</string>
+    <string name="maaAlkaaliMetalli">Earth alkali metal</string>
+    <string name="siirtymaMetalli">Transition metal</string>
+    <string name="muuMetalli">Other metal</string>
+    <string name="puoliMetalli">Metalloid</string>
+    <string name="lantanoidi">Lanthanid</string>
+    <string name="aktanoidi">Aktanid</string>
+    <string name="epametalli">Nonmetal</string>
+    <string name="halogeeni">Halogen</string>
+    <string name="jalokaasu">Noble gas</string>
 
 </resources>

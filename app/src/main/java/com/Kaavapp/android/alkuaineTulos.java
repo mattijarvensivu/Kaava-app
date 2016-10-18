@@ -3,6 +3,7 @@ package com.Kaavapp.android;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 
 
 /**
@@ -102,13 +104,13 @@ public class alkuaineTulos extends Tulos {
 
         //muutetaan atomisäteen no data suomenkieliseksi ja lisätään yksikkö
         if (tiedot.get("atomiSadeTheo").compareTo("no data") == 0) {
-            aSadeT.setText("Ei tietoa");
+            aSadeT.setText(R.string.eiTietoa);
         } else {
             aSadeT.setText(tiedot.get("atomiSadeTheo") + "pm");
         }
 
         if (tiedot.get("atomiSadeEmpi").compareTo("no data") == 0) {
-            aSadeK.setText("Ei tietoa");
+            aSadeK.setText(R.string.eiTietoa);
         } else {
             aSadeK.setText(tiedot.get("atomiSadeEmpi") + "pm");
         }
@@ -116,57 +118,57 @@ public class alkuaineTulos extends Tulos {
         //olomuoto ja luokka on koodattu tietokannassa. Tässä numero muutetaan sanaksi
         switch (Integer.parseInt(tiedot.get("olomuoto"))) {
             case 1:
-                oMuoto.setText("kiinteä");
+                oMuoto.setText(R.string.kiintea);
                 break;
 
             case 2:
-                oMuoto.setText("neste");
+                oMuoto.setText(R.string.neste);
                 break;
 
             case 3:
-                oMuoto.setText("kaasu");
+                oMuoto.setText(R.string.kaasu);
                 break;
         }
 
         switch (Integer.parseInt(tiedot.get("luokka"))) {
             case 0:
-                luokka.setText("alkaali metalli");
+                luokka.setText(R.string.alkaaliMetalli);
                 break;
 
             case 1:
-                luokka.setText("maa-alkaali metalli");
+                luokka.setText(R.string.maaAlkaaliMetalli);
                 break;
 
             case 2:
-                luokka.setText("siirtymä metalli");
+                luokka.setText(R.string.siirtymaMetalli);
                 break;
 
             case 3:
-                luokka.setText("muu metalli");
+                luokka.setText(R.string.muuMetalli);
                 break;
 
             case 4:
-                luokka.setText("puoli metalli");
+                luokka.setText(R.string.puoliMetalli);
                 break;
 
             case 5:
-                luokka.setText("lantanoidi");
+                luokka.setText(R.string.lantanoidi);
                 break;
 
             case 6:
-                luokka.setText("aktanoidi");
+                luokka.setText(R.string.aktanoidi);
                 break;
 
             case 7:
-                luokka.setText("epämetalli");
+                luokka.setText(R.string.epametalli);
                 break;
 
             case 8:
-                luokka.setText("halogeeni");
+                luokka.setText(R.string.halogeeni);
                 break;
 
             case 9:
-                luokka.setText("jalokaasu");
+                luokka.setText(R.string.jalokaasu);
                 break;
         }
 
@@ -217,6 +219,8 @@ public class alkuaineTulos extends Tulos {
             isot.addView(tmp);
         }
 
+        Locale current = paren.getResources().getConfiguration().locale;
+        Log.d("minun", current.getDisplayLanguage());
 
 
         return pal;

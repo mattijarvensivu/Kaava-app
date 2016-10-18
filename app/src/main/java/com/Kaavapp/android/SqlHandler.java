@@ -597,40 +597,37 @@ public class SqlHandler extends SQLiteOpenHelper {
                 //haetaan alkuaineen isotoopit.
                 HashMap<String, String> tmp = new HashMap<>();
                 tmp.put("_alkuaineid", t.getValue("_id"));
-                ((alkuaineTulos)t).addIsotoopit(getValue("isotoopit", tmp, null));
-            }else if(t.getType().compareTo("Kaava")==0)
-            {
+                ((alkuaineTulos) t).addIsotoopit(getValue("isotoopit", tmp, null));
+            } else if (t.getType().compareTo("Kaava") == 0) {
 
 
                 String kaavaid = t.getValue("_kaavaid");
                 ArrayList<String> idt = findMuuttujat(Integer.parseInt(kaavaid)); //haetaan kaavaan liittyvien muuttujien idt
                 ArrayList<Tulos> arvot = new ArrayList<>();
-                for(String s:idt)
-                {
+                for (String s : idt) {
                     //haetaan id:n pohjalta muuttuja
-                    HashMap<String,String> tmp = new HashMap<>();
-                    tmp.put("_muuttujaid",s);
-                    arvot.addAll(getValue("Muuttuja",tmp,null));
+                    HashMap<String, String> tmp = new HashMap<>();
+                    tmp.put("_muuttujaid", s);
+                    arvot.addAll(getValue("Muuttuja", tmp, null));
                 }
-                ((kaavaTulos)t).addMuuttujat(arvot);
+                ((kaavaTulos) t).addMuuttujat(arvot);
                 idt = findVakio(Integer.parseInt(kaavaid)); //haetaan kaavaan liittyvien vakion idt
                 arvot = new ArrayList<>();
-                for(String s:idt)
-                {
+                for (String s : idt) {
                     //haetaan id:n pohjalta muuttuja
-                    HashMap<String,String> tmp = new HashMap<>();
-                    tmp.put("_vakioid",s);
-                    arvot.addAll(getValue("Vakio",tmp,null));
+                    HashMap<String, String> tmp = new HashMap<>();
+                    tmp.put("_vakioid", s);
+                    arvot.addAll(getValue("Vakio", tmp, null));
                 }
-                ((kaavaTulos)t).addVakiot(arvot);
-            } else if(t.getType().compareTo("Isotoopit") == 0) {
+                ((kaavaTulos) t).addVakiot(arvot);
+            } else if (t.getType().compareTo("Isotoopit") == 0) {
                 //tarkistetaan oliko edellinen isotooppi samasta perus alkuaineesta. jos oli niin ei tarvita uutta hakua
                 if (t.getValue("_alkuaineid").compareTo(prevId) != 0) {
                     //Edellinen haettu symboli oli eri id:lle, Joudutaan tekemään haku.
                     HashMap<String, String> tmp = new HashMap<>();
                     prevId = t.getValue("_alkuaineid");
                     tmp.put("_id", prevId);
-                    Cursor cur = getCursor("alkuaineet", tmp,null); //tehtävä näin. getValue kutsu aiheuttaisi loputtoman loopin
+                    Cursor cur = getCursor("alkuaineet", tmp, null); //tehtävä näin. getValue kutsu aiheuttaisi loputtoman loopin
                     try {
                         if (cur.moveToFirst()) {
                             do {
@@ -644,24 +641,15 @@ public class SqlHandler extends SQLiteOpenHelper {
                     }
                 }
                 ((isotooppiTulos) t).setSymbol(symbol);
-            }else if(t.getType().compareTo("Funktionaalinenryhma") == 0)
-            {
+            } else if (t.getType().compareTo("Funktionaalinenryhma") == 0) {
                 //haetaan funktionaalisen ryhmän piikit
-                HashMap<String,String> tmp = new HashMap<>();
-                tmp.put("_ryhmaid",t.getValue("_ryhmaid"));
-                ((funktionaalinenTulos)t).setPiikit(getValue("irpiikit",tmp,null));
+                HashMap<String, String> tmp = new HashMap<>();
+                tmp.put("_ryhmaid", t.getValue("_ryhmaid"));
+                ((funktionaalinenTulos) t).setPiikit(getValue("irpiikit", tmp, null));
 
-            }
-
-            //katsotaan tuleeko lisätä tägejä. i.e. onko
-            if(tagilliset.indexOf(t.getType()) >= 0)
-            {
-                //ikävän näköinen kutsu. Avataanpa hieman.
-                t.setTagit(getTags( //haetaan tägit. Tarvitaan tuloksen id ja taulun nimi
-                        t.getValue( //haetaan tuloksen id sen hashmapistä. Täytyy tuntea avain kentän nimi
-                                findPrimaryKeyName( //On olemassa metodi jolla primary key löydetään
-                                        t.getType())) //PK:n löytämiseksi tarvitaan tuloksen taulu. Se on sen type.
-                        ,t.getType())); //vielä tarvitaan taulun nimi
+            } else if (t.getType().compareTo("ionit") == 0) {
+                //annetaan ionille sen suolojen liukoisuudet
+                ((ioniTulos) t).setLiukoisuudet(fidSolubility((ioniTulos) t));
             }
         }
 
@@ -736,7 +724,7 @@ public class SqlHandler extends SQLiteOpenHelper {
         ArrayList<String[]> tableS = getStructure("ionit");
         for(int i = 0; i < liukoisuusTaulut.length; i++) {
             pal[i] = new ArrayList<>();
-            querry = "SELECT _ionid, kaava, varaus FROM(SELECT * FROM ionit AS i JOIN (SELECT " + valintaKentta + " FROM " + liukoisuusTaulut[i] + " WHERE " + kohdeKentta + " = " + it.getValue("_ionid") + ") AS l ON i._ionid = l."+ valintaKentta +")";
+            querry = "SELECT _ionid, kaava, varaus, nimi, name FROM(SELECT * FROM ionit AS i JOIN (SELECT " + valintaKentta + " FROM " + liukoisuusTaulut[i] + " WHERE " + kohdeKentta + " = " + it.getValue("_ionid") + ") AS l ON i._ionid = l."+ valintaKentta +")";
             Cursor c = db.rawQuery(querry, null);
             if(c.moveToFirst())
             {
@@ -749,8 +737,9 @@ public class SqlHandler extends SQLiteOpenHelper {
                     pal[i].add(new ioniTulos(tmp));
                 }while (c.moveToNext());
             }
+            c.close();
         }
-
+        db.close();
         return pal;
     }
 
