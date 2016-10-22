@@ -49,8 +49,6 @@ public class Tulos {
         {
             case 23: //kyseesssä alkuaine
                 return new alkuaineTulos(values);
-            case 13: //kyseessä happo.
-                return new happoTulos(values);
             case 8:
                 return new isotooppiTulos(values);
             case 4:
@@ -66,6 +64,9 @@ public class Tulos {
 
             case 6:
                 return new piikkiTulos(values);
+            case 9:
+                if(values.get("happovakio1") == null) return new aineTulos(values);
+                return new happoTulos(values);
             default:
                 return null;
         }
@@ -95,9 +96,8 @@ public class Tulos {
                     toggleSuosikki(v);
                 }
             });
+            setTahti(pal); //siirrettiin tämä äsken tänne tuosta ulkoa
         }
-
-        setTahti(pal);
         return pal;
     }
 

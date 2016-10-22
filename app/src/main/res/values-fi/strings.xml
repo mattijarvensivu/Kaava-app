@@ -77,6 +77,9 @@
     <string name="epametalli">Epämetalli</string>
     <string name="halogeeni">Halogeeni</string>
     <string name="jalokaasu">Jalokaasu</string>
+    <string name="sp">sp:</string>
+    <string name="kp">kp:</string>
+    <string name="resistanssi">resistance</string>
 
 
 

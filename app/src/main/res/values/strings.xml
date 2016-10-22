@@ -79,5 +79,8 @@
     <string name="epametalli">Nonmetal</string>
     <string name="halogeeni">Halogen</string>
     <string name="jalokaasu">Noble gas</string>
+    <string name="sp">mp:</string>
+    <string name="kp">bp:</string>
+    <string name="resistanssi">resistance</string>
 
 </resources>
