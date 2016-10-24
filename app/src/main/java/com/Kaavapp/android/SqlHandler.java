@@ -232,7 +232,7 @@ public class SqlHandler extends SQLiteOpenHelper {
 
 
         Cursor cur = getCursor(tableName, searchParameters, tagit);
-
+        Log.d("minun",cur.getCount() + " tulosta");
         //käsitellään saatu data
         try {
             if (cur.moveToFirst()) {
@@ -650,6 +650,11 @@ public class SqlHandler extends SQLiteOpenHelper {
             } else if (t.getType().compareTo("ionit") == 0) {
                 //annetaan ionille sen suolojen liukoisuudet
                 ((ioniTulos) t).setLiukoisuudet(fidSolubility((ioniTulos) t));
+            } else if (t.getType().compareTo("aine") == 0) {
+                HashMap<String,String> tmp = new HashMap<>();
+                tmp.put("_aineid",t.getValue("_aineid"));
+                ((aineTulos)t).setHappo(getValue("hapot",tmp,null));
+
             }
         }
 

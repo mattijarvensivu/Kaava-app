@@ -94,7 +94,6 @@ public class ioniTulos extends Tulos {
         String bString = getValue("kaava").substring(0,getValue("kaava").indexOf('^'));
         long aMulti =  pym/Long.parseLong(a.getValue("varaus"));
         long bMulti =  pym/Long.parseLong(getValue("varaus"));
-        Log.d("minun",a.getValue("varaus") + " ja " + getValue("varaus")+ " pym = " +pym + " amulti on " + aMulti + " bmulti on " + bMulti );
         if(aMulti > 1)
         {
             //ionia a tarvitaan enemmän kuin 1 kappale
