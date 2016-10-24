@@ -27,7 +27,24 @@
                 android:textSize="25dp"
                 android:layout_gravity="center"
                 android:text="Eng nimi"/>
-
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/border"
+    android:layout_gravity="center"
+    android:layout_marginRight="10dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
+    >
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp">
+        <TableRow>
             <TextView
                  
                 android:textColor="#000000"
@@ -37,6 +54,8 @@
                 android:textSize="25dp"
                 android:layout_gravity="center"
                 android:text="J.luku"/>
+        </TableRow>
+        <TableRow>
             <TextView
                 android:textColor="#000000"
                 android:layout_width="wrap_content"
@@ -45,6 +64,8 @@
                 android:layout_gravity="center"
                 android:textSize="40dp"
                 android:text="Symbooli"/>
+        </TableRow>
+        <TableRow>
             <TextView
                  
                 android:textColor="#000000"
@@ -54,9 +75,11 @@
                 android:textSize="25dp"
                 android:layout_gravity="center"
                 android:text="@string/moolimassa"/>
-
+        </TableRow>
+        <TableRow>
             <TextView
-                 
+
+
                 android:textColor="#000000"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -64,7 +87,9 @@
                 android:textSize="25dp"
                 android:layout_gravity="center"
                 android:text="Luokka"/>
-
+        </TableRow>
+    </TableLayout>
+</LinearLayout>
             <TextView
                  
                 android:textColor="#000000"
@@ -86,10 +111,11 @@
                 android:text="Hapetus luvut"/>
 
 
-            <LinearLayout
+            <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+                <TableRow>
                 <TextView
                      
                     android:textColor="#000000"
@@ -108,8 +134,8 @@
                     android:id="@+id/txvENegField"
                     android:textSize="25dp"
                     android:text="E.neg arvo"/>
-
-            </LinearLayout>
+                </TableRow>
+            </TableLayout>
 
             <TextView
                  
@@ -128,10 +154,11 @@
                 />
 
 
-            <LinearLayout
+            <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+                <TableRow>
                 <TextView
                      
                     android:textColor="#000000"
@@ -151,13 +178,14 @@
                     android:textSize="25dp"
 
                     android:text="@string/olomuoto"/>
+                </TableRow>
+            </TableLayout>
 
-            </LinearLayout>
-
-            <LinearLayout
+            <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+                <TableRow>
                 <TextView
                      
                     android:textColor="#000000"
@@ -182,13 +210,14 @@
                     android:id="@+id/mwSpUnit"
                     android:layout_gravity="bottom"
                     />
+                </TableRow>
+            </TableLayout>
 
-            </LinearLayout>
-
-            <LinearLayout
+            <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+                <TableRow>
                 <TextView
                      
                     android:textColor="#000000"
@@ -213,13 +242,14 @@
                     android:id="@+id/mwKpUnit"
                     android:layout_gravity="bottom"
                     />
+                </TableRow>
+            </TableLayout>
 
-            </LinearLayout>
-
-            <LinearLayout
+            <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+                <TableRow>
                 <TextView
                      
                     android:textColor="#000000"
@@ -228,7 +258,8 @@
                     android:id="@+id/txvDenLabel"
                     android:textSize="25dp"
                     android:text="@string/tiheys"/>
-
+                </TableRow>
+                <TableRow>
                 <TextView
                      
                     android:textColor="#000000"
@@ -243,15 +274,16 @@
                     android:layout_height="match_parent"
                     android:id="@+id/mwDenUnit"
                     />
+                </TableRow>
 
 
+            </TableLayout>
 
-            </LinearLayout>
-
-            <LinearLayout
+            <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+                <TableRow>
                 <TextView
                      
                     android:textColor="#000000"
@@ -260,7 +292,8 @@
                     android:id="@+id/txvOmLLabel"
                     android:textSize="25dp"
                     android:text="@string/ominaislampo"/>
-
+                </TableRow>
+                <TableRow>
                 <TextView
                      
                     android:textColor="#000000"
@@ -275,13 +308,14 @@
                     android:layout_height="match_parent"
                     android:id="@+id/mwOLUnit"
                     />
+                </TableRow>
+            </TableLayout>
 
-            </LinearLayout>
-
-            <LinearLayout
+            <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+                <TableRow>
                 <TextView
                      
                     android:textColor="#000000"
@@ -290,7 +324,8 @@
                     android:id="@+id/txvLJLabel"
                     android:textSize="25dp"
                     android:text="@string/lammonjohta"/>
-
+                </TableRow>
+                <TableRow>
                 <TextView
                      
                     android:textColor="#000000"
@@ -305,8 +340,9 @@
                     android:layout_height="match_parent"
                     android:id="@+id/mwLJUnit"
                     />
+                </TableRow>
+            </TableLayout>
 
-            </LinearLayout>
 
             <TextView
                  
@@ -318,10 +354,11 @@
                 android:textSize="25dp"
                 android:text="@string/atomisade"/>
 
-            <LinearLayout
+            <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+                <TableRow>
                 <TextView
                      
                     android:textColor="#000000"
@@ -341,9 +378,9 @@
                     android:textSize="25dp"
                     android:text="300pm"/>
 
+                </TableRow>
 
-            </LinearLayout>
-
+<TableRow>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -367,7 +404,8 @@
                     android:textSize="25dp"
                     android:text="300pm"/>
             </LinearLayout>
-
+</TableRow>
+            </TableLayout>
             <TextView
                  
                 android:textColor="#000000"

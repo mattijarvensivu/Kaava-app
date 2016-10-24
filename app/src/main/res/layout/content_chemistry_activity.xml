@@ -13,7 +13,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".ChemistryActivity"
     tools:showIn="@layout/app_bar_chemistry_activity"
-    android:background="@drawable/bkg_7">
+    android:background="@drawable/bkg_7_chemistry">
 
     <View
         android:layout_width="0px"
@@ -63,6 +63,7 @@
         android:layout_below="@+id/Chemistrysearch"
         android:layout_marginTop="10dp"
         android:layout_weight="1">
+
     <ListView
 
         android:layout_width="match_parent"

@@ -13,7 +13,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.Kaavapp.android.PhysicsActivity"
     tools:showIn="@layout/app_bar_physics"
-    android:background="@drawable/bkg_7">
+    android:background="@drawable/bkg_7_physics">
 
     <View
         android:layout_width="0px"
