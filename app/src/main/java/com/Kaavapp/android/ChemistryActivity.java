@@ -124,8 +124,7 @@ public class ChemistryActivity extends AppCompatActivity
         });
         hand = new SqlHandler(getApplicationContext().getApplicationContext(), "", null, 1, true);
         listOfTagTables = new String[]{"Alkuaineet","Funktionaalinenryhma","Kaava","Vakio"};
-        //listOfTables = new String[]{"Alkuaineet","Funktionaalinenryhma","Hapot","Isotoopit","Kaava","Muuttuja","Vakio","ionit","aine"};
-        listOfTables = new String[]{"aine"};
+        listOfTables = new String[]{"Alkuaineet","Funktionaalinenryhma","Hapot","Isotoopit","Kaava","Muuttuja","Vakio","ionit","aine"};
 
 
     }
