@@ -65,8 +65,9 @@ public class Tulos {
             case 6:
                 return new piikkiTulos(values);
             case 9:
-                if(values.get("happovakio1") == null) return new aineTulos(values);
                 return new happoTulos(values);
+            case 10:
+                return new aineTulos(values);
             default:
                 return null;
         }

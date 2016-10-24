@@ -39,8 +39,8 @@ public class aineTulos extends Tulos {
         //laitetaan tiedot paikoilleen
         ((TextView)pal.findViewById(R.id.txvNimi)).setText(tiedot.get("nimi"));
         ((TextView)pal.findViewById(R.id.txvName)).setText(tiedot.get("name"));
-        ((TextView)pal.findViewById(R.id.txvSulamis)).setText(tiedot.get("sp"));
-        ((TextView)pal.findViewById(R.id.txvKiehumis)).setText(tiedot.get("kp"));
+        ((TextView)pal.findViewById(R.id.txvSulamis)).setText(tiedot.get("sulamispiste"));
+        ((TextView)pal.findViewById(R.id.txvKiehumis)).setText(tiedot.get("kiehumispiste"));
 
         //laitetaan yksiköt paikoilleen
         KaavaFactory kf = new KaavaFactory(pal.getContext(),pal.getResources(),(int)Math.ceil(((TextView)pal.findViewById(R.id.txvNimi)).getTextSize()/ pal.getResources().getDisplayMetrics().density));
@@ -57,11 +57,11 @@ public class aineTulos extends Tulos {
         //laitetaan tiedot paikoilleen
         ((TextView)pal.findViewById(R.id.txvNimi)).setText(tiedot.get("nimi"));
         ((TextView)pal.findViewById(R.id.txvName)).setText(tiedot.get("name"));
-        ((TextView)pal.findViewById(R.id.txvSulamis)).setText(tiedot.get("sp"));
-        ((TextView)pal.findViewById(R.id.txvKiehumis)).setText(tiedot.get("kp"));
+        ((TextView)pal.findViewById(R.id.txvSulamis)).setText(tiedot.get("sulamispiste"));
+        ((TextView)pal.findViewById(R.id.txvKiehumis)).setText(tiedot.get("kiehumispiste"));
         ((TextView)pal.findViewById(R.id.txvTiheys)).setText(tiedot.get("tiheys"));
         ((TextView)pal.findViewById(R.id.txvResistanssi)).setText(tiedot.get("resistanssi"));
-        ((TextView)pal.findViewById(R.id.txvOminaislampo)).setText(tiedot.get("olk"));
+        ((TextView)pal.findViewById(R.id.txvOminaislampo)).setText(tiedot.get("ominaislampokapasiteetti"));
 
         KaavaFactory kf = new KaavaFactory(pal.getContext(),pal.getResources(),(int)Math.ceil(((TextView)pal.findViewById(R.id.txvNimi)).getTextSize()/ pal.getResources().getDisplayMetrics().density));
 
@@ -112,5 +112,13 @@ public class aineTulos extends Tulos {
         }
         //tässä kohtaa, ainakin debugauksessa, teidetään että on vain 1 tulos... ja sitten tehdään leap of faith, joka ehkä tulee kusemaan tulevaisuudessa
         happo = (happoTulos) data.get(0);
+    }
+
+    public void setAlkuaine(ArrayList<Tulos> data)
+    {
+        tiedot.put("sulamispiste",data.get(0).getValue("sulamispiste"));
+        tiedot.put("kiehumispiste",data.get(0).getValue("kiehumispiste"));
+        tiedot.put("tiheys",data.get(0).getValue("tiheys"));
+        tiedot.put("ominaislampokapasiteetti",data.get(0).getValue("ominaislampokapasiteetti"));
     }
 }

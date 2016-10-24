@@ -652,8 +652,15 @@ public class SqlHandler extends SQLiteOpenHelper {
                 ((ioniTulos) t).setLiukoisuudet(fidSolubility((ioniTulos) t));
             } else if (t.getType().compareTo("aine") == 0) {
                 HashMap<String,String> tmp = new HashMap<>();
-                tmp.put("_aineid",t.getValue("_aineid"));
-                ((aineTulos)t).setHappo(getValue("hapot",tmp,null));
+                if( t.getValue("alkuaineLink") != null)
+                {
+                    //kyseessä on bulkki alkuaine
+                    tmp.put("_id",t.getValue("alkuaineLink"));
+                    ((aineTulos)t).setAlkuaine(getValue("alkuaineet",tmp, null));
+                }else{
+                    tmp.put("_aineid",t.getValue("_aineid"));
+                    ((aineTulos)t).setHappo(getValue("hapot",tmp,null));
+                }
 
             }
         }
