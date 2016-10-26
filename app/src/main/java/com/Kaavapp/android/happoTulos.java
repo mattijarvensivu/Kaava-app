@@ -37,7 +37,7 @@ public class happoTulos extends Tulos {
 
         View pal = infl.inflate(layoutSmall, paren, false);
         //asetetaan tiedot paikoilleen
-        ((TextView)pal.findViewById(R.id.txvNimi)).setText(tiedot.get("happoName"));
+        ((TextView)pal.findViewById(R.id.txvNimi)).setText(tiedot.get("name"));
         ((TextView)pal.findViewById(R.id.txvPKa)).setText(tiedot.get("happovakio1"));
         ((TextView)pal.findViewById(R.id.txvPh)).setText(df2.format(calculatePh(1))+"");
         KaavaFactory kf = new KaavaFactory(pal.getContext(),pal.getResources(),(int)Math.ceil(((TextView)pal.findViewById(R.id.txvNimi)).getTextSize()/ pal.getResources().getDisplayMetrics().density)); //viimeinen parametri laskee käytetyn teksti koon.
@@ -64,8 +64,8 @@ public class happoTulos extends Tulos {
         final DecimalFormat df2 = new DecimalFormat("#.##");
 
         //asetetaan arvot paikoilleen
-        ((TextView)pal.findViewById(R.id.txvNimi)).setText(tiedot.get("happoNimi"));
-        ((TextView)pal.findViewById(R.id.txvName)).setText(tiedot.get("happoName"));
+        ((TextView)pal.findViewById(R.id.txvNimi)).setText(tiedot.get("nimi"));
+        ((TextView)pal.findViewById(R.id.txvName)).setText(tiedot.get("name"));
         ((TextView)pal.findViewById(R.id.txvMoolimassa)).setText(tiedot.get("moolimassa"));
 
         phView.setText(df2.format(calculatePh(1))+"");
@@ -129,7 +129,6 @@ public class happoTulos extends Tulos {
             }
         });
 
-        /*
         //käsitellään tiheys
         String dens = tiedot.get("tiheys");
         if(dens.compareTo("-1") == 0)
@@ -140,7 +139,6 @@ public class happoTulos extends Tulos {
 
         }
         ((TextView)pal.findViewById(R.id.txvDensity)).setText(dens);
-
 
         //käsitellään sulamis ja kiehumis pisteet
         String mp = tiedot.get("sulamispiste");
@@ -162,7 +160,6 @@ public class happoTulos extends Tulos {
 
         ((TextView)pal.findViewById(R.id.txvSp)).setText(mp);
         ((TextView)pal.findViewById(R.id.txvKp)).setText(bp);
-        */
 
         //asetetaan pKa/pKb labeli oikeaksi
         //jos on happo, ovat labelit valmiiksi oikein

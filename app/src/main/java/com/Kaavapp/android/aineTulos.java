@@ -17,8 +17,6 @@ import java.util.HashMap;
  */
 public class aineTulos extends Tulos {
 
-    private happoTulos happo;
-
     public aineTulos(HashMap<String,String> vals)
     {
         tiedot = vals;
@@ -26,15 +24,11 @@ public class aineTulos extends Tulos {
         layoutLarge = R.layout.aine_large;
         Log.d("minun","ollaan aineTuloksessa");
         type = "aine";
-        happo = null; //turha, mutta varmistetaan
     }
 
     public View getSmallView (LayoutInflater infl, ViewGroup paren)
     {
-        if(happo != null)
-        {
-            return happo.getSmallView(infl,paren);
-        }
+
         View pal = super.getSmallView(infl,paren);
         //laitetaan tiedot paikoilleen
         ((TextView)pal.findViewById(R.id.txvNimi)).setText(tiedot.get("nimi"));
@@ -93,25 +87,7 @@ public class aineTulos extends Tulos {
         ((ImageView)pal.findViewById(R.id.imgResistanssi)).setImageDrawable(kf.getBmD("\\Omega m")); //onko tässä bugi, vai miksi ei näy iso omega? pikku omega ja esim iso alpha näkyy!
 
 
-        //laitetaan happo osa näkyviin, jos sellainen on
-        if(happo != null)
-        {
-            LinearLayout lin = (LinearLayout)pal.findViewById(R.id.lnlHappo);
-            lin.addView(happo.getLargeView(infl,lin));
-        }
         return pal;
-    }
-
-    public void setHappo(ArrayList<Tulos> data)
-    {
-        if(data.size() == 0) return;
-        if(data.size() > 1) //vain debugasuta varten!
-        {
-            Log.d("minun","liikaa tuloksia aineessa");
-            return;
-        }
-        //tässä kohtaa, ainakin debugauksessa, teidetään että on vain 1 tulos... ja sitten tehdään leap of faith, joka ehkä tulee kusemaan tulevaisuudessa
-        happo = (happoTulos) data.get(0);
     }
 
     public void setAlkuaine(ArrayList<Tulos> data)

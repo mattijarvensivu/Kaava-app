@@ -657,9 +657,6 @@ public class SqlHandler extends SQLiteOpenHelper {
                     //kyseessä on bulkki alkuaine
                     tmp.put("_id",t.getValue("alkuaineLink"));
                     ((aineTulos)t).setAlkuaine(getValue("alkuaineet",tmp, null));
-                }else{
-                    tmp.put("_aineid",t.getValue("_aineid"));
-                    ((aineTulos)t).setHappo(getValue("hapot",tmp,null));
                 }
 
             }

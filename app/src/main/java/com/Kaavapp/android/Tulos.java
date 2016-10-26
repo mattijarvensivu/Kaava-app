@@ -64,7 +64,7 @@ public class Tulos {
 
             case 6:
                 return new piikkiTulos(values);
-            case 9:
+            case 13:
                 return new happoTulos(values);
             case 10:
                 return new aineTulos(values);
