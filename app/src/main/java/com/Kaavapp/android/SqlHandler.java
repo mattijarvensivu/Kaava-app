@@ -312,32 +312,10 @@ public class SqlHandler extends SQLiteOpenHelper {
     private String getTagiStringi(String tableName, boolean useIntersection,ArrayList<HashMap<String, String>> searchParameters )
     {
         //haetaan taulut ja idKentät
-        String linkkitaulu = "";
-        String tagiTaulu = "";
-        String kohdeIdKentta = "";
-        if(tableName.compareTo("Alkuaineet")==0){
-            linkkitaulu = "Alkuaineet_tag";
-            tagiTaulu = "AlkuaineetTag";
-            kohdeIdKentta = "_id";
-        }else if(tableName.compareTo("Funktionaalinenryhma")==0)
-        {
-            linkkitaulu = "Funktionaalinenryhma_tag";
-            tagiTaulu = "FunktionaalinenryhmaTag";
-            kohdeIdKentta = "_ryhmaid";
-        }else if(tableName.compareTo("Kaava")==0)
-        {
-            linkkitaulu = "Kaava_tag";
-            tagiTaulu = "KaavaTag";
-            kohdeIdKentta = "_kaavaid";
-        }
-        else if(tableName.compareTo("Vakio")==0)
-        {
-            kohdeIdKentta = "_vakioid";
-            linkkitaulu = "Vakio_tag";
-            tagiTaulu = "VakioTag";
-        }else {
-            return tableName; //mikäli annetulla taululla ei ole olemassa tägitauluja, passataan taulun nimi takaisin. Koska tällä metodilla muodostetaan joukko, pitäisi tämän toimiä...
-        }
+        String[] tagiTaulut = getTagFields(tableName);
+        String kohdeIdKentta = findPrimaryKeyName(tableName);
+
+        if(tagiTaulut[0]== null) return tableName;
 
         //haetaan taulun kenttien arvot
         ArrayList<String[]> taulunRakenne = getStructure(tableName);
@@ -366,8 +344,8 @@ public class SqlHandler extends SQLiteOpenHelper {
             query += "Select "+ halututKentat +" From " + tableName + " a left join " + linkkitaulu + " as ta on (a." + kohdeIdKentta + " = ta._" + tableName + "id)" +
                     " left join " + tagiTaulu + "  as t on (ta._tagid = t._tagid) Where t.nimi like '" + searchParameters.get(i).get("nimi") + "'";
             */
-            query += "Select "+ getKentat(tableName) +" From " + tableName + " a left join " + linkkitaulu + " as ta on (a." + kohdeIdKentta + " = ta." + findPrimaryKeyName(tableName) + ")" +
-                    " left join " + tagiTaulu + "  as t on (ta._tagid = t._tagid) Where t.nimi like '" + searchParameters.get(i).get("nimi") + "'";
+            query += "Select "+ getKentat(tableName) +" From " + tableName + " a left join " + tagiTaulut[1] + " as ta on (a." + kohdeIdKentta + " = ta." + findPrimaryKeyName(tableName) + ")" +
+                    " left join " + tagiTaulut[0] + "  as t on (ta._tagid = t._tagid) Where t.nimi like '" + searchParameters.get(i).get("nimi") + "'";
             if(i < searchParameters.size()-1)
             {
                 //ei olla viimeisessä, lisätään Intersect
@@ -378,6 +356,23 @@ public class SqlHandler extends SQLiteOpenHelper {
         return "SELECT * FROM( " + query + " )";
 
 
+    }
+
+    //haetaan annettuun tauluun liittyvät tägi ja linkki taulut
+    private String[] getTagFields(String tableName)
+    {
+        String querry = "SELECT tagiTaulu,linkkiTaulu FROM defaultFields WHERE _tname LIKE '" + tableName + "'";
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cur = db.rawQuery(querry,null);
+        String[] pal = {"ERROR FINDING TAG FIELDS","ERROR FINDING TAG FIELDS"};
+        if(cur.moveToFirst())
+        {
+            pal[0] = cur.getString(0);
+            pal[1] = cur.getString(1);
+        }
+        cur.close();
+        //db.close();
+        return pal;
     }
 
 
@@ -476,7 +471,6 @@ public class SqlHandler extends SQLiteOpenHelper {
         }
         //toteutetaan haku
         SQLiteDatabase db = getWritableDatabase();
-        Log.d("minun",query + searchParamsS);
         Cursor pal = db.rawQuery(query + searchParamsS, null); // itse haku täpahtuu tässä
         return pal;
     }
@@ -498,6 +492,7 @@ public class SqlHandler extends SQLiteOpenHelper {
             querry += " WHERE " + findPrimaryKeyName(t.getType()) + " = " + id + " AND _tagid = (SELECT _tagid FROM "+ t.tagiTaulu +" WHERE nimi LIKE \"suosikki\")";
         }
 
+        Log.d("suosikin muutos","ollaan muuttamassa suosikkia: " + querry);
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL(querry);
 
@@ -511,30 +506,12 @@ public class SqlHandler extends SQLiteOpenHelper {
     {
         ArrayList<String> pal = new ArrayList<>();
 
-        //nää vois ehkä laittaa defaultFields tauluun.
-        String linkkitaulu = "";
-        String tagiTaulu = "";
-        if(tableName.compareTo("Alkuaineet")==0){
-            linkkitaulu = "Alkuaineet_tag";
-            tagiTaulu = "AlkuaineetTag";
-        }else if(tableName.compareTo("Funktionaalinenryhma")==0)
-        {
-            linkkitaulu = "Funktionaalinenryhma_tag";
-            tagiTaulu = "FunktionaalinenryhmaTag";
-        }else if(tableName.compareTo("Kaava")==0)
-        {
-            linkkitaulu = "Kaava_tag";
-            tagiTaulu = "KaavaTag";
-        }
-        else if(tableName.compareTo("Vakio")==0)
-        {
-            linkkitaulu = "Vakio_tag";
-            tagiTaulu = "VakioTag";
-        }else{
-            return null; // Tämä nappaa kiinni mikäli yritetään tägejä tulokselle jolla niitä ei ole
-        }
+        //haetaan taulut ja idKentät
+        String[] tagiTaulut = getTagFields(tableName);
+        if(tagiTaulut[0] == null) return null; // Tämä nappaa kiinni mikäli yritetään tägejä tulokselle jolla niitä ei ole
 
-        String query = "SELECT nimi FROM " + tagiTaulu + " AS k JOIN (SELECT * FROM " + linkkitaulu + " WHERE " + findPrimaryKeyName(tableName) + " = " + idVal +" ) as l ON k._tagid = l._tagid";
+
+        String query = "SELECT nimi FROM " + tagiTaulut[0] + " AS k JOIN (SELECT * FROM " + tagiTaulut[1] + " WHERE " + findPrimaryKeyName(tableName) + " = " + idVal +" ) as l ON k._tagid = l._tagid";
         //String query = "SELECT nimi FROM " + tagiTaulu + " AS k JOIN (SELECT * FROM " + linkkitaulu + " WHERE _" + tableName + "id = " + idVal +" ) as l ON k._tagid = l._tagid";
 
         //suoritetaan haku
@@ -589,7 +566,7 @@ public class SqlHandler extends SQLiteOpenHelper {
         //isotooppeja varten
         String symbol = "";
         String prevId = "-1";
-        String[] tagillisetArray = {"Alkuaineet", "Kaava", "Funktionaalinenryhma","Vakio"}; //tässä määritellään ne joilla on tägi taulu. Ehkä tämän tiedon voisi viedä tietokantaan... vaikka defaultFields tauluun?
+        String[] tagillisetArray = {"Alkuaineet", "Kaava", "Funktionaalinenryhma","Vakio","hapot","aine"}; //tässä määritellään ne joilla on tägi taulu. Ehkä tämän tiedon voisi viedä tietokantaan... vaikka defaultFields tauluun?
         ArrayList tagilliset = new ArrayList(Arrays.asList(tagillisetArray));
 
         for(Tulos t: data) {
@@ -659,6 +636,14 @@ public class SqlHandler extends SQLiteOpenHelper {
                     ((aineTulos)t).setAlkuaine(getValue("alkuaineet",tmp, null));
                 }
 
+            }
+            if(tagilliset.indexOf(t.getType()) >= 0) {
+                //ikävän näköinen kutsu. Avataanpa hieman.
+                t.setTagit(getTags( //haetaan tägit. Tarvitaan tuloksen id ja taulun nimi
+                        t.getValue( //haetaan tuloksen id sen hashmapistä. Täytyy tuntea avain kentän nimi
+                                findPrimaryKeyName( //On olemassa metodi jolla primary key löydetään
+                                        t.getType())) //PK:n löytämiseksi tarvitaan tuloksen taulu. Se on sen type.
+                        , t.getType())); //vielä tarvitaan taulun nimi
             }
         }
 

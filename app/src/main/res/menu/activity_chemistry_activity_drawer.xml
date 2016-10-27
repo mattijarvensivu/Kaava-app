@@ -37,6 +37,9 @@
             <item
                 android:id="@+id/Suolat"
                 android:title="@string/suolat" />
+            <item
+                android:id="@+id/Aineet"
+                android:title="@string/aine" />
         </menu>
     </item>
 

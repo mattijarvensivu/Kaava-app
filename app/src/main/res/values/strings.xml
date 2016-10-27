@@ -82,5 +82,7 @@
     <string name="sp">mp:</string>
     <string name="kp">bp:</string>
     <string name="resistanssi">resistance</string>
+    <string name="aine">Materials</string>
+    <string name="ionit">Ions</string>
 
 </resources>

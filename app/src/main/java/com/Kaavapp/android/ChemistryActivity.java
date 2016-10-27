@@ -114,7 +114,7 @@ public class ChemistryActivity extends AppCompatActivity
             }
         });
         hand = new SqlHandler(getApplicationContext().getApplicationContext(), "", null, 1, true);
-        listOfTagTables = new String[]{"Alkuaineet","Funktionaalinenryhma","Kaava","Vakio"};
+        listOfTagTables = new String[]{"Alkuaineet","Funktionaalinenryhma","Kaava","Vakio","Hapot","aine"};
         listOfTables = new String[]{"Alkuaineet","Funktionaalinenryhma","Hapot","Isotoopit","Kaava","Muuttuja","Vakio","ionit","aine"};
 
 
@@ -211,13 +211,19 @@ public class ChemistryActivity extends AppCompatActivity
             ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.vakiot));
 
         }else if (id == R.id.Hapot) {
-            listOfTagTables = new String[]{};
+            listOfTagTables = new String[]{"Hapot"};
             listOfTables = new String[]{"Hapot"};
             ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.hapot));
 
         }else if (id == R.id.Suolat) {
             listOfTagTables = new String[]{};
             listOfTables = new String[]{"ionit"};
+            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.ionit));
+
+        }else if (id == R.id.Aineet) {
+            listOfTagTables = new String[]{"aine"};
+            listOfTables = new String[]{"aine"};
+            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.aine));
 
         }
 
@@ -226,15 +232,20 @@ public class ChemistryActivity extends AppCompatActivity
 
         if(haetaan) {
             ((LinearLayout) findViewById(R.id.lnlContainer)).removeAllViews();
-            ((EditText) findViewById(R.id.Chemistrysearch)).setText("%");
-            HaeChemistry(null);
+            ((EditText) findViewById(R.id.Chemistrysearch)).setText("%"); //ongelma, tehdään tägi haku. Pitäisi forsettaa nimi haku.
+            HaeChemistry(null,false);
             ((EditText) findViewById(R.id.Chemistrysearch)).setText("");
         }
 
         return true;
     }
 
+    //Purkkaa. Haku nappi kutsuu tätä funktiota. Tehtiin jotta voidaan pakottaa tägihaun skippaus
     public void HaeChemistry(View v) {
+            HaeChemistry(v,true);
+    }
+
+    public void HaeChemistry(View v, boolean includeTags) {
         inLargeView = false;
         Log.w("myApp", "Nappia painettu");
 
@@ -252,7 +263,8 @@ public class ChemistryActivity extends AppCompatActivity
         if(tarkistus) {
 
             // Tarkistus mistä taulusta haetaan täytyy tehä
-            ArrayList<Tulos> tulos = suoritaHaku(hakuparametri,listOfTagTables,true);
+            ArrayList<Tulos> tulos = new ArrayList<>();
+             if(includeTags) suoritaHaku(hakuparametri,listOfTagTables,true);
             if(tulos.size()==0 && hakuparametri.length()!=0) {
                 tulos = suoritaHaku(hakuparametri, listOfTables, false);
             }
@@ -315,6 +327,7 @@ public class ChemistryActivity extends AppCompatActivity
                     //kyseessä on tägi haku
                     for(String s: splitattuHP) {
                         HashMap<String, String> tmp = new HashMap<>();
+                        /* purkkaa
                         for (String k : kentatNimet) {
                             while(s.charAt(0) == ' ')
                             {
@@ -327,7 +340,18 @@ public class ChemistryActivity extends AppCompatActivity
                             }
 
                             tmp.put(k, s);
+                        }*/
+                        while(s.charAt(0) == ' ')
+                        {
+                            s = s.substring(1,s.length());
                         }
+
+                        while(s.charAt(s.length()-1) == ' ')
+                        {
+                            s = s.substring(0,s.length()-1);
+                        }
+
+                        tmp.put("nimi", s); //Purkka ratkaisu. Vaatii että kaikissa tägi tauluissa tägin nimi kentän nimi on nimi. Vaikeuttaa varmastikkin myös kaksikielisen tägin implementointia.
                         kentatAL.add(tmp);
                     }
                 }
@@ -360,7 +384,7 @@ public class ChemistryActivity extends AppCompatActivity
         for (Tulos t : tulos) {
             t.setOnSuosikkiToggleListener(new suosikkiToggleListener() {
                 @Override
-                //nuo argumentit on aika ikävät koska en saanu passattua suoraan t muuttujaa... se ois pitäny declarata finaaliks.
+
                 public void onToggleSuosikki(Tulos t) {
 
                     hand.muutaSuosikkiStatus(t);

@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -22,42 +23,91 @@ public class aineTulos extends Tulos {
         tiedot = vals;
         layoutSmall = R.layout.aine_small;
         layoutLarge = R.layout.aine_large;
-        Log.d("minun","ollaan aineTuloksessa");
+
         type = "aine";
+        tagiTaulu = "aineTag";
+        linkkiTaulu = "aine_tag";
     }
 
     public View getSmallView (LayoutInflater infl, ViewGroup paren)
     {
+        //määritellään desimaali formaatit pyöristyksiä varten
+        DecimalFormat df2 = new DecimalFormat("#.##");
 
         View pal = super.getSmallView(infl,paren);
         //laitetaan tiedot paikoilleen
         ((TextView)pal.findViewById(R.id.txvNimi)).setText(tiedot.get("nimi"));
         ((TextView)pal.findViewById(R.id.txvName)).setText(tiedot.get("name"));
-        ((TextView)pal.findViewById(R.id.txvSulamis)).setText(tiedot.get("sulamispiste"));
-        ((TextView)pal.findViewById(R.id.txvKiehumis)).setText(tiedot.get("kiehumispiste"));
-
-        //laitetaan yksiköt paikoilleen
         KaavaFactory kf = new KaavaFactory(pal.getContext(),pal.getResources(),(int)Math.ceil(((TextView)pal.findViewById(R.id.txvNimi)).getTextSize()/ pal.getResources().getDisplayMetrics().density));
         BitmapDrawable celsius = kf.getBmD("C^{\\circ}");
+        if(tiedot.get("sulamispiste").compareTo("-") == 0)
+        {
+            ((ViewGroup)pal.findViewById(R.id.lnlMp)).removeAllViews();
 
-        ((ImageView) pal.findViewById(R.id.imgCelsius)).setImageDrawable(celsius);
-        ((ImageView) pal.findViewById(R.id.imgCelsius2)).setImageDrawable(celsius);
+        }else {
+            ((TextView)pal.findViewById(R.id.txvSulamis)).setText(df2.format(Float.parseFloat(tiedot.get("sulamispiste"))));
+            ((ImageView) pal.findViewById(R.id.imgCelsius)).setImageDrawable(celsius);
+        }
+        if(tiedot.get("kiehumispiste").compareTo("-") == 0)
+        {
+            ((ViewGroup)pal.findViewById(R.id.lnlBp)).removeAllViews();
+
+        }else {
+            ((TextView)pal.findViewById(R.id.txvKiehumis)).setText(df2.format(Float.parseFloat(tiedot.get("kiehumispiste"))));
+            ((ImageView) pal.findViewById(R.id.imgCelsius2)).setImageDrawable(celsius);
+        }
+
         return pal;
     }
 
     public View getLargeView(LayoutInflater infl, ViewGroup paren)
     {
+        //määritellään desimaali formaatit pyöristyksiä varten
+        DecimalFormat df2 = new DecimalFormat("#.##");
         View pal = infl.inflate(layoutLarge, paren, false);
         //laitetaan tiedot paikoilleen
         ((TextView)pal.findViewById(R.id.txvNimi)).setText(tiedot.get("nimi"));
         ((TextView)pal.findViewById(R.id.txvName)).setText(tiedot.get("name"));
-        ((TextView)pal.findViewById(R.id.txvSulamis)).setText(tiedot.get("sulamispiste"));
-        ((TextView)pal.findViewById(R.id.txvKiehumis)).setText(tiedot.get("kiehumispiste"));
-        ((TextView)pal.findViewById(R.id.txvTiheys)).setText(tiedot.get("tiheys"));
-        ((TextView)pal.findViewById(R.id.txvResistanssi)).setText(tiedot.get("resistanssi"));
-        ((TextView)pal.findViewById(R.id.txvOminaislampo)).setText(tiedot.get("ominaislampokapasiteetti"));
-
         KaavaFactory kf = new KaavaFactory(pal.getContext(),pal.getResources(),(int)Math.ceil(((TextView)pal.findViewById(R.id.txvNimi)).getTextSize()/ pal.getResources().getDisplayMetrics().density));
+        BitmapDrawable celsius = kf.getBmD("C^{\\circ}");
+        if(tiedot.get("sulamispiste").compareTo("-") == 0)
+        {
+            ((ViewGroup)pal.findViewById(R.id.lnlMp)).removeAllViews();
+
+        }else {
+            ((TextView) pal.findViewById(R.id.txvSulamis)).setText(df2.format(Float.parseFloat(tiedot.get("sulamispiste"))));
+            ((ImageView) pal.findViewById(R.id.imgCelsius)).setImageDrawable(celsius);
+        }
+        if(tiedot.get("kiehumispiste").compareTo("-") == 0)
+        {
+            ((ViewGroup)pal.findViewById(R.id.lnlBp)).removeAllViews();
+
+        }else {
+            ((TextView)pal.findViewById(R.id.txvKiehumis)).setText(df2.format(Float.parseFloat(tiedot.get("kiehumispiste"))));
+            ((ImageView) pal.findViewById(R.id.imgCelsius2)).setImageDrawable(celsius);
+        }
+        if(tiedot.get("resistanssi").compareTo("-") == 0)
+        {
+            ((ViewGroup)pal.findViewById(R.id.lnlRes)).removeAllViews();
+
+        }else {
+            ((TextView)pal.findViewById(R.id.txvResistanssi)).setText(tiedot.get("resistanssi"));
+            ((ImageView)pal.findViewById(R.id.imgResistanssi)).setImageDrawable(kf.getBmD("\\Omega m")); //onko tässä bugi, vai miksi ei näy iso omega? pikku omega ja esim iso alpha näkyy!
+        }
+        if(tiedot.get("ominaislampokapasiteetti").compareTo("-") == 0)
+        {
+            ((ViewGroup)pal.findViewById(R.id.lnlOlk)).removeAllViews();
+
+        }else {
+            ((TextView)pal.findViewById(R.id.txvOminaislampo)).setText(tiedot.get("ominaislampokapasiteetti"));
+            ((ImageView)pal.findViewById(R.id.imgOminaislampo)).setImageDrawable(kf.getBmD("\\frac{J}{K*kg}"));
+        }
+
+        ((TextView)pal.findViewById(R.id.txvTiheys)).setText(tiedot.get("tiheys"));
+
+
+
+
 
         //määritellään kaava/kuva. Jos ensimmäinen merkki on _ on kyseessä kaava.
         String kaavaString =tiedot.get("kaava");
@@ -78,13 +128,12 @@ public class aineTulos extends Tulos {
         }
 
         //laitetaan yksiköt paikoilleen
-        BitmapDrawable celsius = kf.getBmD("C^{\\circ}");
 
-        ((ImageView) pal.findViewById(R.id.imgCelsius)).setImageDrawable(celsius);
-        ((ImageView) pal.findViewById(R.id.imgCelsius2)).setImageDrawable(celsius);
-        ((ImageView)pal.findViewById(R.id.imgTiheys)).setImageDrawable(kf.getBmD("\\frac{g}{dm^{3}}"));
-        ((ImageView)pal.findViewById(R.id.imgOminaislampo)).setImageDrawable(kf.getBmD("\\frac{J}{K*kg}"));
-        ((ImageView)pal.findViewById(R.id.imgResistanssi)).setImageDrawable(kf.getBmD("\\Omega m")); //onko tässä bugi, vai miksi ei näy iso omega? pikku omega ja esim iso alpha näkyy!
+
+
+
+        ((ImageView)pal.findViewById(R.id.imgTiheys)).setImageDrawable(kf.getBmD("\\frac{g}{cm^{3}}"));
+
 
 
         return pal;

@@ -211,7 +211,13 @@ public class PhysicsActivity extends AppCompatActivity
         return true;
     }
 
+    //Purkkaa. Haku nappi kutsuu tätä funktiota. Tehtiin jotta voidaan pakottaa tägihaun skippaus
     public void HaePhysics(View v) {
+        HaePhysics(v,true);
+    }
+
+
+    public void HaePhysics(View v, boolean includeTags) {
         inLargeView = false;
         Log.w("myApp", " Fysiikka Nappia painettu");
 
@@ -232,7 +238,8 @@ public class PhysicsActivity extends AppCompatActivity
         if(tarkistus) {
 
             // Tarkistus mistä taulusta haetaan täytyy tehä
-            ArrayList<Tulos> tulos = suoritaHaku(hakuparametri,listOfTagTables,true);
+            ArrayList<Tulos> tulos = new ArrayList<>();
+            if(includeTags) suoritaHaku(hakuparametri,listOfTagTables,true);
             if(tulos.size()==0 && hakuparametri.length()!=0) {
                 tulos = suoritaHaku(hakuparametri, listOfTables, false);
             }

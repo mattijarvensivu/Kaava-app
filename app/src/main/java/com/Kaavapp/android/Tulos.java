@@ -127,6 +127,7 @@ public class Tulos {
     {
 
         this.tagit = tagit;
+        if(tagit == null) tagit = new ArrayList<>();
         if(tagit.indexOf("suosikki") >= 0) isSuosikki = true;
     }
 

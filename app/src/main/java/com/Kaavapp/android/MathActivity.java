@@ -236,7 +236,13 @@ public class MathActivity extends AppCompatActivity
         return true;
     }
 
+    //Purkkaa. Haku nappi kutsuu tätä funktiota. Tehtiin jotta voidaan pakottaa tägihaun skippaus
     public void HaeMath(View v) {
+        HaeMath(v,true);
+    }
+
+
+    public void HaeMath(View v, boolean includeTags) {
         Log.w("myApp", " Matikka Nappia painettu");
 
         inLargeView = false;
@@ -258,7 +264,8 @@ public class MathActivity extends AppCompatActivity
         if(tarkistus) {
 
             // Tarkistus mistä taulusta haetaan täytyy tehä
-            ArrayList<Tulos> tulos = suoritaHaku(hakuparametri,listOfTagTables,true);
+            ArrayList<Tulos> tulos = new ArrayList<>();
+            if(includeTags) suoritaHaku(hakuparametri,listOfTagTables,true);
             //haku ei ilmeisesti tapahtunut tägiä käyttäen. Yritetään hakea kentän perusteella
             if(tulos.size()==0 && hakuparametri.length()!=0) { //onko tuon haku parametrin tarkistus turha? eikös 0 pituiset kosahda tuohon missä toastataan check input?
                 tulos = suoritaHaku(hakuparametri, listOfTables, false);

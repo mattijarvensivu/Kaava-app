@@ -26,7 +26,9 @@ public class happoTulos extends Tulos {
         layoutSmall = R.layout.happo_small;
         layoutLarge = R.layout.happo_large;
 
-        type = "Happo";
+        type = "hapot";
+        tagiTaulu = "hapotTag";
+        linkkiTaulu = "hapot_tag";
     }
 
     @Override
@@ -35,7 +37,7 @@ public class happoTulos extends Tulos {
     {
         DecimalFormat df2 = new DecimalFormat("#.##");
 
-        View pal = infl.inflate(layoutSmall, paren, false);
+        View pal = super.getSmallView(infl,paren);
         //asetetaan tiedot paikoilleen
         ((TextView)pal.findViewById(R.id.txvNimi)).setText(tiedot.get("name"));
         ((TextView)pal.findViewById(R.id.txvPKa)).setText(tiedot.get("happovakio1"));
