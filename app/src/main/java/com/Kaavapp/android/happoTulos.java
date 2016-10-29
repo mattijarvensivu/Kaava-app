@@ -27,6 +27,7 @@ public class happoTulos extends Tulos {
         layoutLarge = R.layout.happo_large;
 
         type = "hapot";
+        taulu = "hapot";
         tagiTaulu = "hapotTag";
         linkkiTaulu = "hapot_tag";
     }

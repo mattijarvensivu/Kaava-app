@@ -22,6 +22,7 @@ public class isotooppiTulos extends Tulos {
         layoutLarge = R.layout.isotope_large;
 
         type = "Isotoopit";
+        taulu = "Isotoopit";
     }
 
     @Override

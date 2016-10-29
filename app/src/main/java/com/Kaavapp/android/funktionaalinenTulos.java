@@ -24,6 +24,7 @@ public class funktionaalinenTulos extends Tulos{
         tiedot = values;
 
         type = "Funktionaalinenryhma";
+        taulu = "Funktionaalinenryhma";
         tagiTaulu = "FunktionaalinenryhmaTag";
         linkkiTaulu = "Funktionaalinenryhma_tag";
     }

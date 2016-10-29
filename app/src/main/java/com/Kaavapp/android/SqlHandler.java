@@ -236,10 +236,6 @@ public class SqlHandler extends SQLiteOpenHelper {
         //käsitellään saatu data
         try {
             if (cur.moveToFirst()) {
-                //etsitään tämän taulun avain kenttä
-                HashMap<String,String> idTmp = new HashMap<>();
-                idTmp.put("_tname",tableName);
-                Cursor idCur = getCursor("defaultFields",idTmp,null);
                 do {
                     HashMap<String, String> tmp = new HashMap<String, String>();
                     for (int i = 0; i < tableS.size(); i++) {
@@ -484,12 +480,12 @@ public class SqlHandler extends SQLiteOpenHelper {
             querry = "DELETE FROM ";
         }
         querry += t.linkkiTaulu;
-        String id = t.getValue(findPrimaryKeyName(t.getType())); //haetaan tuloksen id.
+        String id = t.getValue(findPrimaryKeyName(t.getTaulu())); //haetaan tuloksen id.
         if(t.isSuosikki)
         {
             querry += " VALUES (" + id + ",(SELECT _tagid FROM "+ t.tagiTaulu +" WHERE nimi LIKE \"suosikki\") )";
         }else{
-            querry += " WHERE " + findPrimaryKeyName(t.getType()) + " = " + id + " AND _tagid = (SELECT _tagid FROM "+ t.tagiTaulu +" WHERE nimi LIKE \"suosikki\")";
+            querry += " WHERE " + findPrimaryKeyName(t.getTaulu()) + " = " + id + " AND _tagid = (SELECT _tagid FROM "+ t.tagiTaulu +" WHERE nimi LIKE \"suosikki\")";
         }
 
         Log.d("suosikin muutos","ollaan muuttamassa suosikkia: " + querry);
@@ -508,7 +504,7 @@ public class SqlHandler extends SQLiteOpenHelper {
 
         //haetaan taulut ja idKentät
         String[] tagiTaulut = getTagFields(tableName);
-        if(tagiTaulut[0] == null) return null; // Tämä nappaa kiinni mikäli yritetään tägejä tulokselle jolla niitä ei ole
+        if(tagiTaulut[0] == null || tagiTaulut[0].compareTo("ERROR FINDING TAG FIELDS") == 0) return null; // Tämä nappaa kiinni mikäli yritetään tägejä tulokselle jolla niitä ei ole
 
 
         String query = "SELECT nimi FROM " + tagiTaulut[0] + " AS k JOIN (SELECT * FROM " + tagiTaulut[1] + " WHERE " + findPrimaryKeyName(tableName) + " = " + idVal +" ) as l ON k._tagid = l._tagid";
@@ -636,14 +632,20 @@ public class SqlHandler extends SQLiteOpenHelper {
                     ((aineTulos)t).setAlkuaine(getValue("alkuaineet",tmp, null));
                 }
 
+            }else if (t.getType().compareTo("triFunMaster") == 0) {
+                //haetaan trigonometristenFunktioiden arvot ja annetaan ne tulokselle.
+                HashMap<String,String> tmp = new HashMap<>();
+                tmp.put("cos","%"); //tällä pitäs osua kaikkiin asteisiin...
+                ((triFunMasterTulos)t).setArvot(getValue("trigonometrisetArvot",tmp,null));
+
             }
-            if(tagilliset.indexOf(t.getType()) >= 0) {
+            if(tagilliset.indexOf(t.getTaulu()) >= 0) {
                 //ikävän näköinen kutsu. Avataanpa hieman.
                 t.setTagit(getTags( //haetaan tägit. Tarvitaan tuloksen id ja taulun nimi
                         t.getValue( //haetaan tuloksen id sen hashmapistä. Täytyy tuntea avain kentän nimi
                                 findPrimaryKeyName( //On olemassa metodi jolla primary key löydetään
-                                        t.getType())) //PK:n löytämiseksi tarvitaan tuloksen taulu. Se on sen type.
-                        , t.getType())); //vielä tarvitaan taulun nimi
+                                        t.getTaulu())) //PK:n löytämiseksi tarvitaan tuloksen taulu.
+                        , t.getTaulu())); //vielä tarvitaan taulun nimi
             }
         }
 

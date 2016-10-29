@@ -32,6 +32,7 @@ public class alkuaineTulos extends Tulos {
         isotoopit = new ArrayList<>();
 
         type = "Alkuaineet";
+        taulu = "Alkuaineet";
         tagiTaulu = "AlkuaineetTag";
         linkkiTaulu = "Alkuaineet_tag";
     }

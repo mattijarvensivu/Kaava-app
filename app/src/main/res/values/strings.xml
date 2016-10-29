@@ -84,5 +84,8 @@
     <string name="resistanssi">resistance</string>
     <string name="aine">Materials</string>
     <string name="ionit">Ions</string>
+    <string name="trifunt">Values of trigonometric functions</string>
+    <string name="aste">Dec</string>
+    <string name="radian">Rad</string>
 
 </resources>

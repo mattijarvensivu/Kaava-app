@@ -44,7 +44,7 @@ public class MathActivity extends AppCompatActivity
     //idea on että aihealueen valinta perustuu tägeihin. Koska käytännössä kaikki matikan tieto on kaava tai vakio taulussa, ei voida käyttää samaa ratkaisua kuin kemiassa. Tämä systeemi joudutaan ehkä lisäämään myös kemian osalle
     String[] listOfReqTags = new String[]{};
     String[] listOfTagTables = new String[]{"Kaava","Vakio"};
-    String[] listOfTables = new String[]{"Kaava","Muuttuja","Vakio"};
+    String[] listOfTables = new String[]{"Kaava","Vakio"};
 
     //näillä palataan takaisin largeViewistä
     boolean inLargeView = false;

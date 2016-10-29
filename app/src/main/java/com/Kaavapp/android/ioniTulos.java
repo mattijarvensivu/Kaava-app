@@ -32,6 +32,7 @@ public class ioniTulos extends Tulos {
         layoutLarge = R.layout.ioni_large;
         suolaLayout = R.layout.suola;
         type = "ionit";
+        taulu = "ionit";
     }
 
 

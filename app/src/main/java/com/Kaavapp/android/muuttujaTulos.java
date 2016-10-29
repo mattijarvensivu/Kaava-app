@@ -19,6 +19,7 @@ public class muuttujaTulos extends Tulos{
         layoutLarge = -1;
         layoutSmall = R.layout.muuttuja_small;
         tiedot = values;
+        taulu = "Muuttuja";
     }
 
     @Override

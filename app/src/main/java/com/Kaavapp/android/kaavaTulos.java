@@ -38,6 +38,7 @@ public class kaavaTulos extends Tulos{
         tagiTaulu = "KaavaTag";
         linkkiTaulu = "Kaava_tag";
         type = "Kaava";
+        taulu = "Kaava";
 
 
     }

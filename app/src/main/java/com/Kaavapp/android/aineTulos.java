@@ -25,6 +25,7 @@ public class aineTulos extends Tulos {
         layoutLarge = R.layout.aine_large;
 
         type = "aine";
+        taulu = "aine";
         tagiTaulu = "aineTag";
         linkkiTaulu = "aine_tag";
     }

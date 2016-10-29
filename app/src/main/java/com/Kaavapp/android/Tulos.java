@@ -34,8 +34,12 @@ public class Tulos {
 
     public Tulos()
     {
+        taulu = "raw";
+    }
 
-
+    public Tulos(HashMap<String,String> vals)
+    {
+        tiedot = vals;
     }
 
 
@@ -59,7 +63,13 @@ public class Tulos {
                 return new muuttujaTulos(values);//muuttuja
 
             case 5:
-                if(values.get("yksikko") != null) return new vakioTulos(values);//vakio
+                if(values.get("yksikko") != null)
+                {
+                    if(values.get("yksikko").compareTo("trigKey") == 0 )
+                        return new triFunMasterTulos(values);
+                    return new vakioTulos(values);//vakio
+                }
+                if(values.get("_aste") != null) return new Tulos(values); //trigonometrisetArvot tulos
                 return new ioniTulos(values);
 
             case 6:
@@ -69,7 +79,8 @@ public class Tulos {
             case 10:
                 return new aineTulos(values);
             default:
-                return null;
+                Log.d("Tulos virhe","Palautetaan default tulos");
+                return new Tulos(values); //mahdollisesti vaarallista, mutta toisaalta mahdollistetaan puhtaan tiedon siirtely.
         }
 
     }
@@ -152,6 +163,8 @@ public class Tulos {
         setTahti(v);
         suosikkiToggle.onToggleSuosikki(this); //kerrotaan listenerille että suosikki status on muuttunut
     }
+
+    public String getTaulu(){ return taulu;}
 
 
 }

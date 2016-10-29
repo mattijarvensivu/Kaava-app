@@ -23,6 +23,7 @@ public class piikkiTulos extends Tulos {
             String tmp = tiedot.get("sidos").replace("(ks)","\u2261");
             tiedot.put("sidos",tmp);
         }
+        taulu = "irpiikit";
     }
 
     public View getSmallView (LayoutInflater infl, ViewGroup paren) {
