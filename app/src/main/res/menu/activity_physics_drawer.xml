@@ -23,8 +23,12 @@
                 android:id="@+id/termodynamiikka"
                 android:title="@string/termodynamiikka" />
             <item
-                android:id="@+id/mekaniikka"
-                android:title="@string/mekaniikka" />
+            android:id="@+id/mekaniikka"
+            android:title="@string/mekaniikka" />
+
+            <item
+                android:id="@+id/yksikot"
+                android:title="@string/yksikot" />
         </menu>
     </item>
 

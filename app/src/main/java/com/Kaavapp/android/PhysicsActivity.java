@@ -41,8 +41,9 @@ public class PhysicsActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     SqlHandler hand;
     private ListView listView;
-    //idea on että aihealueen valinta perustuu tägeihin. Koska käytännössä kaikki matikan tieto on kaava tai vakio taulussa, ei voida käyttää samaa ratkaisua kuin kemiassa. Tämä systeemi joudutaan ehkä lisäämään myös kemian osalle
-    String[] listOfReqTags = new String[]{};
+    private String[] listOfReqTags = new String[]{};
+    private String[] listOfTables;
+    private String[] listOfTagTables;
 
     //näillä palataan takaisin largeViewistä
     boolean inLargeView = false;
@@ -118,6 +119,9 @@ public class PhysicsActivity extends AppCompatActivity
             }
         });
         hand = new SqlHandler(getApplicationContext().getApplicationContext(), "", null, 1, true);
+        //listOfTagTables = new String[]{"Kaava","Vakio","aine","yksikot"};
+        listOfTagTables = new String[]{"yksikot"};
+        listOfTables = new String[]{"Kaava","Muuttuja","Vakio","aine","yksikot"};
     }
 
     @Override
@@ -166,9 +170,13 @@ public class PhysicsActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        boolean haetaan = true;
+        listOfTagTables = new String[]{"Kaava","Vakio","aine","yksikot"};
+        listOfTables = new String[]{"Kaava","Vakio","aine","yksikot"};
+        listOfReqTags = new String[]{};
+
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        boolean haetaan = true;
 
         if (id == R.id.nav_camera) {
 
@@ -186,14 +194,21 @@ public class PhysicsActivity extends AppCompatActivity
             finish();
         } else if (id == R.id.termodynamiikka) {
             ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.termodynamiikka));
+            listOfTables = new String[]{"Kaava","Vakio"};
+            listOfTagTables = new String[]{"Kaava","Vakio"};
             listOfReqTags = new String[]{"termodynamiikka"};
 
 
         } else if (id == R.id.mekaniikka) {
             ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.mekaniikka));
+            listOfTables = new String[]{"Kaava","Vakio"};
+            listOfTagTables = new String[]{"Kaava","Vakio"};
             listOfReqTags = new String[]{"mekaniikka"};
-
-
+        }else if (id == R.id.yksikot) {
+            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.yksikot));
+            listOfTables = new String[]{"yksikot"};
+            listOfTagTables = new String[]{"yksikot"};
+            listOfReqTags = new String[]{};
         }
 
         ((LinearLayout) findViewById(R.id.lnlContainer)).removeAllViews();
@@ -204,7 +219,7 @@ public class PhysicsActivity extends AppCompatActivity
         if(haetaan) {
             ((LinearLayout) findViewById(R.id.lnlContainer)).removeAllViews();
             ((EditText) findViewById(R.id.Physicsearch)).setText("%");
-            HaePhysics(null);
+            HaePhysics(null,false);
             ((EditText) findViewById(R.id.Physicsearch)).setText("");
         }
 
@@ -228,9 +243,6 @@ public class PhysicsActivity extends AppCompatActivity
             Toast.makeText(this, getString(R.string.check_input), Toast.LENGTH_SHORT).show();
             return;
         }
-        String[] listOfTagTables = new String[]{"Kaava","Vakio"};
-        String[] listOfTables = new String[]{"Kaava","Muuttuja","Vakio"};
-
         Boolean tarkistus= false;
         StringValidator val = new StringValidator();
         tarkistus = val.CheckString(hakuparametri);
@@ -239,7 +251,7 @@ public class PhysicsActivity extends AppCompatActivity
 
             // Tarkistus mistä taulusta haetaan täytyy tehä
             ArrayList<Tulos> tulos = new ArrayList<>();
-            if(includeTags) suoritaHaku(hakuparametri,listOfTagTables,true);
+            if(includeTags) tulos = suoritaHaku(hakuparametri,listOfTagTables,true);
             if(tulos.size()==0 && hakuparametri.length()!=0) {
                 tulos = suoritaHaku(hakuparametri, listOfTables, false);
             }
@@ -350,6 +362,18 @@ public class PhysicsActivity extends AppCompatActivity
             }
 
         }
+        for (Tulos t : tulos) {
+            t.setOnSuosikkiToggleListener(new suosikkiToggleListener() {
+                @Override
+
+                public void onToggleSuosikki(Tulos t) {
+
+                    hand.muutaSuosikkiStatus(t);
+                }
+            });
+
+        }
+
 
 
         return tulos;

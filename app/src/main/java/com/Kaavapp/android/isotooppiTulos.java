@@ -29,6 +29,7 @@ public class isotooppiTulos extends Tulos {
     //tuottaa Viewin annetulla inflaterillä ja isännällä. Tässä viewissä näytetään nopea yhteen veto tuloksesta
     public View getSmallView (LayoutInflater infl, ViewGroup paren)
     {
+        if(!dataHaettu) GAD.findData(this);
         View pal = infl.inflate(layoutSmall, paren, false);
         //asetetaan tiedot paikoilleen
         ((TextView)pal.findViewById(R.id.txvParticles)).setText(tiedot.get("massaluku") + symbol);
@@ -114,6 +115,7 @@ public class isotooppiTulos extends Tulos {
     public void setSymbol(String value)
     {
         symbol = value;
+        dataHaettu = true;
     }
     public String getName()
     {

@@ -40,6 +40,7 @@ public class triFunMasterTulos extends Tulos {
     }
     public View getLargeView (LayoutInflater infl, ViewGroup paren)
     {
+        if(!dataHaettu) GAD.findData(this);
         View pal = infl.inflate(layoutLarge, paren, false);
         TableLayout mainTbl = (TableLayout) pal.findViewById(R.id.tblMain);
         String[] kentat = {"radian","cos","sin","tan"}; //fukit, en rupee kirjottamaan 4x koodia jolla rakkennetaan yksittäinen imageViewi
@@ -73,6 +74,7 @@ public class triFunMasterTulos extends Tulos {
     public void setArvot(ArrayList<Tulos> vals)
     {
         arvot = vals;
+        dataHaettu = true;
     }
 
     //asetetaan tägit. Samalla tarkistetaan onko tämä suosikki (onko tällä suosikki tägi)

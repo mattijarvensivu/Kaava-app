@@ -27,6 +27,9 @@ public class kaavaTulos extends Tulos{
     private ArrayList<Tulos> muuttujat;
     //private String kaikkimuuttujat;
 
+    private boolean haettuVakiot = false;
+    private boolean haettuMuuttujat = false;
+
 
     public kaavaTulos(HashMap<String,String> values) {
         layoutLarge = R.layout.kaava_large;
@@ -62,6 +65,7 @@ public class kaavaTulos extends Tulos{
     }
 
     public View getLargeView (LayoutInflater infl, ViewGroup paren) {
+        if(!dataHaettu) GAD.findData(this);
         View pal = infl.inflate(layoutLarge, paren, false);
         KaavaFactory ka = new KaavaFactory(pal.getContext(),pal.getResources(),(int)Math.ceil(((TextView)pal.findViewById(R.id.kaava_nimi_largeee)).getTextSize()/ pal.getResources().getDisplayMetrics().density)); //viimeinen parametri laskee käytetyn teksti koon.
         ((ImageView)pal.findViewById(R.id.kaava_lause_large)).setImageDrawable(ka.getBmD(tiedot.get("lause")));
@@ -108,6 +112,8 @@ public class kaavaTulos extends Tulos{
 
     public void addMuuttujat(ArrayList<Tulos> vals)
     {
+        haettuMuuttujat = true;
+        dataHaettu = haettuMuuttujat && haettuVakiot;
         for(int i = 0; i < vals.size(); i++) {
             muuttujat.add((muuttujaTulos)vals.get(i));
             Log.d("Lisätty",vals.get(i).getValue("kuvaus"));
@@ -117,6 +123,8 @@ public class kaavaTulos extends Tulos{
     }
     public void addVakiot(ArrayList<Tulos> vals)
     {
+        haettuVakiot = true;
+        dataHaettu = haettuMuuttujat && haettuVakiot;
         for(int i = 0; i < vals.size(); i++) {
             vakiot.add((vakioTulos)vals.get(i));
             Log.d("Lisätty",vals.get(i).getValue("nimi"));

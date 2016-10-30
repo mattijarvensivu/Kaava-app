@@ -22,6 +22,7 @@ import java.util.HashMap;
 public class SqlHandler extends SQLiteOpenHelper {
 
     private static String DB_PATH = "/data/data/com.Kaavapp.android/databases/";
+    private String[] tagillisetArray = {"Alkuaineet", "Kaava", "Funktionaalinenryhma","Vakio","hapot","aine","yksikot"}; //tässä määritellään ne joilla on tägi taulu. Ehkä tämän tiedon voisi viedä tietokantaan... vaikka defaultFields tauluun?
 
     private static String DB_NAME = "Kaavapp.db";
 
@@ -250,8 +251,21 @@ public class SqlHandler extends SQLiteOpenHelper {
             cur.close();
 
         }
-        gatherAditionalData(pal);
 
+        ArrayList tagilliset = new ArrayList(Arrays.asList(tagillisetArray));
+        addGADListener(pal);
+        for(Tulos t : pal)
+        {
+            if(tagilliset.indexOf(t.getTaulu()) >= 0) {
+                //ikävän näköinen kutsu. Avataanpa hieman.
+                t.setTagit(getTags( //haetaan tägit. Tarvitaan tuloksen id ja taulun nimi
+                        t.getValue( //haetaan tuloksen id sen hashmapistä. Täytyy tuntea avain kentän nimi
+                                findPrimaryKeyName( //On olemassa metodi jolla primary key löydetään
+                                        t.getTaulu())) //PK:n löytämiseksi tarvitaan tuloksen taulu.
+                        , t.getTaulu())); //vielä tarvitaan taulun nimi
+            }
+
+        }
 
         return pal;
     }
@@ -269,10 +283,6 @@ public class SqlHandler extends SQLiteOpenHelper {
         try {
             if (cur.moveToFirst()) {
                 do {
-                    HashMap<String,String> idTmp = new HashMap<>();
-                    idTmp.put("_tname",tableName);
-                    Cursor idCur = getCursor("defaultFields",idTmp,null);
-                    String keyField = null;
                     HashMap<String, String> tmp = new HashMap<String, String>();
                     for (int i = 0; i < tableS.size(); i++) {
 
@@ -282,10 +292,28 @@ public class SqlHandler extends SQLiteOpenHelper {
                 } while (cur.moveToNext());
 
             }
-        } finally {
+        }catch (Exception e)
+        {
+            Log.d("virhe","tapahtui virhe getValue by tägissä");
+        }
+        finally {
             cur.close();
         }
-        gatherAditionalData(pal);
+
+        ArrayList tagilliset = new ArrayList(Arrays.asList(tagillisetArray));
+        addGADListener(pal);
+        for(Tulos t : pal)
+        {
+            if(tagilliset.indexOf(t.getTaulu()) >= 0) {
+                //ikävän näköinen kutsu. Avataanpa hieman.
+                t.setTagit(getTags( //haetaan tägit. Tarvitaan tuloksen id ja taulun nimi
+                        t.getValue( //haetaan tuloksen id sen hashmapistä. Täytyy tuntea avain kentän nimi
+                                findPrimaryKeyName( //On olemassa metodi jolla primary key löydetään
+                                        t.getTaulu())) //PK:n löytämiseksi tarvitaan tuloksen taulu.
+                        , t.getTaulu())); //vielä tarvitaan taulun nimi
+            }
+
+        }
         return pal;
     }
 
@@ -557,15 +585,13 @@ public class SqlHandler extends SQLiteOpenHelper {
     }
 
     //haetaan tulokseen liittyvä ylimääräinen data, esim isotoopit tai kaavojen muuttujat ja vakiot.
-    private void gatherAditionalData(ArrayList<Tulos> data)
+    //POTENTIAALINEN VIRHE: mikäli haettavia tuloksia ei haeta getValue tai getValueByTag metodeilla, ei niille aseteta GADlisteneriä! tulee siis spesifisti hoitaa se!
+    private void gatherAditionalData(Tulos t)
     {
         //isotooppeja varten
         String symbol = "";
         String prevId = "-1";
-        String[] tagillisetArray = {"Alkuaineet", "Kaava", "Funktionaalinenryhma","Vakio","hapot","aine"}; //tässä määritellään ne joilla on tägi taulu. Ehkä tämän tiedon voisi viedä tietokantaan... vaikka defaultFields tauluun?
-        ArrayList tagilliset = new ArrayList(Arrays.asList(tagillisetArray));
 
-        for(Tulos t: data) {
             if (t.getType().compareTo("Alkuaineet") == 0) {
                 //haetaan alkuaineen isotoopit.
                 HashMap<String, String> tmp = new HashMap<>();
@@ -625,12 +651,14 @@ public class SqlHandler extends SQLiteOpenHelper {
                 ((ioniTulos) t).setLiukoisuudet(fidSolubility((ioniTulos) t));
             } else if (t.getType().compareTo("aine") == 0) {
                 HashMap<String,String> tmp = new HashMap<>();
+                ArrayList<Tulos> tmpAL = null;
                 if( t.getValue("alkuaineLink") != null)
                 {
                     //kyseessä on bulkki alkuaine
                     tmp.put("_id",t.getValue("alkuaineLink"));
-                    ((aineTulos)t).setAlkuaine(getValue("alkuaineet",tmp, null));
+                    tmpAL = getValue("alkuaineet",tmp, null);
                 }
+                ((aineTulos)t).setAlkuaine(tmpAL);
 
             }else if (t.getType().compareTo("triFunMaster") == 0) {
                 //haetaan trigonometristenFunktioiden arvot ja annetaan ne tulokselle.
@@ -638,15 +666,29 @@ public class SqlHandler extends SQLiteOpenHelper {
                 tmp.put("cos","%"); //tällä pitäs osua kaikkiin asteisiin...
                 ((triFunMasterTulos)t).setArvot(getValue("trigonometrisetArvot",tmp,null));
 
+            }else if (t.getType().compareTo("yksikot") == 0) {
+                //haetaan yksikön tekijät
+                ArrayList<Tulos> tmp = getLinkitettytYksikot(Integer.parseInt(t.getValue("_yksikkoid")));
+                addGADListener(tmp);
+                ((yksikkoTulos) t).addCompound(tmp);
             }
-            if(tagilliset.indexOf(t.getTaulu()) >= 0) {
-                //ikävän näköinen kutsu. Avataanpa hieman.
-                t.setTagit(getTags( //haetaan tägit. Tarvitaan tuloksen id ja taulun nimi
-                        t.getValue( //haetaan tuloksen id sen hashmapistä. Täytyy tuntea avain kentän nimi
-                                findPrimaryKeyName( //On olemassa metodi jolla primary key löydetään
-                                        t.getTaulu())) //PK:n löytämiseksi tarvitaan tuloksen taulu.
-                        , t.getTaulu())); //vielä tarvitaan taulun nimi
-            }
+
+
+
+    }
+
+    //toimiiko näin? onko vals kopio AL?
+    private void addGADListener(ArrayList<Tulos> vals)
+    {
+        if(vals == null) return;
+        for(Tulos t: vals)
+        {
+            t.setGADListener(new gatehrAddDataListener() {
+                @Override
+                public void findData(Tulos kohde) {
+                    gatherAditionalData(kohde);
+                }
+            });
         }
 
     }
@@ -739,6 +781,32 @@ public class SqlHandler extends SQLiteOpenHelper {
         return pal;
     }
 
+    private ArrayList<Tulos> getLinkitettytYksikot(int yid)
+    {
+        String querry = "SELECT _yksikkoId,nimi,yksikko,suure FROM (SELECT linkitettyYksikko FROM yksikko_linkki WHERE isantaYksikko = " +yid+ ") AS l,yksikot as y WHERE y._yksikkoId = l.linkitettyYksikko";
+        ArrayList<Tulos> pal = null;
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.rawQuery(querry,null);
+        if(c.moveToFirst())
+        {
+            pal = new ArrayList<>();
+            ArrayList<String[]> tableS = getStructure("yksikot");
+            do{
+                HashMap<String, String> tmp = new HashMap<>();
+                for(int j = 0; j < tableS.size(); j++)
+                {
+                    tmp.put(tableS.get(j)[0],c.getString(j));
+                }
+                pal.add(Tulos.getTulos(tmp));
+            }while(c.moveToNext());
+        }
+        c.close();
+        db.close();
+        return pal;
+    }
+
+
+
 
 
 
@@ -757,6 +825,11 @@ public class SqlHandler extends SQLiteOpenHelper {
         db.execSQL(querry);
         db.close();
     }*/
+}
+
+interface gatehrAddDataListener
+{
+    void findData(Tulos kohde);
 }
 
 

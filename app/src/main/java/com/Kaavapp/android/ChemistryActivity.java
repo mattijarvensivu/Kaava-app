@@ -42,6 +42,7 @@ public class ChemistryActivity extends AppCompatActivity
     SqlHandler hand;
 
     private ListView listView;
+    String[] listOfReqTags = new String[]{};
     private String[] listOfTables;
     private String[] listOfTagTables;
 
@@ -167,6 +168,9 @@ public class ChemistryActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         boolean haetaan = true;
+        listOfTagTables = new String[]{"Alkuaineet","Funktionaalinenryhma","Kaava","Vakio","Hapot","aine"};
+        listOfTables = new String[]{"Alkuaineet","Funktionaalinenryhma","Hapot","Isotoopit","Kaava","Muuttuja","Vakio","ionit","aine"};
+        listOfReqTags = new String[]{};
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
@@ -264,7 +268,7 @@ public class ChemistryActivity extends AppCompatActivity
 
             // Tarkistus mistä taulusta haetaan täytyy tehä
             ArrayList<Tulos> tulos = new ArrayList<>();
-             if(includeTags) suoritaHaku(hakuparametri,listOfTagTables,true);
+             if(includeTags)tulos = suoritaHaku(hakuparametri,listOfTagTables,true);
             if(tulos.size()==0 && hakuparametri.length()!=0) {
                 tulos = suoritaHaku(hakuparametri, listOfTables, false);
             }

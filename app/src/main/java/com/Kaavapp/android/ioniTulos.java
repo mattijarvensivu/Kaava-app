@@ -49,6 +49,7 @@ public class ioniTulos extends Tulos {
 
     public View getLargeView(LayoutInflater infl, ViewGroup paren)
     {
+        if(!dataHaettu) GAD.findData(this);
         View pal = infl.inflate(layoutLarge, paren, false);
         ((TextView)pal.findViewById(R.id.txvNimi)).setText(tiedot.get("nimi"));
         ((TextView)pal.findViewById(R.id.txvName)).setText(tiedot.get("name"));
@@ -81,6 +82,7 @@ public class ioniTulos extends Tulos {
     public void setLiukoisuudet( ArrayList<ioniTulos>[] annetut)
     {
         vastinIonit = annetut;
+        dataHaettu = true;
     }
 
     public boolean isKationi() {return isKationi;}

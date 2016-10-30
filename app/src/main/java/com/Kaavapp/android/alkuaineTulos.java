@@ -196,6 +196,7 @@ public class alkuaineTulos extends Tulos {
 
         //Esitetään isotoopit
         //ei syystä tai toisesta hyväksy ArrayList<isotooppiTulos> parametrinä, täytyy olla ArrayList<Tulos>
+        if(!dataHaettu) GAD.findData(this); //haetaan isotoopit vain jos niiden lista on tyhjä
         for(int i = 0; i < isotoopit.size(); i++)
         {
             View tmp = isotoopit.get(i).getSmallView(infl,isot);
@@ -229,6 +230,7 @@ public class alkuaineTulos extends Tulos {
 
     public void addIsotoopit(ArrayList<Tulos> vals)
     {
+        dataHaettu = true;
         for(int i = 0; i < vals.size(); i++) {
             isotoopit.add((isotooppiTulos)vals.get(i));
         }

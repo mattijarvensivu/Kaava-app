@@ -28,8 +28,11 @@ public class Tulos {
     protected String linkkiTaulu;
 
     protected suosikkiToggleListener suosikkiToggle;
+    protected gatehrAddDataListener GAD;
 
     protected ArrayList<String> tagit;
+
+    protected boolean dataHaettu = false;
 
 
     public Tulos()
@@ -60,6 +63,8 @@ public class Tulos {
                     return new funktionaalinenTulos(values); //funktionaalinen ryhmä
                 if(values.get("_kaavaid") != null)
                     return new kaavaTulos(values); //kaava
+                if(values.get("_yksikkoid") != null)
+                    return new yksikkoTulos(values); //yksikkö
                 return new muuttujaTulos(values);//muuttuja
 
             case 5:
@@ -88,6 +93,10 @@ public class Tulos {
     public void setOnSuosikkiToggleListener(suosikkiToggleListener s)
     {
         suosikkiToggle = s;
+    }
+    public void setGADListener(gatehrAddDataListener s)
+    {
+        GAD = s;
     }
 
     public String getType()
@@ -159,6 +168,7 @@ public class Tulos {
     //tähden tilaa on muutettu. Toimitaan.
     protected void toggleSuosikki(View v)
     {
+        if(suosikkiToggle == null) return;
         isSuosikki = !isSuosikki;
         setTahti(v);
         suosikkiToggle.onToggleSuosikki(this); //kerrotaan listenerille että suosikki status on muuttunut

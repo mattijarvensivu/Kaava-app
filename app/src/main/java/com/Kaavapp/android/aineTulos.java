@@ -41,6 +41,9 @@ public class aineTulos extends Tulos {
         ((TextView)pal.findViewById(R.id.txvName)).setText(tiedot.get("name"));
         KaavaFactory kf = new KaavaFactory(pal.getContext(),pal.getResources(),(int)Math.ceil(((TextView)pal.findViewById(R.id.txvNimi)).getTextSize()/ pal.getResources().getDisplayMetrics().density));
         BitmapDrawable celsius = kf.getBmD("C^{\\circ}");
+
+        if(!dataHaettu) GAD.findData(this);
+
         if(tiedot.get("sulamispiste").compareTo("-") == 0)
         {
             ((ViewGroup)pal.findViewById(R.id.lnlMp)).removeAllViews();
@@ -142,6 +145,8 @@ public class aineTulos extends Tulos {
 
     public void setAlkuaine(ArrayList<Tulos> data)
     {
+        dataHaettu = true;
+        if (data == null) return;
         tiedot.put("sulamispiste",data.get(0).getValue("sulamispiste"));
         tiedot.put("kiehumispiste",data.get(0).getValue("kiehumispiste"));
         tiedot.put("tiheys",data.get(0).getValue("tiheys"));

@@ -87,5 +87,6 @@
     <string name="trifunt">Values of trigonometric functions</string>
     <string name="aste">Dec</string>
     <string name="radian">Rad</string>
+    <string name="yksikot">Units</string>
 
 </resources>

@@ -14,7 +14,7 @@ public class StringValidator {
     public Boolean CheckString(String tarkastettava){
 
         Boolean hyvaksytty = false;
-        Pattern p = Pattern.compile("[^a-z0-9, %]", Pattern.CASE_INSENSITIVE);
+        Pattern p = Pattern.compile("[^a-z0-9, %äö]", Pattern.CASE_INSENSITIVE);
         Matcher m = p.matcher(tarkastettava);
         hyvaksytty = m.find();
         hyvaksytty = !hyvaksytty;

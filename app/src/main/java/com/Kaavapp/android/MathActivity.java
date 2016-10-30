@@ -265,7 +265,7 @@ public class MathActivity extends AppCompatActivity
 
             // Tarkistus mistä taulusta haetaan täytyy tehä
             ArrayList<Tulos> tulos = new ArrayList<>();
-            if(includeTags) suoritaHaku(hakuparametri,listOfTagTables,true);
+            if(includeTags)tulos = suoritaHaku(hakuparametri,listOfTagTables,true);
             //haku ei ilmeisesti tapahtunut tägiä käyttäen. Yritetään hakea kentän perusteella
             if(tulos.size()==0 && hakuparametri.length()!=0) { //onko tuon haku parametrin tarkistus turha? eikös 0 pituiset kosahda tuohon missä toastataan check input?
                 tulos = suoritaHaku(hakuparametri, listOfTables, false);

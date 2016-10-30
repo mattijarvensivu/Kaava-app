@@ -62,6 +62,7 @@ public class funktionaalinenTulos extends Tulos{
 
         //laitetaan piikit näkyville
         LinearLayout piikit = (LinearLayout)pal.findViewById(R.id.lnlPiikit);
+        if(!dataHaettu) GAD.findData(this);
         for(piikkiTulos p : irpiikit)
         {
             piikit.addView(p.getSmallView(infl,piikit));
@@ -72,6 +73,7 @@ public class funktionaalinenTulos extends Tulos{
 
     public void setPiikit(ArrayList<Tulos> given)
     {
+        dataHaettu = true;
         for(Tulos t: given)
         {
             irpiikit.add((piikkiTulos)t);
