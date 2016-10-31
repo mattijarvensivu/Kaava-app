@@ -1,5 +1,6 @@
 package com.Kaavapp.android;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ public class yksikkoTulos extends Tulos {
 
     private ArrayList<yksikkoTulos> compoundYksikot; //paska nimi
 
+
     public yksikkoTulos(HashMap<String,String> vals)
     {
         tiedot = vals;
@@ -28,6 +30,8 @@ public class yksikkoTulos extends Tulos {
         tagiTaulu = "yksikotTag";
         linkkiTaulu = "yksikot_tag";
     }
+
+
 
     public View getSmallView (LayoutInflater infl, ViewGroup paren)
     {
@@ -71,6 +75,7 @@ public class yksikkoTulos extends Tulos {
         }
         return pal;
     }
+
 
     public void addCompound(ArrayList<Tulos> data)
     {
