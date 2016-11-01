@@ -61,8 +61,7 @@ public class Tulos {
             case 4:
                 if(values.get("_ryhmaid") != null)
                     return new funktionaalinenTulos(values); //funktionaalinen ryhmä
-                if(values.get("_kaavaid") != null)
-                    return new kaavaTulos(values); //kaava
+
                 if(values.get("_yksikkoid") != null)
                     return new yksikkoTulos(values); //yksikkö
                 return new muuttujaTulos(values);//muuttuja
@@ -74,6 +73,8 @@ public class Tulos {
                         return new triFunMasterTulos(values);
                     return new vakioTulos(values);//vakio
                 }
+                if(values.get("_kaavaid") != null)
+                    return new kaavaTulos(values); //kaava
                 if(values.get("_aste") != null) return new Tulos(values); //trigonometrisetArvot tulos
                 return new ioniTulos(values);
 

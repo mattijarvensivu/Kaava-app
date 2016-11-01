@@ -296,6 +296,7 @@ public class MathActivity extends AppCompatActivity
 
     private ArrayList<Tulos> suoritaHaku(String hakuparametri, String[] taulut, boolean isTag)
     {
+
         HashMap<String, String> kentat;
         String tmpHakuPreP = hakuparametri;
         //syödään turhat välit pilkkujen ympäriltä pois

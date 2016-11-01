@@ -230,7 +230,7 @@ public class SqlHandler extends SQLiteOpenHelper {
     public ArrayList<Tulos> getValue (String tableName, HashMap<String,String> searchParameters, ArrayList<HashMap<String, String>> tagit) {
         ArrayList<Tulos> pal = new ArrayList<>();
         ArrayList<String[]> tableS = getStructure(tableName);
-
+HeaderClass header = new HeaderClass();
 
         Cursor cur = getCursor(tableName, searchParameters, tagit);
         Log.d("minun",cur.getCount() + " tulosta");
@@ -243,6 +243,8 @@ public class SqlHandler extends SQLiteOpenHelper {
 
                         tmp.put(tableS.get(i)[0], cur.getString(i));
                     }
+
+                    pal= header.SetHeader(tmp, pal);
                     pal.add(Tulos.getTulos(tmp));
                 } while (cur.moveToNext());
 
@@ -272,6 +274,7 @@ public class SqlHandler extends SQLiteOpenHelper {
 
     public ArrayList<Tulos> getValueByTag (String tableName, ArrayList<HashMap<String,String>> searchParameters,  ArrayList<HashMap<String,String>> mustHaveTags) {
         ArrayList<Tulos> pal = new ArrayList<>();
+        HeaderClass header = new HeaderClass();
 
         //haetaan tagi taulua vastaavat kohde ja linkki taulu
 
@@ -288,6 +291,7 @@ public class SqlHandler extends SQLiteOpenHelper {
 
                         tmp.put(tableS.get(i)[0], cur.getString(i));
                     }
+                    pal= header.SetHeader(tmp, pal);
                     pal.add(Tulos.getTulos(tmp));
                 } while (cur.moveToNext());
 
@@ -377,6 +381,9 @@ public class SqlHandler extends SQLiteOpenHelper {
             }
         }
 
+        if(tableName.compareTo("Kaava")==0){
+            query += "ORDER BY mainTag";
+        }
         return "SELECT * FROM( " + query + " )";
 
 
@@ -398,6 +405,7 @@ public class SqlHandler extends SQLiteOpenHelper {
         //db.close();
         return pal;
     }
+
 
 
     //etsitään nimetyn taulun oletus kentät
@@ -468,6 +476,7 @@ public class SqlHandler extends SQLiteOpenHelper {
         }
         //luodaan querry
         String query = "Select * from (" + source + ")";
+        Log.d("SOURCETEST", source);
         String searchParamsS = "";
         boolean isFirst = true;
         for(int i = 0; i < tableS.size(); i++)
@@ -492,6 +501,11 @@ public class SqlHandler extends SQLiteOpenHelper {
                 }
                 isFirst = false;
             }
+        }
+        Log.d("SERCHPARAMS", searchParamsS);
+        if(source.compareTo("Kaava")==0){
+            Log.d("IFFIN SIÄLLÄ", source);
+            searchParamsS +=" ORDER BY mainTag";
         }
         //toteutetaan haku
         SQLiteDatabase db = getWritableDatabase();
