@@ -41,7 +41,7 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/Chemistrysearch"
+            android:id="@+id/edtHakuKentta"
             android:layout_weight="1"
             android:visibility="visible" />
 
@@ -52,7 +52,7 @@
             android:text="@string/search"
             android:id="@+id/Chemistrynappi"
 
-            android:onClick="HaeChemistry" />
+            android:onClick="Hae" />
 
     </LinearLayout>
 
@@ -60,7 +60,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/lnlContainer"
-        android:layout_below="@+id/Chemistrysearch"
+        android:layout_below="@+id/edtHakuKentta"
         android:layout_marginTop="10dp"
         android:layout_weight="1">
 
@@ -75,7 +75,7 @@
     </LinearLayout>
 
     <com.google.android.gms.ads.AdView
-        android:id="@+id/adViewChemistry"
+        android:id="@+id/adViewMainos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"

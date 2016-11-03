@@ -42,7 +42,7 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/Physicsearch"
+            android:id="@+id/edtHakuKentta"
             android:visibility="visible"
             android:layout_weight="1"/>
 
@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:text="@string/search"
             android:id="@+id/Physicsnappi"
-            android:onClick="HaePhysics" />
+            android:onClick="Hae" />
 
 
     </LinearLayout>
@@ -78,7 +78,7 @@
 
 
     <com.google.android.gms.ads.AdView
-        android:id="@+id/adViewPhysics"
+        android:id="@+id/adViewMainos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
