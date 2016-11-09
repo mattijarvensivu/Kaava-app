@@ -47,7 +47,7 @@ public class MathActivity extends activityMaster {
         super.onCreate(savedInstanceState);
 
         listOfTagTables = new String[]{"Kaava","Vakio"};
-        listOfTables = new String[]{"Kaava","Muuttuja","Vakio"};
+        listOfTables = new String[]{"Kaava","Vakio"};
         listOfReqTags = new String[]{};
     }
 

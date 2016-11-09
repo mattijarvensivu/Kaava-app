@@ -271,25 +271,29 @@ public class activityMaster extends AppCompatActivity
                     }
                 }
 
+                //luodaan mustHave tägi rajoite lista
+                ArrayList<HashMap<String,String>> mstHvTags = new ArrayList<>();
+                if(t.compareTo("Kaava") == 0 || t.compareTo("Vakio") == 0)
+                {
+                    HashMap<String, String> tmp = new HashMap<>();
+                    tmp.put("nimi",actKategoria);
+                    mstHvTags.add(tmp);
+                }
+                for(String s : listOfReqTags)
+                {
+                    HashMap<String, String> tmp = new HashMap<>();
+                    tmp.put("nimi",s);
+                    mstHvTags.add(tmp);
+                }
+
+
                 if(isTag==true)
                 {
-                    ArrayList<HashMap<String,String>> tagit = new ArrayList<>();
-                    if(t.compareTo("Kaava") == 0 || t.compareTo("Vakio") == 0)
-                    {
-                        HashMap<String, String> tmp = new HashMap<>();
-                        tmp.put("nimi",actKategoria);
-                        tagit.add(tmp);
-                    }
-                    tulos.addAll(hand.getValueByTag(t, kentatAL, tagit));
+
+                    tulos.addAll(hand.getValueByTag(t, kentatAL, mstHvTags));
                 }else {
-                    ArrayList<HashMap<String,String>> tagit = new ArrayList<>();
-                    if(t.compareTo("Kaava") == 0 || t.compareTo("Vakio") == 0)
-                    {
-                        HashMap<String, String> tmp = new HashMap<>();
-                        tmp.put("nimi",actKategoria);
-                        tagit.add(tmp);
-                    }
-                    tulos.addAll(hand.getValue(t, kentat,tagit));
+
+                    tulos.addAll(hand.getValue(t, kentat,mstHvTags));
                 }
 
                 // tulos.addAll(hand.getValue(t, kentat));
