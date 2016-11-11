@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+
 import android.widget.TextView;
 
 
@@ -82,6 +83,9 @@ public class kaavaTulos extends Tulos{
       */  //muut.setText(kaikkimuuttujat);
         LinearLayout muuttujaLL = (LinearLayout) pal.findViewById(R.id.muuttujatLL);
         LinearLayout VakioLL = (LinearLayout) pal.findViewById(R.id.vakiotLL);
+
+
+
         for(int i = 0; i < muuttujat.size(); i++)
         {
             View tmp = muuttujat.get(i).getSmallView(infl,muuttujaLL);

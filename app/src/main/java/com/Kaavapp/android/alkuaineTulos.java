@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -64,7 +66,26 @@ public class alkuaineTulos extends Tulos {
         DecimalFormat df4 = new DecimalFormat("#.####");
         DecimalFormat df2 = new DecimalFormat("#.##");
 
+
         View pal = infl.inflate(layoutLarge, paren, false);
+        String url = "https://en.m.wikipedia.org/wiki/"+ tiedot.get("nimi");
+        Log.d("URL!!!!!!!!!!!!!", url);
+        final WebView myWebView = (WebView) pal.findViewById(R.id.webview);
+        myWebView.loadUrl(url);
+
+        Button wikibutton = (Button) pal.findViewById(R.id.wikibutton);
+        wikibutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(myWebView.getVisibility()==View.INVISIBLE){
+                    myWebView.setVisibility(View.VISIBLE);
+                }else{
+                    myWebView.setVisibility(View.INVISIBLE);
+                }
+
+            }
+        });
+
 
         //laitetaan tiedot paikoilleen
         ((TextView) pal.findViewById(R.id.txvSymbol)).setText(tiedot.get("symbol"));

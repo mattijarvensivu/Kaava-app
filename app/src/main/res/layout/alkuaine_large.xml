@@ -66,6 +66,11 @@
                 android:text="Symbooli"/>
         </TableRow>
         <TableRow>
+
+
+
+
+
             <TextView
                  
                 android:textColor="#000000"
@@ -90,6 +95,8 @@
         </TableRow>
     </TableLayout>
 </LinearLayout>
+
+
             <TextView
                  
                 android:textColor="#000000"
@@ -439,6 +446,17 @@
                 android:id="@+id/lnlIsot">
 
             </LinearLayout>
+           <Button
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Wikipedia"
+               android:id="@+id/wikibutton"/>
+            <WebView
+                android:id="@+id/webview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                />
         </LinearLayout>
 
 </ScrollView>
