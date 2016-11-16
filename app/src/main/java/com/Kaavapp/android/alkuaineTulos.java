@@ -77,10 +77,10 @@ public class alkuaineTulos extends Tulos {
         wikibutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(myWebView.getVisibility()==View.INVISIBLE){
+                if(myWebView.getVisibility()==View.GONE){
                     myWebView.setVisibility(View.VISIBLE);
                 }else{
-                    myWebView.setVisibility(View.INVISIBLE);
+                    myWebView.setVisibility(View.GONE);
                 }
 
             }

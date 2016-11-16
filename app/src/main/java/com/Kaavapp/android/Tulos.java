@@ -82,7 +82,7 @@ public class Tulos {
                 return new piikkiTulos(values);
             case 13:
                 return new happoTulos(values);
-            case 10:
+            case 11:
                 return new aineTulos(values);
             default:
                 Log.d("Tulos virhe","Palautetaan default tulos");

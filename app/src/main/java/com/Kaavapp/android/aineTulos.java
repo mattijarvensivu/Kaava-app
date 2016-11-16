@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -105,7 +106,15 @@ public class aineTulos extends Tulos {
         }else {
             ((TextView)pal.findViewById(R.id.txvOminaislampo)).setText(tiedot.get("ominaislampokapasiteetti"));
             ((ImageView)pal.findViewById(R.id.imgOminaislampo)).setImageDrawable(kf.getBmD("\\frac{J}{K*kg}"));
+
         }
+        if(tiedot.get("lampolaajeneminen").compareTo("-")==0){
+        ((ViewGroup)pal.findViewById(R.id.lnlLampoL)).removeAllViews();
+    }
+        else{
+            ((TextView)pal.findViewById(R.id.txvlampolaajeneminen)).setText(tiedot.get("lampolaajeneminen"));
+            ((ImageView)pal.findViewById(R.id.imglampolaajeneminen)).setImageDrawable(kf.getBmD("\\frac{1}{C^{\\circ}}"));
+    }
 
         ((TextView)pal.findViewById(R.id.txvTiheys)).setText(tiedot.get("tiheys"));
 

@@ -88,5 +88,5 @@
     <string name="aste">Dec</string>
     <string name="radian">Rad</string>
     <string name="yksikot">Units</string>
-
+<string name="lampolaajeneminen">Heat expansion</string>
 </resources>
