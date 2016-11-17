@@ -93,11 +93,55 @@ public class PhysicsActivity extends activityMaster {
             listOfReqTags = new String[]{"termodynamiikka"};
 
 
-        } else if (id == R.id.mekaniikka) {
-            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.mekaniikka));
+        } else if (id == R.id.harmooninenliike) {
+            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.termodynamiikka));
             listOfTables = new String[]{"Kaava","Vakio"};
             listOfTagTables = new String[]{"Kaava","Vakio"};
-            listOfReqTags = new String[]{"mekaniikka"};
+            listOfReqTags = new String[]{"harmooninen liike"};
+
+
+        }else if (id == R.id.dynamiikka) {
+            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.termodynamiikka));
+            listOfTables = new String[]{"Kaava","Vakio"};
+            listOfTagTables = new String[]{"Kaava","Vakio"};
+            listOfReqTags = new String[]{"dynamiikka"};
+
+
+        }else if (id == R.id.kinematiikka) {
+            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.termodynamiikka));
+            listOfTables = new String[]{"Kaava","Vakio"};
+            listOfTagTables = new String[]{"Kaava","Vakio"};
+            listOfReqTags = new String[]{"kinematiikka"};
+
+
+        }else if (id == R.id.valo) {
+            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.termodynamiikka));
+            listOfTables = new String[]{"Kaava","Vakio"};
+            listOfTagTables = new String[]{"Kaava","Vakio"};
+            listOfReqTags = new String[]{"valo"};
+
+
+        }else if (id == R.id.ydinfysiikka) {
+            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.termodynamiikka));
+            listOfTables = new String[]{"Kaava","Vakio"};
+            listOfTagTables = new String[]{"Kaava","Vakio"};
+            listOfReqTags = new String[]{"ydinfysiikka"};
+
+
+        }else if (id == R.id.sahko) {
+            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.termodynamiikka));
+            listOfTables = new String[]{"Kaava","Vakio"};
+            listOfTagTables = new String[]{"Kaava","Vakio"};
+            listOfReqTags = new String[]{"sähkö"};
+
+
+        }else if (id == R.id.magnetismi) {
+            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.termodynamiikka));
+            listOfTables = new String[]{"Kaava","Vakio"};
+            listOfTagTables = new String[]{"Kaava","Vakio"};
+            listOfReqTags = new String[]{"magnetismi"};
+
+
         }else if (id == R.id.yksikot) {
             ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.yksikot));
             listOfTables = new String[]{"yksikot"};

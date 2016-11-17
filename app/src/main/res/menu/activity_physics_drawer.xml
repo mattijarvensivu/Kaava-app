@@ -20,12 +20,29 @@
     <item android:title="@string/aiheet">
         <menu>
             <item
+                android:id="@+id/harmooninenliike"
+                android:title="@string/harmooninen_liike" />
+            <item
+                android:id="@+id/kinematiikka"
+                android:title="@string/kinematiika" />
+            <item
+                android:id="@+id/dynamiikka"
+                android:title="@string/dynamiikka" />
+            <item
+                android:id="@+id/valo"
+                android:title="@string/valo" />
+            <item
+                android:id="@+id/ydinfysiikka"
+                android:title="@string/ydinfysiikka" />
+            <item
                 android:id="@+id/termodynamiikka"
                 android:title="@string/termodynamiikka" />
             <item
-            android:id="@+id/mekaniikka"
-            android:title="@string/mekaniikka" />
-
+                android:id="@+id/sahko"
+                android:title="@string/sahko" />
+            <item
+                android:id="@+id/magnetismi"
+                android:title="@string/magnetismi" />
             <item
                 android:id="@+id/yksikot"
                 android:title="@string/yksikot" />

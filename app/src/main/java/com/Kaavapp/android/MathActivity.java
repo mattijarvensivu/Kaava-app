@@ -63,7 +63,7 @@ public class MathActivity extends activityMaster {
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         listOfTagTables = new String[]{"Kaava","Vakio"};
-        listOfTables = new String[]{"Kaava","Muuttuja","Vakio"};
+        listOfTables = new String[]{"Kaava","Vakio"};
         listOfReqTags = new String[]{};
         // Handle navigation view item clicks here.
         int id = item.getItemId();

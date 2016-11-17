@@ -89,4 +89,11 @@
     <string name="radian">Rad</string>
     <string name="yksikot">Units</string>
 <string name="lampolaajeneminen">Heat expansion</string>
+    <string name="harmooninen_liike">Harmonic motion</string>
+    <string name="kinematiika">Kinematics</string>
+    <string name="dynamiikka">Dynamics</string>
+    <string name="valo">Light</string>
+    <string name="ydinfysiikka">Nuclear physics</string>
+    <string name="sahko">Electricity</string>
+    <string name="magnetismi">Magnetism</string>
 </resources>
