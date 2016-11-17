@@ -1,29 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+     android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textSize="35dp"
         android:textColor="#000000"
+        android:gravity="center"
+        android:textStyle="bold|italic"
         android:id="@+id/txvNimi"/>
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:textSize="20dp"
+        android:gravity="center"
         android:textColor="#000000"
         android:id="@+id/txvName"/>
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="5dp"
         android:id="@+id/imgKaava"/>
+<TableLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
+<TableRow>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -31,148 +41,177 @@
         android:id="@+id/lnlMp">
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textSize="20dp"
+            android:layout_height="wrap_content"
+            android:textSize="25dp"
+            android:layout_marginRight="10dp"
             android:textColor="#000000"
             android:text="@string/sulamis"/>
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textSize="20dp"
+            android:layout_height="wrap_content"
+            android:textSize="25dp"
             android:textColor="#000000"
             android:id="@+id/txvSulamis"/>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/imgCelsius"/>
-    </LinearLayout>
 
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/imgCelsius"
+            />
+    </LinearLayout>
+</TableRow>
+    <TableRow>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="horizontal"
         android:id="@+id/lnlBp">
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textSize="20dp"
+            android:layout_height="wrap_content"
+            android:textSize="25dp"
             android:textColor="#000000"
+            android:layout_marginRight="10dp"
             android:text="@string/kiehumis"/>
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textSize="20dp"
+            android:layout_height="wrap_content"
+            android:textSize="25dp"
             android:textColor="#000000"
             android:id="@+id/txvKiehumis"/>
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/imgCelsius2"/>
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/imgCelsius2"
+            android:layout_marginLeft="10dp"/>
     </LinearLayout>
+    </TableRow>
 
+    <TableRow>
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textSize="20dp"
+            android:layout_height="wrap_content"
+            android:textSize="25dp"
+            android:layout_marginRight="10dp"
             android:textColor="#000000"
             android:text="@string/tiheys"/>
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textSize="20dp"
+            android:layout_height="wrap_content"
+            android:textSize="25dp"
             android:textColor="#000000"
             android:id="@+id/txvTiheys"/>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:id="@+id/imgTiheys"/>
+            android:id="@+id/imgTiheys"
+            android:layout_marginLeft="10dp"/>
     </LinearLayout>
-
+    </TableRow>
+    <TableRow>
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:id="@+id/lnlOlk">
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textSize="20dp"
+                android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25dp"
             android:textColor="#000000"
             android:text="@string/ominaislampo"/>
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textSize="20dp"
+            android:layout_height="wrap_content"
+            android:textSize="25dp"
             android:textColor="#000000"
             android:id="@+id/txvOminaislampo"/>
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/imgOminaislampo"/>
     </LinearLayout>
-
+    </TableRow>
+    <TableRow>
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:id="@+id/lnlRes">
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textSize="20dp"
+            android:layout_height="wrap_content"
+            android:textSize="25dp"
             android:textColor="#000000"
             android:text="@string/resistanssi"/>
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textSize="20dp"
+            android:layout_height="wrap_content"
+            android:textSize="25dp"
             android:textColor="#000000"
             android:id="@+id/txvResistanssi"/>
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:id="@+id/imgResistanssi"/>
     </LinearLayout>
+    </TableRow>
+    <TableRow>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="horizontal"
         android:id="@+id/lnlLampoL">
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textSize="20dp"
+            android:layout_height="wrap_content"
+            android:textSize="25dp"
             android:textColor="#000000"
             android:text="@string/lampolaajeneminen"/>
-
+    </LinearLayout>
+    </TableRow>
+    <TableRow>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:id="@+id/lnlLampoL2">
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textSize="20dp"
+            android:layout_height="wrap_content"
+            android:textSize="25dp"
             android:textColor="#000000"
             android:id="@+id/txvlampolaajeneminen"/>
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/imglampolaajeneminen"/>
-    </LinearLayout>
 
+</LinearLayout>
+    </TableRow>
+    <TableRow>
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/lnlHappo"
         android:orientation="vertical">
 
     </LinearLayout>
+
+    </TableRow>
+</TableLayout>
+
 </LinearLayout>
 
 </ScrollView>
