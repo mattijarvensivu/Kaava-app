@@ -680,6 +680,12 @@ HeaderClass header = new HeaderClass();
                 tmp.put("cos","%"); //tällä pitäs osua kaikkiin asteisiin...
                 ((triFunMasterTulos)t).setArvot(getValue("trigonometrisetArvot",tmp,null));
 
+            }else if (t.getType().compareTo("redox") == 0) {
+                //haetaan redoxpotentiaalit ja annetaan ne tulokselle.
+                HashMap<String,String> tmp = new HashMap<>();
+                tmp.put("kaava","%"); //tällä pitäs osua kaikkiin potentiaaleihin
+                ((redoxTulos)t).setArvot(getValue("redoxpotentiaali",tmp,null));
+
             }else if (t.getType().compareTo("yksikot") == 0) {
                 //haetaan yksikön tekijät
                 ArrayList<Tulos> tmp = getLinkitettytYksikot(Integer.parseInt(t.getValue("_yksikkoid")));

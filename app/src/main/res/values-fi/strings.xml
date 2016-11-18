@@ -86,7 +86,7 @@
     <string name="aste">Ast</string>
     <string name="radian">Rad</string>
     <string name="yksikot">Yksiköt</string>
-<string name="lampolaajeneminen">Lampölaajeneminen</string>
+    <string name="lampolaajeneminen">Lampölaajeneminen</string>
     <string name="derivointi">Derivointi</string>
     <string name="dynamiikka">Dynamiikka</string>
     <string name="harmooninen_liike">Harmooninen liike</string>
@@ -95,6 +95,9 @@
     <string name="sahko">Sähkö</string>
     <string name="valo">Valo</string>
     <string name="ydinfysiikka">Ydinfysiikka</string>
+    <string name="redox">Redoxpotentiaali</string>
+    <string name="reactio">Reaktio</string>
+    <string name="potential">Potentiaali</string>
 
 
 </resources>

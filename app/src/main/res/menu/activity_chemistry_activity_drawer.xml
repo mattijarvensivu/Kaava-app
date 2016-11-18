@@ -23,6 +23,9 @@
                 android:id="@+id/Alkuaineet"
                 android:title="@string/chemistry_elements" />
             <item
+                android:id="@+id/redox"
+                android:title="@string/redox" />
+            <item
                 android:id="@+id/FnkRyhma"
                 android:title="@string/chemistry_functional" />
             <item

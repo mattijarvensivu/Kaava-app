@@ -56,6 +56,7 @@ public class ChemistryActivity extends activityMaster {
         listOfTagTables = new String[]{"Alkuaineet","Funktionaalinenryhma","Kaava","Vakio","Hapot","aine"};
         listOfTables = new String[]{"Alkuaineet","Funktionaalinenryhma","Hapot","Isotoopit","Kaava","Muuttuja","Vakio","ionit","aine"};
         listOfReqTags = new String[]{};
+        ((EditText) findViewById(R.id.edtHakuKentta)).setText("%");
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
@@ -114,6 +115,10 @@ public class ChemistryActivity extends activityMaster {
             listOfTables = new String[]{"aine"};
             ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.aine));
 
+
+        }else if (id == R.id.redox) {
+            ((EditText) findViewById(R.id.edtHakuKentta)).setText("redox");
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -121,7 +126,6 @@ public class ChemistryActivity extends activityMaster {
 
         if(haetaan) {
             ((LinearLayout) findViewById(R.id.lnlContainer)).removeAllViews();
-            ((EditText) findViewById(R.id.edtHakuKentta)).setText("%"); //ongelma, tehdään tägi haku. Pitäisi forsettaa nimi haku.
             Hae(null,false);
             ((EditText) findViewById(R.id.edtHakuKentta)).setText("");
         }

@@ -26,7 +26,7 @@ public class triFunMasterTulos extends Tulos {
         layoutSmall = R.layout.trifunm_small;
         layoutLarge = R.layout.trifunm_large;
 
-        type = "triFunMaster"; //voiko aiheuttaa ongelmia? Kyllä. Tägien etsimisessä tarvitaan taulu jsota se on lähtöisin. Jotta tägit löydetään, on tämän oltava vakio.
+        type = "triFunMaster";
         taulu = "Vakio";
         tagiTaulu = "vakioTag";
         linkkiTaulu = "vakio_tag";
@@ -77,13 +77,4 @@ public class triFunMasterTulos extends Tulos {
         dataHaettu = true;
     }
 
-    //asetetaan tägit. Samalla tarkistetaan onko tämä suosikki (onko tällä suosikki tägi)
-    //TESTI
-    public void setTagit(ArrayList<String> tagit)
-    {
-
-        this.tagit = tagit;
-        if(tagit == null) tagit = new ArrayList<>();
-        if(tagit.indexOf("suosikki") >= 0) isSuosikki = true;
-    }
 }

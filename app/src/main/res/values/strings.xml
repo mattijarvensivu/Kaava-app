@@ -96,4 +96,7 @@
     <string name="ydinfysiikka">Nuclear physics</string>
     <string name="sahko">Electricity</string>
     <string name="magnetismi">Magnetism</string>
+    <string name="redox">Redoxpotential</string>
+    <string name="reactio">Reaction</string>
+    <string name="potential">Potential</string>
 </resources>

@@ -15,13 +15,14 @@ import java.util.HashMap;
  * Olio joka pitää siällään yhden rivin tiedot. Tarkoitus on että tästä luokasta peritään jokaiselle taululle oma Tulos olio variantti
  * Tärkein (ainut) tehtävä on antaa UI:lle sen haluamat view komponentit jossa esitetään olion, eli rivin, sisältämä tieto
  */
-public class Tulos {
+public class Tulos implements Comparable<Tulos> {
 
     protected int layoutSmall;
     protected int layoutLarge;
     protected HashMap<String,String> tiedot;
     protected String type = "raw";
     protected boolean isSuosikki = false;
+    public String sortKey = "RAW";
 
     protected String taulu;
     protected String tagiTaulu;
@@ -71,6 +72,8 @@ public class Tulos {
                 {
                     if(values.get("yksikko").compareTo("trigKey") == 0 )
                         return new triFunMasterTulos(values);
+                    if(values.get("yksikko").compareTo("redox") == 0 )
+                        return new redoxTulos(values);
                     return new vakioTulos(values);//vakio
                 }
                 if(values.get("_kaavaid") != null)
@@ -104,6 +107,7 @@ public class Tulos {
     {
         return type;
     }
+    public String getSortValue(){return tiedot.get(sortKey);}
 
     //super metodi jonka tehtävä on huolehtia suosikki tähdestä.
     public View getSmallView(LayoutInflater infl, ViewGroup paren)
@@ -178,6 +182,22 @@ public class Tulos {
     public String getTaulu(){ return taulu;}
 
 
+    @Override
+    //Aika rujon näkönen. Toivottavasti ei aiheuta ongelmia
+    public int compareTo(Tulos another) {
+
+        //pyritään muuttamaan saadut arvot floateiksi
+        String tvs = getSortValue();
+        String avs = another.getSortValue();
+        if(tvs == null || avs == null) throw new ClassCastException();
+        try{
+            return Float.compare(Float.parseFloat(tvs),Float.parseFloat(avs));
+        }catch (NumberFormatException e)
+        {
+            //ei ollu floatteja. Vertaillaan stringeinä
+            return tvs.compareToIgnoreCase(avs);
+        }
+    }
 }
 
 interface suosikkiToggleListener
