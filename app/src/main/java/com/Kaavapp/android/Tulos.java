@@ -74,6 +74,8 @@ public class Tulos implements Comparable<Tulos> {
                         return new triFunMasterTulos(values);
                     if(values.get("yksikko").compareTo("redox") == 0 )
                         return new redoxTulos(values);
+                    if(values.get("yksikko").compareTo("refra") == 0 )
+                        return new refraTulos(values);
                     return new vakioTulos(values);//vakio
                 }
                 if(values.get("_kaavaid") != null)

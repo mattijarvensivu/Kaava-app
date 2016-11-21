@@ -68,6 +68,7 @@ public class PhysicsActivity extends activityMaster {
         listOfTagTables = new String[]{"Kaava","Vakio","aine","yksikot"};
         listOfTables = new String[]{"Kaava","Vakio","aine","yksikot"};
         listOfReqTags = new String[]{};
+        ((EditText) findViewById(R.id.edtHakuKentta)).setText("%");
 
         // Handle navigation view item clicks here.
         int id = item.getItemId();
@@ -147,6 +148,9 @@ public class PhysicsActivity extends activityMaster {
             listOfTables = new String[]{"yksikot"};
             listOfTagTables = new String[]{"yksikot"};
             listOfReqTags = new String[]{};
+        }else if (id == R.id.taitekertoimia) {
+            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.refraction));
+            ((EditText) findViewById(R.id.edtHakuKentta)).setText("taitekertoimia");
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -154,7 +158,6 @@ public class PhysicsActivity extends activityMaster {
 
         if(haetaan) {
             ((LinearLayout) findViewById(R.id.lnlContainer)).removeAllViews();
-            ((EditText) findViewById(R.id.edtHakuKentta)).setText("%");
             Hae(null,false);
             ((EditText) findViewById(R.id.edtHakuKentta)).setText("");
         }

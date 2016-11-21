@@ -98,6 +98,9 @@
     <string name="redox">Redoxpotentiaali</string>
     <string name="reactio">Reaktio</string>
     <string name="potential">Potentiaali</string>
+    <string name="refraction">Taitekertoimia</string>
+    <string name="kerroin">Taite kerorin</string>
+    <string name="materiaali">Materiaali</string>
 
 
 </resources>

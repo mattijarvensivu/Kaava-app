@@ -99,4 +99,7 @@
     <string name="redox">Redoxpotential</string>
     <string name="reactio">Reaction</string>
     <string name="potential">Potential</string>
+    <string name="refraction">Refraction indexes</string>
+    <string name="materiaali">Material</string>
+    <string name="kerroin">Refraction index</string>
 </resources>

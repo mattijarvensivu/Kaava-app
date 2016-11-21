@@ -691,6 +691,12 @@ HeaderClass header = new HeaderClass();
                 ArrayList<Tulos> tmp = getLinkitettytYksikot(Integer.parseInt(t.getValue("_yksikkoid")));
                 addGADListener(tmp);
                 ((yksikkoTulos) t).addCompound(tmp);
+            }else if (t.getType().compareTo("refraction") == 0) {
+                //haetaan redoxpotentiaalit ja annetaan ne tulokselle.
+                HashMap<String,String> tmp = new HashMap<>();
+                tmp.put("materiaali","%"); //tällä pitäs osua kaikkiin potentiaaleihin
+                ((refraTulos)t).setArvot(getValue("taitekerroin",tmp,null));
+
             }
 
 
