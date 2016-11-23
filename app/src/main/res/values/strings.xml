@@ -105,4 +105,6 @@
     <string name="virhearvossa">Error on arvoTulos</string>
     <string name="permitivity">Permitivities</string>
     <string name="permitiivisyys">Permitivity</string>
+    <string name="permeability">Permeabilities</string>
+    <string name="permeabilityheader">Permeability</string>
 </resources>

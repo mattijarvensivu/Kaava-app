@@ -104,6 +104,8 @@
     <string name="virhearvossa">Virhe arvoTuloksessa</string>
     <string name="permitivity">Permitiivisyyksiä</string>
     <string name="permitiivisyys">permitiivisyys</string>
+    <string name="permeability">Permeabiliteettejä</string>
+    <string name="permeabilityheader">Permeabiliteetti</string>
 
 
 </resources>
