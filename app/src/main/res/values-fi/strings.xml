@@ -101,6 +101,9 @@
     <string name="refraction">Taitekertoimia</string>
     <string name="kerroin">Taite kerorin</string>
     <string name="materiaali">Materiaali</string>
+    <string name="virhearvossa">Virhe arvoTuloksessa</string>
+    <string name="permitivity">Permitiivisyyksiä</string>
+    <string name="permitiivisyys">permitiivisyys</string>
 
 
 </resources>

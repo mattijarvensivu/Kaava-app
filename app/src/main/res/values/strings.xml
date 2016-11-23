@@ -102,4 +102,7 @@
     <string name="refraction">Refraction indexes</string>
     <string name="materiaali">Material</string>
     <string name="kerroin">Refraction index</string>
+    <string name="virhearvossa">Error on arvoTulos</string>
+    <string name="permitivity">Permitivities</string>
+    <string name="permitiivisyys">Permitivity</string>
 </resources>

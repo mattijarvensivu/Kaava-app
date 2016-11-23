@@ -5,7 +5,6 @@ import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -15,27 +14,69 @@ import java.util.Collections;
 import java.util.HashMap;
 
 /**
- * Created by janne on 21.11.2016.
+ * Created by janne on 23.11.2016.
  */
-public class refraTulos extends Tulos {
-
+public class arvoTulos extends Tulos {
     private ArrayList<Tulos> arvot;
     private View largev;
 
-    public refraTulos(HashMap<String,String> vals) {
-        tiedot = vals;
-        layoutSmall = R.layout.refraction_small;
-        layoutLarge = R.layout.refraction_large;
+    //on tärkeää että arvoId on dummy vakion yksikön arvon indeksi,
+    private int arvoId = -1;//-1:error; 0:taitekerroin; 1:permitiivisyys
+    static String[] arvoAvaimet = new String[]{"refra","permitivity"};
 
-        type = "refraction";
+    //tarkistetaan onko annettu hashmappi jonkin arvo taulun dummy vakio
+    public static boolean isArvo(HashMap<String,String> vals)
+    {
+        for(String s: arvoAvaimet)
+        {
+            if(vals.get("yksikko") != null && s.compareTo(vals.get("yksikko"))== 0) return true;
+        }
+        return false;
+    }
+
+    public arvoTulos(HashMap<String,String> vals) {
+        tiedot = vals;
+        layoutSmall = R.layout.arvo_small;
+        layoutLarge = R.layout.arvo_large;
+
+        type = "arvo";
         taulu = "Vakio";
         tagiTaulu = "vakioTag";
         linkkiTaulu = "vakio_tag";
+
+        //asetetaan muuttuja jonka perusteella laitetaan UIhin tekstit.
+        for(String s: arvoAvaimet)
+        {
+            arvoId++;
+            if(vals.get("yksikko") != null && s.compareTo(vals.get("yksikko"))== 0) break;
+        }
+
+    }
+
+    public String getArvoTaulu()
+    {
+        switch (arvoId) {
+            case 0:
+                return "taitekerroin";
+            case 1:
+                return "permitivity";
+        }
+        return "virhe getArvoTaulussa";
 
     }
     public View getSmallView (LayoutInflater infl, ViewGroup paren)
     {
         View pal = super.getSmallView(infl,paren);
+        int teksti = R.string.virhearvossa;
+        switch (arvoId) {
+            case 0:
+                teksti = R.string.refraction;
+                break;
+            case 1:
+                teksti = R.string.permitivity;
+                break;
+        }
+        ((TextView)pal.findViewById(R.id.txvKuvaus)).setText(teksti);
         return pal;
     }
     public View getLargeView (LayoutInflater infl, ViewGroup paren)
@@ -48,7 +89,7 @@ public class refraTulos extends Tulos {
                 //ei ole olemass tilannetta missä tätä voitaisiin kutsua ilman että olisi olemassa large view
                 for(Tulos t:arvot)
                 {
-                    t.sortKey = "materiaali";
+                    t.sortKey = "aine";
                 }
                 Collections.sort(arvot);
                 ((TableLayout)largev.findViewById(R.id.tblMain)).removeAllViews();
@@ -61,7 +102,7 @@ public class refraTulos extends Tulos {
             //ei ole olemass tilannetta missä tätä voitaisiin kutsua ilman että olisi olemassa large view
             for(Tulos t:arvot)
             {
-                t.sortKey = "kerroin";
+                t.sortKey = "arvo";
             }
             Collections.sort(arvot);
             ((TableLayout)largev.findViewById(R.id.tblMain)).removeAllViews();
@@ -69,6 +110,18 @@ public class refraTulos extends Tulos {
 
         }
     });
+
+        int teksti = R.string.virhearvossa;
+        switch (arvoId) {
+            case 0:
+                teksti = R.string.kerroin;
+                break;
+            case 1:
+                teksti = R.string.permitiivisyys;
+                break;
+        }
+        ((TextView)pal.findViewById(R.id.txvKerroin)).setText(teksti);
+
         setTaulukko(pal);
 
         largev = pal;
@@ -92,8 +145,8 @@ public class refraTulos extends Tulos {
             }
             tmpKerroin.setTextColor(Color.BLACK);
             tmpMateriaali.setTextColor(Color.BLACK);
-            tmpKerroin.setText(t.getValue("kerroin"));
-            tmpMateriaali.setText(t.getValue("materiaali"));
+            tmpKerroin.setText(t.getValue("arvo"));
+            tmpMateriaali.setText(t.getValue("aine"));
             //luodaan yksittäinen solu
             tmpMateriaali.setLayoutParams(new TableRow.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT,1f));
             tmp.addView(tmpMateriaali);
@@ -108,7 +161,7 @@ public class refraTulos extends Tulos {
         arvot = vals;
         for(Tulos t:arvot)
         {
-            t.sortKey = "kerroin";
+            t.sortKey = "arvo";
         }
         Collections.sort(arvot);
         dataHaettu = true;
