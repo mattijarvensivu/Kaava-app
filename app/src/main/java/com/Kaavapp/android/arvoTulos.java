@@ -21,8 +21,8 @@ public class arvoTulos extends Tulos {
     private View largev;
 
     //on tärkeää että arvoId on dummy vakion yksikön arvon indeksi,
-    private int arvoId = -1;//-1:error; 0:taitekerroin; 1:permitiivisyys; 2: permabiiteetti
-    static String[] arvoAvaimet = new String[]{"refra","permitivity","permeability"};
+    private int arvoId = -1;//-1:error; 0:taitekerroin; 1:permitiivisyys; 2: permabiiteetti; 3:äänen nopeus
+    static String[] arvoAvaimet = new String[]{"refra","permitivity","permeability","aanennopeus"};
 
     //tarkistetaan onko annettu hashmappi jonkin arvo taulun dummy vakio
     public static boolean isArvo(HashMap<String,String> vals)
@@ -62,6 +62,8 @@ public class arvoTulos extends Tulos {
                 return "permitivity";
             case 2:
                 return "permeability";
+            case 3:
+                return "aanennopeus";
         }
         return "virhe getArvoTaulussa";
 
@@ -79,6 +81,9 @@ public class arvoTulos extends Tulos {
                 break;
             case 2:
                 teksti = R.string.permeability;
+                break;
+            case 3:
+                teksti = R.string.aanennopeus;
                 break;
         }
         ((TextView)pal.findViewById(R.id.txvKuvaus)).setText(teksti);
@@ -117,18 +122,29 @@ public class arvoTulos extends Tulos {
     });
 
         int teksti = R.string.virhearvossa;
+        int headerTeksti = -1;
         switch (arvoId) {
             case 0:
                 teksti = R.string.kerroin;
+                headerTeksti = R.string.kerroinTeksti;
                 break;
             case 1:
                 teksti = R.string.permitiivisyys;
+                headerTeksti = R.string.huoneenlammossa;
                 break;
             case 2:
                 teksti = R.string.permeabilityheader;
+                headerTeksti = R.string.huoneenlammossa;
+                break;
+            case 3:
+                teksti = R.string.aanennopeusheader;
+                headerTeksti = R.string.huoneenlammossa;
                 break;
         }
         ((TextView)pal.findViewById(R.id.txvKerroin)).setText(teksti);
+
+        if(headerTeksti != -1)
+        ((TextView)pal.findViewById(R.id.txvHead)).setText(headerTeksti);
 
         setTaulukko(pal);
 

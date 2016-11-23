@@ -102,10 +102,14 @@
     <string name="kerroin">Taite kerorin</string>
     <string name="materiaali">Materiaali</string>
     <string name="virhearvossa">Virhe arvoTuloksessa</string>
-    <string name="permitivity">Permitiivisyyksiä</string>
-    <string name="permitiivisyys">permitiivisyys</string>
+    <string name="permitivity">Suhteellisia permitiivisyyksiä</string>
+    <string name="permitiivisyys">suhteellinen permitiivisyys</string>
     <string name="permeability">Permeabiliteettejä</string>
     <string name="permeabilityheader">Permeabiliteetti</string>
+    <string name="aanennopeus">Äänen nopeus aineissa</string>
+    <string name="aanennopeusheader">äänen nopeus</string>
+    <string name="kerroinTeksti">Allon pituudelle 589.29nm</string>
+    <string name="huoneenlammossa">Huoneen lämmössä</string>
 
 
 </resources>

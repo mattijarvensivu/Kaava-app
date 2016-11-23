@@ -103,8 +103,12 @@
     <string name="materiaali">Material</string>
     <string name="kerroin">Refraction index</string>
     <string name="virhearvossa">Error on arvoTulos</string>
-    <string name="permitivity">Permitivities</string>
-    <string name="permitiivisyys">Permitivity</string>
+    <string name="permitivity">Relative permitivities</string>
+    <string name="permitiivisyys">relative permitivity</string>
     <string name="permeability">Permeabilities</string>
     <string name="permeabilityheader">Permeability</string>
+    <string name="aanennopeus">Speed of sound in materials</string>
+    <string name="aanennopeusheader">Speed of sound</string>
+    <string name="kerroinTeksti">For wavelength of 589.29nm</string>
+    <string name="huoneenlammossa">In room temperature</string>
 </resources>
