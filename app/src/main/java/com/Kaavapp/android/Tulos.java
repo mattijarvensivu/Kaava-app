@@ -60,15 +60,19 @@ public class Tulos implements Comparable<Tulos> {
                 return new alkuaineTulos(values);
             case 8:
                 return new isotooppiTulos(values);
-            case 4:
-                if(values.get("_ryhmaid") != null)
-                    return new funktionaalinenTulos(values); //funktionaalinen ryhmä
-
-                if(values.get("_yksikkoid") != null)
-                    return new yksikkoTulos(values); //yksikkö
-                return new muuttujaTulos(values);//muuttuja
 
             case 5:
+
+                if(values.get("_kaavaid") != null)
+                    return new kaavaTulos(values); //kaava
+                if(values.get("_yksikkoid") != null)
+                    return new yksikkoTulos(values); //yksikkö
+                if(values.get("_muuttujaid") != null)
+                    return new muuttujaTulos(values);//muuttuja
+                if(values.get("_aste") != null) return new Tulos(values); //trigonometrisetArvot tulos
+                return new ioniTulos(values);
+
+            case 6:
                 if(values.get("yksikko") != null)
                 {
                     if(values.get("yksikko").compareTo("trigKey") == 0 )
@@ -79,12 +83,8 @@ public class Tulos implements Comparable<Tulos> {
                         return new arvoTulos(values);
                     return new vakioTulos(values);//vakio
                 }
-                if(values.get("_kaavaid") != null)
-                    return new kaavaTulos(values); //kaava
-                if(values.get("_aste") != null) return new Tulos(values); //trigonometrisetArvot tulos
-                return new ioniTulos(values);
-
-            case 6:
+                if(values.get("_ryhmaid") != null)
+                    return new funktionaalinenTulos(values); //funktionaalinen ryhmä
                 return new piikkiTulos(values);
             case 13:
                 return new happoTulos(values);
