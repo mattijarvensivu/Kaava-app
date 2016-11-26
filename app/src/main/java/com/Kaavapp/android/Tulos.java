@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * Created by janne on 27.6.2016.
@@ -34,7 +35,7 @@ public class Tulos implements Comparable<Tulos> {
     protected ArrayList<String> tagit;
 
     protected boolean dataHaettu = false;
-
+    protected  boolean isEnglish;
 
     public Tulos()
     {
@@ -182,6 +183,23 @@ public class Tulos implements Comparable<Tulos> {
     }
 
     public String getTaulu(){ return taulu;}
+
+
+
+    public boolean checkLanguage(){
+
+    String UsedLanguage = activityMaster.language;
+        if(UsedLanguage.compareTo("en")==0){
+            this.isEnglish = true;
+        }
+        else{
+            this.isEnglish = false;
+        }
+
+
+        return this.isEnglish;
+    }
+
 
 
     @Override

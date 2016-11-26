@@ -25,7 +25,7 @@ import java.util.Locale;
 public class alkuaineTulos extends Tulos {
 
     private ArrayList<isotooppiTulos> isotoopit;
-
+private String nimiarvo;
     public alkuaineTulos (HashMap<String,String> values)
     {
         layoutLarge = R.layout.alkuaine_large;
@@ -43,10 +43,18 @@ public class alkuaineTulos extends Tulos {
     //tuottaa Viewin annetulla inflaterillä ja isännällä. Tässä viewissä näytetään nopea yhteen veto tuloksesta
     public View getSmallView (LayoutInflater infl, ViewGroup paren)
     {
+
+        if(checkLanguage()){
+           this.nimiarvo = "nimi";
+        }else{
+            this.nimiarvo = "fiName";
+
+        }
+        Log.d("NAME", this.nimiarvo);
         View pal = super.getSmallView(infl, paren);
         //asetetaan tiedot paikoilleen
         ((TextView)pal.findViewById(R.id.txvNumber)).setText(tiedot.get("jarjestyluku"));
-        ((TextView)pal.findViewById(R.id.txvName)).setText(Html.fromHtml(tiedot.get("nimi")));
+        ((TextView)pal.findViewById(R.id.txvName)).setText(Html.fromHtml(tiedot.get(this.nimiarvo)));
         ((TextView)pal.findViewById(R.id.txvSymbol)).setText(tiedot.get("symbol"));
         ((TextView)pal.findViewById(R.id.txvMolar)).setText(tiedot.get("moolimassa"));
 
@@ -65,10 +73,14 @@ public class alkuaineTulos extends Tulos {
         //määritellään desimaali formaatit pyöristyksiä varten
         DecimalFormat df4 = new DecimalFormat("#.####");
         DecimalFormat df2 = new DecimalFormat("#.##");
-
-
+        String url;
+        if(this.isEnglish) {
+            url = "https://en.m.wikipedia.org/wiki/"+ tiedot.get("nimi");
+        }else{
+            url = "https://fi.m.wikipedia.org/wiki/"+ tiedot.get("fiName");
+        }
         View pal = infl.inflate(layoutLarge, paren, false);
-        String url = "https://en.m.wikipedia.org/wiki/"+ tiedot.get("nimi");
+
         Log.d("URL!!!!!!!!!!!!!", url);
         final WebView myWebView = (WebView) pal.findViewById(R.id.webview);
         myWebView.loadUrl(url);
@@ -101,7 +113,12 @@ public class alkuaineTulos extends Tulos {
         ((TextView) pal.findViewById(R.id.txvLJField)).setText(tiedot.get("lammonjohtavuus"));
         TextView oMuoto =(TextView) pal.findViewById(R.id.txvOMField);
         TextView luokka =(TextView) pal.findViewById(R.id.txvLuokka);
-        ((TextView) pal.findViewById(R.id.txvNimiMain)).setText(tiedot.get("fiName"));
+
+        if(!this.isEnglish) {
+            ((TextView) pal.findViewById(R.id.txvNimiMain)).setText(tiedot.get("fiName"));
+        }else{
+            ((TextView) pal.findViewById(R.id.txvNimiMain)).setVisibility(View.GONE);
+        }
         TextView aSadeT = (TextView) pal.findViewById(R.id.txvTASField);
         TextView aSadeK = (TextView) pal.findViewById(R.id.txvKASField);
         LinearLayout IonE = (LinearLayout) pal.findViewById(R.id.lvoIonE);

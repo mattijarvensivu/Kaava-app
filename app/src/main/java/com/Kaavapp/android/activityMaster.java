@@ -40,7 +40,7 @@ public class activityMaster extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     protected SqlHandler hand;
-
+public static  String language;
     protected int layout; //tähän tallennetaan lapsiLuokassa layoutti mitä käytetään
     protected String actKategoria; //tähän tallennetaan lapsiLuokan kategoria. Lähinnä kaavoja varten
     protected Class classParam;
@@ -56,6 +56,9 @@ public class activityMaster extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        this.language = getResources().getConfiguration().locale.getLanguage();
+        Log.d("Lokaali", language);
 
         // register listView's context menu (to delete row)
         // registerForContextMenu(listView);
