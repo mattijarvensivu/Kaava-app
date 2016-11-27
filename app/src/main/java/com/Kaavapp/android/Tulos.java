@@ -63,8 +63,6 @@ public class Tulos implements Comparable<Tulos> {
 
             case 5:
 
-                if(values.get("_kaavaid") != null)
-                    return new kaavaTulos(values); //kaava
                 if(values.get("_yksikkoid") != null)
                     return new yksikkoTulos(values); //yksikkö
                 if(values.get("_muuttujaid") != null)
@@ -83,8 +81,10 @@ public class Tulos implements Comparable<Tulos> {
                         return new arvoTulos(values);
                     return new vakioTulos(values);//vakio
                 }
-                if(values.get("_ryhmaid") != null)
+                if(values.get("nimifragmentti") != null)
                     return new funktionaalinenTulos(values); //funktionaalinen ryhmä
+                if(values.get("_kaavaid") != null)
+                    return new kaavaTulos(values); //kaava
                 return new piikkiTulos(values);
             case 13:
                 return new happoTulos(values);
