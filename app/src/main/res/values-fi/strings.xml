@@ -110,6 +110,20 @@
     <string name="aanennopeusheader">äänen nopeus</string>
     <string name="kerroinTeksti">Allon pituudelle 589.29nm</string>
     <string name="huoneenlammossa">Huoneen lämmössä</string>
+    <string name="aineCat">Materiaali</string>
+    <string name="alkuaineCat">Alkuaine</string>
+    <string name="arvoCat">Arvo</string>
+    <string name="funkCat">Funktionaalinenryhmä</string>
+    <string name="happoCat">Happo/Emäs</string>
+    <string name="ionCat">Ioni</string>
+    <string name="isotopeCat">Isotooppi</string>
+    <string name="kaavaCat">Kaava</string>
+    <string name="muuttujaCat">Muuttuja</string>
+    <string name="piikkiCat">IR-piikki</string>
+    <string name="redoxCat">Pelkistys potentiaali</string>
+    <string name="triFunCat">Trogonometristen funktioiden arvo</string>
+    <string name="vakioCat">Vakio</string>
+    <string name="yksikkoCat">Yksikkö</string>
 
 
 </resources>

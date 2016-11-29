@@ -23,6 +23,8 @@ public class isotooppiTulos extends Tulos {
 
         type = "Isotoopit";
         taulu = "Isotoopit";
+
+        defaultCategory = R.string.isotopeCat;
     }
 
     @Override

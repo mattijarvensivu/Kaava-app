@@ -201,7 +201,7 @@ public static  String language;
             placeToCenter(listView); //laitetaan listViewi keskelle
 
             //lisätään tiedot listViewiin näkyville
-            resultAdapter a = new resultAdapter(getApplicationContext(), -1, tulos);
+            resultAdapter a = new resultAdapter(getApplicationContext(), -1, addOtsikot(tulos));
             listView.setAdapter(a);
 
             //onClick oli tässä
@@ -210,9 +210,85 @@ public static  String language;
         }else{ Log.w("myApp", tarkistus.toString() );}
     }
 
-    private ArrayList<Tulos> suoritaHaku(String hakuparametri, String[] taulut, boolean isTag)
+    //lisätään väli otsikot
+    private ArrayList<Tulos> addOtsikot(ArrayList<Tulos> raaka)
     {
-        HashMap<String, String> kentat;
+        //luodaan laajennetut vaaditut tägit syötteen ja vaaditujen tägien pohjalta
+        String[] siivottuHaku = siivoaHaku(((EditText)findViewById(R.id.edtHakuKentta)).getText().toString());
+        String[] laajReqTags = new String[listOfReqTags.length + siivottuHaku.length];
+        int j = 0;
+        for(String s: listOfReqTags)
+        {
+            laajReqTags[j] = s;
+            j++;
+        }for(String s: siivottuHaku)
+    {
+        laajReqTags[j] = s;
+        j++;
+    }
+        //Tulokset lajitellaan tähän hashmappiin niiden väliotsikon perusteella
+        HashMap<String,ArrayList<Tulos>> lajittelu = new HashMap<>();
+        String currentOtsikko = "";
+        //lajitellaan tulokset hashmappiin
+        for(Tulos t : raaka)
+        {
+               currentOtsikko = t.getCategory(laajReqTags);
+            if(lajittelu.get(currentOtsikko) == null) lajittelu.put(currentOtsikko, new ArrayList<Tulos>());
+            lajittelu.get(currentOtsikko).add(t);
+        }
+        //rakennetaan lopullinen arrayListi
+        ArrayList<Tulos> pal = new ArrayList<>();
+        if(lajittelu.size() == 1) return raaka;
+        //laitetaan suosikki kärkeen
+        HashMap<String,String> tmp = new HashMap<>();
+        if(lajittelu.get("suosikki") != null)
+        {
+            tmp.put("nimi","suosikki");
+            pal.add(new headerTulos(tmp));
+            pal.addAll(lajittelu.get("suosikki"));
+            lajittelu.remove("suosikki");
+        }
+        //lisätään seuraavaksi ne tulokset joilla on vain vaadittu tägi
+        for(String s: laajReqTags)
+        {
+            if(lajittelu.get(s) != null)
+            {
+                tmp = new HashMap<>();
+                tmp.put("nimi",s);
+                pal.add(new headerTulos(tmp));
+                pal.addAll(lajittelu.get(s));
+                lajittelu.remove(s);
+            }
+        }
+        //otetaan pienin prioriteetti ja lisätään se listaan.
+        //Tämä toteutus on vähn niin ja näin. Olisi varmaan parempi jos järjesteltäisiin nämä kerralla, mieluiten jotain valmista metodia käyttäen.
+        String pienin = "";
+        int pieninI = Integer.MAX_VALUE;
+        Set<String> avaimet = lajittelu.keySet();
+        while(lajittelu.size() > 0)
+        {
+            for(String s: avaimet)
+            {
+                if(pieninI >= lajittelu.get(s).get(0).getCategoryValue(s))
+                {
+                    pienin = s;
+                    pieninI = lajittelu.get(s).get(0).getCategoryValue(s);
+                }
+            }
+            tmp = new HashMap<>();
+            tmp.put("nimi",pienin);
+            pal.add(new headerTulos(tmp));
+            pal.addAll(lajittelu.get(pienin));
+            lajittelu.remove(pienin);
+            pienin = "";
+            pieninI = Integer.MAX_VALUE;
+            avaimet = lajittelu.keySet();
+        }
+        return pal;
+    }
+
+    private String[] siivoaHaku(String hakuparametri)
+    {
         String tmpHakuPreP = hakuparametri;
         String tmpHakuPosP = hakuparametri.replaceAll(", ", ",");
         while(tmpHakuPreP.compareTo(tmpHakuPosP) != 0)
@@ -226,9 +302,16 @@ public static  String language;
             tmpHakuPreP = tmpHakuPosP;
             tmpHakuPosP = tmpHakuPosP.replaceAll(" ,", ",");
         }
+        return tmpHakuPosP.split(",");
+
+    }
+
+    private ArrayList<Tulos> suoritaHaku(String hakuparametri, String[] taulut, boolean isTag)
+    {
+        HashMap<String, String> kentat;
+        String[] splitattuHP = siivoaHaku(hakuparametri);
         ArrayList<HashMap<String, String>> kentatAL = new ArrayList<>();
         Set<String> kentatNimet;
-        String[] splitattuHP = tmpHakuPosP.split(",");
         ArrayList<Tulos> tulos = new ArrayList<>();
 
         for(String t : taulut)

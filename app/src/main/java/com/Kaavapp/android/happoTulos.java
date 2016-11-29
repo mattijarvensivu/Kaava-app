@@ -30,6 +30,8 @@ public class happoTulos extends Tulos {
         taulu = "hapot";
         tagiTaulu = "hapotTag";
         linkkiTaulu = "hapot_tag";
+
+        defaultCategory = R.string.happoCat;
     }
 
     @Override

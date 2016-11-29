@@ -230,7 +230,6 @@ public class SqlHandler extends SQLiteOpenHelper {
     public ArrayList<Tulos> getValue (String tableName, HashMap<String,String> searchParameters, ArrayList<HashMap<String, String>> tagit) {
         ArrayList<Tulos> pal = new ArrayList<>();
         ArrayList<String[]> tableS = getStructure(tableName);
-HeaderClass header = new HeaderClass();
 
         Cursor cur = getCursor(tableName, searchParameters, tagit);
         Log.d("minun",cur.getCount() + " tulosta");
@@ -244,7 +243,6 @@ HeaderClass header = new HeaderClass();
                         tmp.put(tableS.get(i)[0], cur.getString(i));
                     }
 
-                    pal= header.SetHeader(tmp, pal);
                     pal.add(Tulos.getTulos(tmp));
                 } while (cur.moveToNext());
 
@@ -274,7 +272,6 @@ HeaderClass header = new HeaderClass();
 
     public ArrayList<Tulos> getValueByTag (String tableName, ArrayList<HashMap<String,String>> searchParameters,  ArrayList<HashMap<String,String>> mustHaveTags) {
         ArrayList<Tulos> pal = new ArrayList<>();
-        HeaderClass header = new HeaderClass();
 
         //haetaan tagi taulua vastaavat kohde ja linkki taulu
 
@@ -291,7 +288,6 @@ HeaderClass header = new HeaderClass();
 
                         tmp.put(tableS.get(i)[0], cur.getString(i));
                     }
-                    pal= header.SetHeader(tmp, pal);
                     pal.add(Tulos.getTulos(tmp));
                 } while (cur.moveToNext());
 
@@ -540,16 +536,16 @@ HeaderClass header = new HeaderClass();
     }
 
     //haetaan annettuun ID:hen liittyvät tägit
-    private ArrayList<String> getTags(String idVal, String tableName)
+    private ArrayList<HashMap<String,String>> getTags(String idVal, String tableName)
     {
-        ArrayList<String> pal = new ArrayList<>();
+        ArrayList<HashMap<String,String>> pal = new ArrayList<>();
 
         //haetaan taulut ja idKentät
         String[] tagiTaulut = getTagFields(tableName);
         if(tagiTaulut[0] == null || tagiTaulut[0].compareTo("ERROR FINDING TAG FIELDS") == 0) return null; // Tämä nappaa kiinni mikäli yritetään tägejä tulokselle jolla niitä ei ole
 
 
-        String query = "SELECT nimi FROM " + tagiTaulut[0] + " AS k JOIN (SELECT * FROM " + tagiTaulut[1] + " WHERE " + findPrimaryKeyName(tableName) + " = " + idVal +" ) as l ON k._tagid = l._tagid";
+        String query = "SELECT * FROM " + tagiTaulut[0] + " AS k JOIN (SELECT * FROM " + tagiTaulut[1] + " WHERE " + findPrimaryKeyName(tableName) + " = " + idVal +" ) as l ON k._tagid = l._tagid";
         //String query = "SELECT nimi FROM " + tagiTaulu + " AS k JOIN (SELECT * FROM " + linkkitaulu + " WHERE _" + tableName + "id = " + idVal +" ) as l ON k._tagid = l._tagid";
 
         //suoritetaan haku
@@ -558,10 +554,16 @@ HeaderClass header = new HeaderClass();
 
         //Luetaan tägit kursorista array listiin
 
+        ArrayList<String[]> kentat = getStructure(tagiTaulut[0]);
         if(cur.moveToFirst())
         {
             do{
-                pal.add(cur.getString(0));
+                HashMap<String, String> tmp = new HashMap<String, String>();
+                for (int i = 0; i < kentat.size(); i++) {
+
+                    tmp.put(kentat.get(i)[0], cur.getString(i));
+                }
+                pal.add(tmp);
             }while (cur.moveToNext());
         }
         cur.close();

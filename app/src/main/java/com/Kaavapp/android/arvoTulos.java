@@ -44,6 +44,8 @@ public class arvoTulos extends Tulos {
         tagiTaulu = "vakioTag";
         linkkiTaulu = "vakio_tag";
 
+        defaultCategory = R.string.arvoCat;
+
         //asetetaan muuttuja jonka perusteella laitetaan UIhin tekstit.
         for(String s: arvoAvaimet)
         {

@@ -44,6 +44,7 @@ public class kaavaTulos extends Tulos{
         type = "Kaava";
         taulu = "Kaava";
 
+        defaultCategory = R.string.kaavaCat;
 
     }
 

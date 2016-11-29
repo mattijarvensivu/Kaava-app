@@ -20,6 +20,8 @@ public class muuttujaTulos extends Tulos{
         layoutSmall = R.layout.muuttuja_small;
         tiedot = values;
         taulu = "Muuttuja";
+
+        defaultCategory = R.string.muuttujaCat;
     }
 
     @Override

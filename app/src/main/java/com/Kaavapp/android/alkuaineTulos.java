@@ -37,6 +37,8 @@ private String nimiarvo;
         taulu = "Alkuaineet";
         tagiTaulu = "AlkuaineetTag";
         linkkiTaulu = "Alkuaineet_tag";
+
+        defaultCategory = R.string.alkuaineCat;
     }
 
     @Override

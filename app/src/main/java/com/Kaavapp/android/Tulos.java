@@ -32,10 +32,12 @@ public class Tulos implements Comparable<Tulos> {
     protected suosikkiToggleListener suosikkiToggle;
     protected gatehrAddDataListener GAD;
 
-    protected ArrayList<String> tagit;
+    protected ArrayList<HashMap<String,String>> tagit;
 
     protected boolean dataHaettu = false;
     protected  boolean isEnglish;
+
+    protected int defaultCategory;
 
     public Tulos()
     {
@@ -63,14 +65,15 @@ public class Tulos implements Comparable<Tulos> {
 
             case 5:
 
-                if(values.get("_yksikkoid") != null)
-                    return new yksikkoTulos(values); //yksikkö
+
                 if(values.get("_muuttujaid") != null)
                     return new muuttujaTulos(values);//muuttuja
                 if(values.get("_aste") != null) return new Tulos(values); //trigonometrisetArvot tulos
                 return new ioniTulos(values);
 
             case 6:
+                if(values.get("_yksikkoid") != null)
+                    return new yksikkoTulos(values); //yksikkö
                 if(values.get("yksikko") != null)
                 {
                     if(values.get("yksikko").compareTo("trigKey") == 0 )
@@ -151,12 +154,19 @@ public class Tulos implements Comparable<Tulos> {
     }
 
     //asetetaan tägit. Samalla tarkistetaan onko tämä suosikki (onko tällä suosikki tägi)
-    public void setTagit(ArrayList<String> tagit)
+    public void setTagit(ArrayList<HashMap<String,String>> tagit)
     {
 
         this.tagit = tagit;
         if(tagit == null) tagit = new ArrayList<>();
-        if(tagit.indexOf("suosikki") >= 0) isSuosikki = true;
+        for(HashMap<String,String> h : tagit)
+        {
+            if(h.get("nimi").compareTo("suosikki") == 0) //tässä kaattuu mikäli HM ei sisällä avainta nimi. Ei pitäisi koskaan tulla tähän sellaista mappia
+            {
+                isSuosikki = true;
+                break;
+            }
+        }
     }
 
     //asetetaan oikea tähden grafiikka
@@ -217,6 +227,55 @@ public class Tulos implements Comparable<Tulos> {
             //ei ollu floatteja. Vertaillaan stringeinä
             return tvs.compareToIgnoreCase(avs);
         }
+    }
+    public String getCategory(String[] reqTags)
+    {
+        int highest = -1;
+        if(tagit == null || tagit.size() == 0 || tagit.get(0).get("prior") == null) return defaultCategory+"";
+        //etsitään ensimmäinen validi tagi
+        int i = 0;
+        while(i < tagit.size() && highest == -1)
+        {
+            //tarkistetaan onko tämä tägi vaadittujen listalla -> ei toimi väliotsikkona
+            boolean valid = true;
+            for(String s: reqTags)
+            {
+                if(s.compareTo(tagit.get(i).get("nimi")) == 0) valid = false;
+            }
+            if(valid && Integer.parseInt(tagit.get(i).get("prior")) > 0) highest = i;
+            i++;
+        }
+        for(; i < tagit.size(); i++)
+        {
+            if(Integer.parseInt(tagit.get(i).get("prior")) >= Integer.parseInt(tagit.get(highest).get("prior")))
+            {
+                //tarkistetaan onko tämä tägi vaadittujen listalla -> ei toimi väliotsikkona
+                boolean valid = true;
+                for(String s: reqTags)
+                {
+                    if(s.compareTo(tagit.get(i).get("nimi")) == 0) valid = false;
+                }
+                if(valid) highest = i;
+            }
+        }
+        if(highest == -1 && reqTags.length > 0) return getCategory(new String[]{}); //mikäli yksikään tägi ei ollut sallittu ja oli olemassa tägiRajtteita, poistetaan rajoitteet
+        if(isEnglish)
+        {
+            return tagit.get(highest).get("ennimi");
+        }else {
+            return tagit.get(highest).get("nimi");
+        }
+
+    }
+
+    //ei ehkä ihan paras toteutus
+    public int getCategoryValue(String category)
+    {
+        for(HashMap<String, String> h: tagit)
+        {
+            if(h.get("nimi").compareTo(category) == 0) return Integer.parseInt(h.get("prior"));
+        }
+        return -1;
     }
 }
 

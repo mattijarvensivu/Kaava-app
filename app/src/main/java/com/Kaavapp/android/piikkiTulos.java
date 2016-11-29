@@ -24,6 +24,8 @@ public class piikkiTulos extends Tulos {
             tiedot.put("sidos",tmp);
         }
         taulu = "irpiikit";
+
+        defaultCategory = R.string.piikkiCat;
     }
 
     public View getSmallView (LayoutInflater infl, ViewGroup paren) {

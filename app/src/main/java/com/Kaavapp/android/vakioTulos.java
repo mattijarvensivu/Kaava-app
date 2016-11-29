@@ -24,6 +24,8 @@ public class vakioTulos extends Tulos{
         tagiTaulu = "VakioTag";
         linkkiTaulu = "Vakio_tag";
 
+        defaultCategory = R.string.vakioCat;
+
     }
 
     @Override

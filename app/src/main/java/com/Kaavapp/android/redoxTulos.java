@@ -33,6 +33,8 @@ public class redoxTulos extends Tulos {
         tagiTaulu = "vakioTag";
         linkkiTaulu = "vakio_tag";
 
+        defaultCategory = R.string.redoxCat;
+
     }
     public View getSmallView (LayoutInflater infl, ViewGroup paren)
     {

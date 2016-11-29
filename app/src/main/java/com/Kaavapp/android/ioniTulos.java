@@ -33,6 +33,8 @@ public class ioniTulos extends Tulos {
         suolaLayout = R.layout.suola;
         type = "ionit";
         taulu = "ionit";
+
+        defaultCategory = R.string.ionCat;
     }
 
 

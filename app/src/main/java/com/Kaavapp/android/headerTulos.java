@@ -25,7 +25,13 @@ public class headerTulos extends Tulos {
     public View getSmallView (LayoutInflater infl, ViewGroup paren)
     {
         View pal = super.getSmallView(infl,paren);
-        ((TextView)pal.findViewById(R.id.header_value)).setText(tiedot.get("nimi"));
+        String nimi = tiedot.get("nimi");
+        try{
+            ((TextView)pal.findViewById(R.id.header_value)).setText(Integer.parseInt(nimi));
+        }catch (NumberFormatException e)
+        {
+            ((TextView)pal.findViewById(R.id.header_value)).setText(nimi);
+        }
         return pal;
     }
 }

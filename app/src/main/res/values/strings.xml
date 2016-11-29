@@ -111,4 +111,18 @@
     <string name="aanennopeusheader">Speed of sound</string>
     <string name="kerroinTeksti">For wavelength of 589.29nm</string>
     <string name="huoneenlammossa">In room temperature</string>
+    <string name="aineCat">Material</string>
+    <string name="alkuaineCat">Element</string>
+    <string name="arvoCat">Value</string>
+    <string name="funkCat">Functional group</string>
+    <string name="happoCat">Acid/Base</string>
+    <string name="ionCat">Ion</string>
+    <string name="isotopeCat">Isotope</string>
+    <string name="kaavaCat">Formula</string>
+    <string name="muuttujaCat">Variable</string>
+    <string name="piikkiCat">IR-peak</string>
+    <string name="redoxCat">Reduction potential</string>
+    <string name="triFunCat">Value of trigonometric functions</string>
+    <string name="vakioCat">Constant</string>
+    <string name="yksikkoCat">Unit</string>
 </resources>

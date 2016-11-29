@@ -27,6 +27,8 @@ public class funktionaalinenTulos extends Tulos{
         taulu = "Funktionaalinenryhma";
         tagiTaulu = "FunktionaalinenryhmaTag";
         linkkiTaulu = "Funktionaalinenryhma_tag";
+
+        defaultCategory = R.string.funkCat;
     }
 
     @Override

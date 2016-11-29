@@ -31,6 +31,8 @@ public class triFunMasterTulos extends Tulos {
         tagiTaulu = "vakioTag";
         linkkiTaulu = "vakio_tag";
 
+        defaultCategory = R.string.triFunCat;
+
     }
 
     public View getSmallView (LayoutInflater infl, ViewGroup paren)

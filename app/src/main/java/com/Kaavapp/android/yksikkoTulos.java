@@ -29,6 +29,8 @@ public class yksikkoTulos extends Tulos {
         taulu = "yksikot";
         tagiTaulu = "yksikotTag";
         linkkiTaulu = "yksikot_tag";
+
+        defaultCategory = R.string.yksikkoCat;
     }
 
 

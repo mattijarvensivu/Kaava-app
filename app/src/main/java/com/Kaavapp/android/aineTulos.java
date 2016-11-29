@@ -29,6 +29,8 @@ public class aineTulos extends Tulos {
         taulu = "aine";
         tagiTaulu = "aineTag";
         linkkiTaulu = "aine_tag";
+
+        defaultCategory = R.string.aineCat;
     }
 
     public View getSmallView (LayoutInflater infl, ViewGroup paren)
