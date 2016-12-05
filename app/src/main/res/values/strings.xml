@@ -22,12 +22,12 @@
     <string name="naming">Naming</string>
     <string name="hapetus_luvut">Oxidation number</string>
     <string name="elektronega">Elektronegativity: </string>
-    <string name="olomuoto">State of matter: </string>
+    <string name="olomuoto">State:</string>
     <string name="sulamis">Melting point: </string>
     <string name="kiehumis">boiling point: </string>
     <string name="tiheys">Density</string>
-    <string name="ominaislampo">Specific heat capasity</string>
-    <string name="lammonjohta">Thermal conductivity: </string>
+    <string name="ominaislampo">Specific heat cap.</string>
+    <string name="lammonjohta">Thermal cond.:</string>
     <string name="teoreettinen">Theoretical: </string>
     <string name="kokeellinen">Experimental: </string>
     <string name="ionisaatioene">Ionization energies (kJ/mol)</string>

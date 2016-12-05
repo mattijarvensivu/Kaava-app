@@ -6,9 +6,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
->
+            >
             <TextView
                 android:textColor="#000000"
                 android:layout_width="wrap_content"
@@ -96,7 +96,183 @@
     </TableLayout>
 </LinearLayout>
 
+<TableLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
 
+    <TableRow
+        >
+            <TextView
+
+                android:textColor="#000000"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txvENegLabel"
+                android:textSize="25dp"
+                android:text="@string/elektronega"/>
+
+            <TextView
+
+                android:textColor="#000000"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:id="@+id/txvENegField"
+                android:textSize="25dp"
+                android:text="E.neg arvo"/>
+        </TableRow>
+
+    <TableRow>
+        <TextView
+
+            android:textColor="#000000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txvOMLabel"
+            android:textSize="25dp"
+            android:text="@string/olomuoto"/>
+
+        <TextView
+
+            android:textColor="#000000"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:id="@+id/txvOMField"
+            android:textSize="25dp"
+
+            android:text="@string/olomuoto"/>
+    </TableRow>
+
+    <TableRow>
+        <TextView
+
+            android:textColor="#000000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txvSPLabel"
+            android:textSize="25dp"
+            android:text="@string/sulamis"/>
+
+        <TextView
+
+            android:textColor="#000000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txvSPField"
+            android:textSize="25dp"
+            android:text="SP"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/mwSpUnit"
+            android:layout_gravity="bottom"
+            />
+    </TableRow>
+    <TableRow>
+        <TextView
+
+            android:textColor="#000000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txvKPLabel"
+            android:textSize="25dp"
+            android:text="@string/kiehumis"/>
+
+        <TextView
+
+            android:textColor="#000000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txvKPField"
+            android:textSize="25dp"
+            android:text="kp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/mwKpUnit"
+            android:layout_gravity="bottom"
+            />
+    </TableRow>
+
+    <TableRow>
+        <TextView
+
+            android:textColor="#000000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txvDenLabel"
+            android:textSize="25dp"
+            android:text="@string/tiheys"/>
+        <TextView
+
+            android:textColor="#000000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txvDenField"
+            android:textSize="25dp"
+            android:text="Dens"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/mwDenUnit"
+            />
+    </TableRow>
+    <TableRow>
+        <TextView
+
+            android:textColor="#000000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txvOmLLabel"
+            android:textSize="25dp"
+            android:text="@string/ominaislampo"/>
+        <TextView
+
+            android:textColor="#000000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txvOmLField"
+            android:textSize="25dp"
+            android:text="ominais.l"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/mwOLUnit"
+            />
+    </TableRow>
+    <TableRow>
+        <TextView
+
+            android:textColor="#000000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txvLJLabel"
+            android:textSize="25dp"
+            android:text="@string/lammonjohta"/>
+        <TextView
+
+            android:textColor="#000000"
+            android:textSize="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txvLJField"
+            android:text="lämmön"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/mwLJUnit"
+            />
+    </TableRow>
+
+
+</TableLayout>
             <TextView
                  
                 android:textColor="#000000"
@@ -118,32 +294,6 @@
                 android:text="Hapetus luvut"/>
 
 
-            <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TableRow>
-                <TextView
-                     
-                    android:textColor="#000000"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txvENegLabel"
-                    android:textSize="25dp"
-                    android:text="@string/elektronega"/>
-
-                <TextView
-                     
-                    android:textColor="#000000"
-                    android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txvENegField"
-                    android:textSize="25dp"
-                    android:text="E.neg arvo"/>
-                </TableRow>
-            </TableLayout>
-
             <TextView
                  
                 android:textColor="#000000"
@@ -161,194 +311,6 @@
                 />
 
 
-            <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TableRow>
-                <TextView
-                     
-                    android:textColor="#000000"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txvOMLabel"
-                    android:textSize="25dp"
-                    android:text="@string/olomuoto"/>
-
-                <TextView
-                     
-                    android:textColor="#000000"
-                    android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txvOMField"
-                    android:textSize="25dp"
-
-                    android:text="@string/olomuoto"/>
-                </TableRow>
-            </TableLayout>
-
-            <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TableRow>
-                <TextView
-                     
-                    android:textColor="#000000"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txvSPLabel"
-                    android:textSize="25dp"
-                    android:text="@string/sulamis"/>
-
-                <TextView
-                     
-                    android:textColor="#000000"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txvSPField"
-                    android:textSize="25dp"
-                    android:text="SP"/>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/mwSpUnit"
-                    android:layout_gravity="bottom"
-                    />
-                </TableRow>
-            </TableLayout>
-
-            <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TableRow>
-                <TextView
-                     
-                    android:textColor="#000000"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txvKPLabel"
-                    android:textSize="25dp"
-                    android:text="@string/kiehumis"/>
-
-                <TextView
-                     
-                    android:textColor="#000000"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txvKPField"
-                    android:textSize="25dp"
-                    android:text="kp"/>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/mwKpUnit"
-                    android:layout_gravity="bottom"
-                    />
-                </TableRow>
-            </TableLayout>
-
-            <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TableRow>
-                <TextView
-                     
-                    android:textColor="#000000"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txvDenLabel"
-                    android:textSize="25dp"
-                    android:text="@string/tiheys"/>
-                </TableRow>
-                <TableRow>
-                <TextView
-                     
-                    android:textColor="#000000"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txvDenField"
-                    android:textSize="25dp"
-                    android:text="Dens"/>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/mwDenUnit"
-                    />
-                </TableRow>
-
-
-            </TableLayout>
-
-            <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TableRow>
-                <TextView
-                     
-                    android:textColor="#000000"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txvOmLLabel"
-                    android:textSize="25dp"
-                    android:text="@string/ominaislampo"/>
-                </TableRow>
-                <TableRow>
-                <TextView
-                     
-                    android:textColor="#000000"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txvOmLField"
-                    android:textSize="25dp"
-                    android:text="ominais.l"/>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/mwOLUnit"
-                    />
-                </TableRow>
-            </TableLayout>
-
-            <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TableRow>
-                <TextView
-                     
-                    android:textColor="#000000"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txvLJLabel"
-                    android:textSize="25dp"
-                    android:text="@string/lammonjohta"/>
-                </TableRow>
-                <TableRow>
-                <TextView
-                     
-                    android:textColor="#000000"
-                    android:textSize="25dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txvLJField"
-                    android:text="lämmön"/>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/mwLJUnit"
-                    />
-                </TableRow>
-            </TableLayout>
 
 
             <TextView
@@ -359,12 +321,14 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/txvASLabel"
                 android:textSize="25dp"
-                android:text="@string/atomisade"/>
+                android:text="@string/atomisade"
+                android:layout_marginTop="7dp"/>
 
             <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginBottom="7dp">
                 <TableRow>
                 <TextView
                      
@@ -373,7 +337,8 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/txvTASLabel"
                     android:textSize="25dp"
-                    android:text="@string/teoreettinen"/>
+                    android:text="@string/kokeellinen"
+                    android:layout_marginRight="4dp"/>
 
                 <TextView
                      
@@ -387,31 +352,6 @@
 
                 </TableRow>
 
-<TableRow>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                     
-                    android:textColor="#000000"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txvKASLabel"
-                    android:textSize="25dp"
-                    android:text="@string/kokeellinen"/>
-
-                <TextView
-                     
-                    android:textColor="#000000"
-                    android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txvKASField"
-                    android:textSize="25dp"
-                    android:text="300pm"/>
-            </LinearLayout>
-</TableRow>
             </TableLayout>
             <TextView
                  

@@ -122,7 +122,7 @@ private String nimiarvo;
             ((TextView) pal.findViewById(R.id.txvNimiMain)).setVisibility(View.GONE);
         }
         TextView aSadeT = (TextView) pal.findViewById(R.id.txvTASField);
-        TextView aSadeK = (TextView) pal.findViewById(R.id.txvKASField);
+       // TextView aSadeK = (TextView) pal.findViewById(R.id.txvKASField);
         LinearLayout IonE = (LinearLayout) pal.findViewById(R.id.lvoIonE);
         LinearLayout isot = (LinearLayout) pal.findViewById(R.id.lnlIsot);
 
@@ -144,16 +144,15 @@ private String nimiarvo;
 
 
         //muutetaan atomisäteen no data suomenkieliseksi ja lisätään yksikkö
-        if (tiedot.get("atomiSadeTheo").compareTo("no data") == 0) {
-            aSadeT.setText(R.string.eiTietoa);
-        } else {
-            aSadeT.setText(tiedot.get("atomiSadeTheo") + "pm");
-        }
-
+        aSadeT.setText(tiedot.get("atomiSadeEmpi") + "pm");
         if (tiedot.get("atomiSadeEmpi").compareTo("no data") == 0) {
-            aSadeK.setText(R.string.eiTietoa);
-        } else {
-            aSadeK.setText(tiedot.get("atomiSadeEmpi") + "pm");
+            aSadeT.setText(tiedot.get("atomiSadeTheo") + "pm");
+            ((TextView)pal.findViewById(R.id.txvTASLabel)).setText(R.string.teoreettinen);
+        }
+        if(tiedot.get("atomiSadeTheo").compareTo("no data") == 0)
+        {
+            aSadeT.setText("");
+            ((TextView)pal.findViewById(R.id.txvTASLabel)).setText(R.string.eiTietoa);
         }
 
         //olomuoto ja luokka on koodattu tietokannassa. Tässä numero muutetaan sanaksi
