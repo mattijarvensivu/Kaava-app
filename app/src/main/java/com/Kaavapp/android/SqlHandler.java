@@ -417,9 +417,11 @@ String nimiarvo = "";
         HashMap<String,String> pal = new HashMap<>();
         if(c.moveToFirst())
         {
-            do{
                 pal.put(c.getString(1),"");
-            }while(c.moveToNext());
+                if(c.getString(4) != null)
+                {
+                    pal.put(c.getString(4),"");
+                }
         }
 
         c.close();
@@ -485,7 +487,7 @@ String nimiarvo = "";
                 if(searchParamsS.compareTo("") == 0) searchParamsS += " where "; //On olemassa ainakin yksi haku rajoite ja queryyn ei ole lisätty where avain sanaa. Lisätään se
                 if(!isFirst)
                 {
-                    searchParamsS += " AND "; //tätä rajoitetta edeltää ainakin yksi toinen rajoite. Lisätään and
+                    searchParamsS += " OR "; //tätä rajoitetta edeltää ainakin yksi toinen rajoite. Lisätään and
                 }
                 //Kyseisellä kentällä on rajoite. Lisätään se kutsuun
                 searchParamsS +=  tableS.get(i)[0] +  " LIKE " ;
