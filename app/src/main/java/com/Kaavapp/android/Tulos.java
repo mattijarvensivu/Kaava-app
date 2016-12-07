@@ -271,6 +271,7 @@ public class Tulos implements Comparable<Tulos> {
     //ei ehkä ihan paras toteutus
     public int getCategoryValue(String category)
     {
+        if(tagit == null) return -1;
         for(HashMap<String, String> h: tagit)
         {
             if(h.get("nimi").compareTo(category) == 0) return Integer.parseInt(h.get("prior"));
