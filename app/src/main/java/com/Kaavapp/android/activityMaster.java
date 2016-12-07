@@ -353,6 +353,7 @@ public static  String language;
                         }
 
                         tmp.put("nimi", s); //Purkka ratkaisu. Vaatii että kaikissa tägi tauluissa tägin nimi kentän nimi on nimi. Vaikeuttaa varmastikkin myös kaksikielisen tägin implementointia.
+                        tmp.put("ennimi",s);
                         kentatAL.add(tmp);
                     }
                 }
