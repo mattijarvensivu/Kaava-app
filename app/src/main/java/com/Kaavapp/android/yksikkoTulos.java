@@ -17,7 +17,7 @@ import java.util.HashMap;
 public class yksikkoTulos extends Tulos {
 
     private ArrayList<yksikkoTulos> compoundYksikot; //paska nimi
-
+private  String nimiarvo, suurearvo;
 
     public yksikkoTulos(HashMap<String,String> vals)
     {
@@ -38,8 +38,19 @@ public class yksikkoTulos extends Tulos {
     public View getSmallView (LayoutInflater infl, ViewGroup paren)
     {
         View pal = super.getSmallView(infl,paren);
-        ((TextView)pal.findViewById(R.id.txvNimi)).setText(tiedot.get("nimi"));
-        ((TextView)pal.findViewById(R.id.txvKuvaus)).setText(tiedot.get("suure"));
+
+
+        if(checkLanguage()){
+            this.nimiarvo = "ennimi";
+            this.suurearvo = "ensuure";
+        }else{
+            this.nimiarvo = "nimi";
+            this.suurearvo = "suure";
+
+        }
+
+        ((TextView)pal.findViewById(R.id.txvNimi)).setText(tiedot.get(nimiarvo));
+        ((TextView)pal.findViewById(R.id.txvKuvaus)).setText(tiedot.get(suurearvo));
 
         KaavaFactory kf = new KaavaFactory(pal.getContext(),pal.getResources(),(int)Math.ceil(((TextView)pal.findViewById(R.id.txvNimi)).getTextSize()/ pal.getResources().getDisplayMetrics().density));
         ((ImageView)pal.findViewById(R.id.imgYksikko)).setImageDrawable(kf.getBmD(tiedot.get("yksikko")));
@@ -63,7 +74,7 @@ public class yksikkoTulos extends Tulos {
                     String klikattuNimi = ((TextView)v.findViewById(R.id.txvNimi)).getText().toString();
                     for(int i = 0; i < compoundYksikot.size(); i++)
                     {
-                        if(klikattuNimi.compareTo(compoundYksikot.get(i).getValue("nimi")) == 0)
+                        if(klikattuNimi.compareTo(compoundYksikot.get(i).getValue(nimiarvo)) == 0)
                         {
                             //löytyi klikattu isotooppi
                             paren.removeAllViews(); //Viite tähän olioon mahdollisesti katoaa kun tyhjennetään layoutti...

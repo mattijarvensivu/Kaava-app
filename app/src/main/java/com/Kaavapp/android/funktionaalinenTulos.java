@@ -16,6 +16,7 @@ import java.util.HashMap;
 public class funktionaalinenTulos extends Tulos{
 
     private ArrayList<piikkiTulos> irpiikit;
+private String nimiarvo, fragnimi;
 
     public funktionaalinenTulos(HashMap<String,String> values) {
         layoutLarge = R.layout.funktional_large;
@@ -35,32 +36,43 @@ public class funktionaalinenTulos extends Tulos{
     //tuottaa Viewin annetulla inflaterillä ja isännällä. Tässä viewissä näytetään nopea yhteen veto tuloksesta
     public View getSmallView (LayoutInflater infl, ViewGroup paren) {
         View pal = super.getSmallView(infl, paren);
+
+        if(checkLanguage()){
+            this.nimiarvo = "ennimi";
+            this.fragnimi = "ennimifragmentti";
+        }else{
+            this.nimiarvo = "nimi";
+            this.fragnimi = "nimifragmentti";
+
+        }
+
+
         //laitetaan kuva paikoilleen
         try {
-            ((ImageView)pal.findViewById(R.id.imgKuva)).setImageResource(R.drawable.class.getField(tiedot.get("nimi")).getInt(null));
+            ((ImageView)pal.findViewById(R.id.imgKuva)).setImageResource(R.drawable.class.getField(tiedot.get(nimiarvo)).getInt(null));
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
         }
 
-        ((TextView)pal.findViewById(R.id.txvNimi)).setText(tiedot.get("nimi"));
+        ((TextView)pal.findViewById(R.id.txvNimi)).setText(tiedot.get(nimiarvo));
         return pal;
     }
 
     public View getLargeView (LayoutInflater infl, ViewGroup paren) {
         View pal = infl.inflate(layoutLarge, paren, false);
 
-        ((TextView)pal.findViewById(R.id.txvNimi)).setText(tiedot.get("nimi"));
+        ((TextView)pal.findViewById(R.id.txvNimi)).setText(tiedot.get(nimiarvo));
         try {
-            ((ImageView)pal.findViewById(R.id.imgKuva)).setImageResource(R.drawable.class.getField(tiedot.get("nimi")).getInt(null));
+            ((ImageView)pal.findViewById(R.id.imgKuva)).setImageResource(R.drawable.class.getField(tiedot.get(nimiarvo)).getInt(null));
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
         }
 
-        ((TextView)pal.findViewById(R.id.txvNom)).setText(tiedot.get("nimifragmentti"));
+        ((TextView)pal.findViewById(R.id.txvNom)).setText(tiedot.get(fragnimi));
 
         //laitetaan piikit näkyville
         LinearLayout piikit = (LinearLayout)pal.findViewById(R.id.lnlPiikit);

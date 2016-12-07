@@ -359,6 +359,8 @@ public class SqlHandler extends SQLiteOpenHelper {
         if(useIntersection) {
            separator = " INTERSECT ";
         }
+String nimiarvo = "";
+
 
         String query = "";
         for(int i = 0; i < searchParameters.size(); i++) {
@@ -369,7 +371,7 @@ public class SqlHandler extends SQLiteOpenHelper {
                     " left join " + tagiTaulu + "  as t on (ta._tagid = t._tagid) Where t.nimi like '" + searchParameters.get(i).get("nimi") + "'";
             */
             query += "Select "+ getKentat(tableName) +" From " + tableName + " a left join " + tagiTaulut[1] + " as ta on (a." + kohdeIdKentta + " = ta." + findPrimaryKeyName(tableName) + ")" +
-                    " left join " + tagiTaulut[0] + "  as t on (ta._tagid = t._tagid) Where t.nimi like '" + searchParameters.get(i).get("nimi") + "'";
+                    " left join " + tagiTaulut[0] + "  as t on (ta._tagid = t._tagid) Where t.nimi like '" + searchParameters.get(i).get("nimi") + "'"+ "OR t.ennimi like '" + searchParameters.get(i).get("ennimi") + "'";
             if(i < searchParameters.size()-1)
             {
                 //ei olla viimeisessä, lisätään Intersect
@@ -835,10 +837,6 @@ public class SqlHandler extends SQLiteOpenHelper {
 
 
 
-
-
-
-
     /*public void addLine (String str, String integ) {
         //Katsotaan onko identtinen rivi jo olemassa
         HashMap<String, String> data = getValue("", str, integ);
@@ -854,6 +852,8 @@ public class SqlHandler extends SQLiteOpenHelper {
         db.close();
     }*/
 }
+
+
 
 interface gatehrAddDataListener
 {

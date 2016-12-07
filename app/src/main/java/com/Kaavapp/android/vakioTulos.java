@@ -14,7 +14,7 @@ import java.util.HashMap;
  */
 public class vakioTulos extends Tulos{
 
-
+private String nimiarvo;
     public vakioTulos(HashMap<String,String> values) {
         layoutLarge = -1;
         layoutSmall = R.layout.vakio_small;
@@ -33,8 +33,15 @@ public class vakioTulos extends Tulos{
     public View getSmallView (LayoutInflater infl, ViewGroup paren) {
         View pal = super.getSmallView(infl, paren);
 
+        if(checkLanguage()){
+            this.nimiarvo = "ennimi";
+        }else{
+            this.nimiarvo = "nimi";
 
-        ((TextView)pal.findViewById(R.id.txvKuvaus)).setText(tiedot.get("nimi"));
+        }
+
+
+        ((TextView)pal.findViewById(R.id.txvKuvaus)).setText(tiedot.get(nimiarvo));
         ((TextView)pal.findViewById(R.id.txvArvo)).setText(tiedot.get("arvo"));
 
         KaavaFactory kf = new KaavaFactory(pal.getContext(),pal.getResources(),(int)Math.ceil(((TextView)pal.findViewById(R.id.txvArvo)).getTextSize()/ pal.getResources().getDisplayMetrics().density)); //viimeinen parametri laskee käytetyn teksti koon.

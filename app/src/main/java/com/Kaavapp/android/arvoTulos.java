@@ -19,7 +19,7 @@ import java.util.HashMap;
 public class arvoTulos extends Tulos {
     private ArrayList<Tulos> arvot;
     private View largev;
-
+private String nimiarvo;
     //on tärkeää että arvoId on dummy vakion yksikön arvon indeksi,
     private int arvoId = -1;//-1:error; 0:taitekerroin; 1:permitiivisyys; 2: permabiiteetti; 3:äänen nopeus
     static String[] arvoAvaimet = new String[]{"refra","permitivity","permeability","aanennopeus"};
@@ -73,6 +73,14 @@ public class arvoTulos extends Tulos {
     public View getSmallView (LayoutInflater infl, ViewGroup paren)
     {
         View pal = super.getSmallView(infl,paren);
+
+        if(checkLanguage()){
+            this.nimiarvo = "enaine";
+        }else{
+            this.nimiarvo = "aine";
+
+        }
+
         int teksti = R.string.virhearvossa;
         switch (arvoId) {
             case 0:
@@ -101,7 +109,7 @@ public class arvoTulos extends Tulos {
                 //ei ole olemass tilannetta missä tätä voitaisiin kutsua ilman että olisi olemassa large view
                 for(Tulos t:arvot)
                 {
-                    t.sortKey = "aine";
+                    t.sortKey = nimiarvo;
                 }
                 Collections.sort(arvot);
                 ((TableLayout)largev.findViewById(R.id.tblMain)).removeAllViews();
@@ -172,7 +180,7 @@ public class arvoTulos extends Tulos {
             tmpKerroin.setTextColor(Color.BLACK);
             tmpMateriaali.setTextColor(Color.BLACK);
             tmpKerroin.setText(t.getValue("arvo"));
-            tmpMateriaali.setText(t.getValue("aine"));
+            tmpMateriaali.setText(t.getValue(nimiarvo));
             //luodaan yksittäinen solu
             tmpMateriaali.setLayoutParams(new TableRow.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT,1f));
             tmp.addView(tmpMateriaali);

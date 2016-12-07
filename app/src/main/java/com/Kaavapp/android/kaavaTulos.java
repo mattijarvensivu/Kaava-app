@@ -27,7 +27,7 @@ public class kaavaTulos extends Tulos{
     private ArrayList<Tulos> vakiot;
     private ArrayList<Tulos> muuttujat;
     //private String kaikkimuuttujat;
-
+    private  String nimiarvo, kuvausarvo;
     private boolean haettuVakiot = false;
     private boolean haettuMuuttujat = false;
 
@@ -53,8 +53,18 @@ public class kaavaTulos extends Tulos{
     {
        View pal = super.getSmallView(infl,paren);
 
+        if(checkLanguage()){
+            this.nimiarvo = "ennimi";
+            this.kuvausarvo = "enkuvaus";
+        }else{
+            this.nimiarvo = "nimi";
+            this.kuvausarvo = "kuvaus";
+
+        }
+
+
         //asetetaan tiedot paikoilleen
-        String nimi = tiedot.get("nimi");
+        String nimi = tiedot.get(nimiarvo);
         if(nimi.compareTo("-")== 0) nimi = "";
         ((TextView)pal.findViewById(R.id.kaava_nimi)).setText(nimi);
 
@@ -71,7 +81,7 @@ public class kaavaTulos extends Tulos{
         View pal = infl.inflate(layoutLarge, paren, false);
         KaavaFactory ka = new KaavaFactory(pal.getContext(),pal.getResources(),(int)Math.ceil(((TextView)pal.findViewById(R.id.kaava_nimi_largeee)).getTextSize()/ pal.getResources().getDisplayMetrics().density)); //viimeinen parametri laskee käytetyn teksti koon.
         ((ImageView)pal.findViewById(R.id.kaava_lause_large)).setImageDrawable(ka.getBmD(tiedot.get("lause")));
-        String nimi = tiedot.get("nimi");
+        String nimi = tiedot.get(nimiarvo);
         if(nimi.compareTo("-")== 0) nimi = "";
         ((TextView)pal.findViewById(R.id.kaava_nimi_largeee)).setText(nimi);
 
@@ -121,7 +131,7 @@ public class kaavaTulos extends Tulos{
         dataHaettu = haettuMuuttujat && haettuVakiot;
         for(int i = 0; i < vals.size(); i++) {
             muuttujat.add((muuttujaTulos)vals.get(i));
-            Log.d("Lisätty",vals.get(i).getValue("kuvaus"));
+            Log.d("Lisätty",vals.get(i).getValue(kuvausarvo));
             //Log.d("KAIKKIMUUTTUJAT",muuttujat.get(i).getValue("kuvaus"));
             //this.kaikkimuuttujat += muuttujat.get(i).getValue("symbol") + " = " +  muuttujat.get(i).getValue("kuvaus") + "  "+  muuttujat.get(i).getValue("yksikkö")+"\n";
         }
@@ -132,7 +142,7 @@ public class kaavaTulos extends Tulos{
         dataHaettu = haettuMuuttujat && haettuVakiot;
         for(int i = 0; i < vals.size(); i++) {
             vakiot.add((vakioTulos)vals.get(i));
-            Log.d("Lisätty",vals.get(i).getValue("nimi"));
+            Log.d("Lisätty",vals.get(i).getValue(nimiarvo));
             //Log.d("KAIKKIMUUTTUJAT",muuttujat.get(i).getValue("kuvaus"));
             //this.kaikkimuuttujat += muuttujat.get(i).getValue("symbol") + " = " +  muuttujat.get(i).getValue("kuvaus") + "  "+  muuttujat.get(i).getValue("yksikkö")+"\n";
         }
