@@ -25,7 +25,7 @@ public class redoxTulos extends Tulos {
 
     public redoxTulos(HashMap<String,String> vals) {
         tiedot = vals;
-        layoutSmall = R.layout.redox_small;
+        layoutSmall = R.layout.arvo_small;
         layoutLarge = R.layout.redox_large;
 
         type = "redox";
@@ -39,6 +39,7 @@ public class redoxTulos extends Tulos {
     public View getSmallView (LayoutInflater infl, ViewGroup paren)
     {
         View pal = super.getSmallView(infl,paren);
+        ((TextView)pal.findViewById(R.id.txvKuvaus)).setText(R.string.redox);
         return pal;
     }
     public View getLargeView (LayoutInflater infl, ViewGroup paren)

@@ -5,37 +5,29 @@
     android:layout_height="wrap_content"
     >
 
-        <TableLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_weight="1"
             >
-            <TableRow>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20dp"
                 android:textColor="#000000"
                 android:id="@+id/txvNimi"/>
-</LinearLayout>
-            </TableRow>
 
-
-        <TableRow>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="horizontal"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="5dp"
                     android:id="@+id/lnlMp">
                     <TextView
                         android:layout_width="wrap_content"
@@ -56,39 +48,35 @@
                         android:layout_height="match_parent"
                         android:id="@+id/imgCelsius"/>
                 </LinearLayout>
-        </TableRow>
-
-    <TableRow>
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="horizontal"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="10dp"
                     android:id="@+id/lnlBp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:textSize="20dp"
-                        android:layout_marginRight="3dp"
-                        android:textColor="#000000"
-                        android:text="@string/kp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:textSize="20dp"
+                            android:layout_marginRight="3dp"
+                            android:textColor="#000000"
+                            android:text="@string/kp"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:textSize="20dp"
-                        android:textColor="#000000"
-                        android:id="@+id/txvKiehumis"/>
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:id="@+id/imgCelsius2"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:textSize="20dp"
+                            android:textColor="#000000"
+                            android:id="@+id/txvKiehumis"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:id="@+id/imgCelsius2"/>
 
                 </LinearLayout>
-    </TableRow>
+            </LinearLayout>
 
-        </TableLayout>
+
+        </LinearLayout>
 
     <ImageView
 

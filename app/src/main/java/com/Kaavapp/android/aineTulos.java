@@ -79,7 +79,7 @@ public class aineTulos extends Tulos {
         BitmapDrawable celsius = kf.getBmD("C^{\\circ}");
         if(tiedot.get("sulamispiste").compareTo("-") == 0)
         {
-            ((ViewGroup)pal.findViewById(R.id.lnlMp)).removeAllViews();
+            ((ViewGroup)pal.findViewById(R.id.tbrMp)).removeAllViews();
 
         }else {
             ((TextView) pal.findViewById(R.id.txvSulamis)).setText(df2.format(Float.parseFloat(tiedot.get("sulamispiste"))));
@@ -87,7 +87,7 @@ public class aineTulos extends Tulos {
         }
         if(tiedot.get("kiehumispiste").compareTo("-") == 0)
         {
-            ((ViewGroup)pal.findViewById(R.id.lnlBp)).removeAllViews();
+            ((ViewGroup)pal.findViewById(R.id.tbrBp)).removeAllViews();
 
         }else {
             ((TextView)pal.findViewById(R.id.txvKiehumis)).setText(df2.format(Float.parseFloat(tiedot.get("kiehumispiste"))));
@@ -95,7 +95,7 @@ public class aineTulos extends Tulos {
         }
         if(tiedot.get("resistanssi").compareTo("-") == 0)
         {
-            ((ViewGroup)pal.findViewById(R.id.lnlRes)).removeAllViews();
+            ((ViewGroup)pal.findViewById(R.id.tbrRes)).removeAllViews();
 
         }else {
             ((TextView)pal.findViewById(R.id.txvResistanssi)).setText(tiedot.get("resistanssi"));
@@ -103,7 +103,7 @@ public class aineTulos extends Tulos {
         }
         if(tiedot.get("ominaislampokapasiteetti").compareTo("-") == 0)
         {
-            ((ViewGroup)pal.findViewById(R.id.lnlOlk)).removeAllViews();
+            ((ViewGroup)pal.findViewById(R.id.tbrOlk)).removeAllViews();
 
         }else {
             ((TextView)pal.findViewById(R.id.txvOminaislampo)).setText(tiedot.get("ominaislampokapasiteetti"));
@@ -111,7 +111,7 @@ public class aineTulos extends Tulos {
 
         }
         if(tiedot.get("lampolaajeneminen").compareTo("-")==0){
-        ((ViewGroup)pal.findViewById(R.id.lnlLampoL)).removeAllViews();
+        ((ViewGroup)pal.findViewById(R.id.tbrLampoL)).removeAllViews();
     }
         else{
             ((TextView)pal.findViewById(R.id.txvlampolaajeneminen)).setText(tiedot.get("lampolaajeneminen"));

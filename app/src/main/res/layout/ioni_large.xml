@@ -27,11 +27,10 @@
         android:paddingBottom="10dp"
         android:id="@+id/mvKaava"/>
 
-    <LinearLayout
+    <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:id="@+id/lnlSuolat"/>
+        android:id="@+id/tblSuolat"/>
     </LinearLayout>
 
 </ScrollView>

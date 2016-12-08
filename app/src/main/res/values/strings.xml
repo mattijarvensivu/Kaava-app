@@ -19,13 +19,13 @@
     <string name="search">Search</string>
     <string name="check_input">Check the input!</string>
     <string name="back">Back</string>
-    <string name="naming">Naming</string>
+    <string name="naming">Naming:</string>
     <string name="hapetus_luvut">Oxidation number</string>
     <string name="elektronega">Elektronegativity: </string>
     <string name="olomuoto">State:</string>
     <string name="sulamis">Melting point: </string>
     <string name="kiehumis">boiling point: </string>
-    <string name="tiheys">Density</string>
+    <string name="tiheys">Density:</string>
     <string name="ominaislampo">Specific heat cap.</string>
     <string name="lammonjohta">Thermal cond.:</string>
     <string name="teoreettinen">Theoretical: </string>
@@ -41,7 +41,7 @@
     <string name="suhteellinenosuus">Relative portion in nature: </string>
     <string name="hajoamistavat">Decay paths: </string>
     <string name="moolimassa"> Molar mass: </string>
-    <string name="ph1mliuos">at 1M solution: </string>
+    <string name="ph1mliuos">pH at 1M solution:</string>
     <string name="symboli">Symbol</string>
     <string name="vakiot">Constants</string>
     <string name="hapot">Acids</string>

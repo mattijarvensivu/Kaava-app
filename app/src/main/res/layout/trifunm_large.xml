@@ -9,7 +9,8 @@
         android:layout_height="match_parent"
         android:id="@+id/tblMain">
 
-    <TableRow>
+    <TableRow
+        android:layout_marginBottom="7dp">
         <TextView
             android:text="@string/aste"
             android:textSize="20dp"

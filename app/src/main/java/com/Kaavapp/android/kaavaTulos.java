@@ -62,14 +62,19 @@ public class kaavaTulos extends Tulos{
 
         }
 
+        KaavaFactory kf = new KaavaFactory(pal.getContext(),pal.getResources(),(int)Math.ceil(((TextView)pal.findViewById(R.id.kaava_nimi)).getTextSize()/ pal.getResources().getDisplayMetrics().density)); //viimeinen parametri laskee käytetyn teksti koon.
+        ((ImageView)pal.findViewById(R.id.kaava_lause_small)).setImageDrawable(kf.getBmD(tiedot.get("lause")));
 
         //asetetaan tiedot paikoilleen
         String nimi = tiedot.get(nimiarvo);
-        if(nimi.compareTo("-")== 0) nimi = "";
-        ((TextView)pal.findViewById(R.id.kaava_nimi)).setText(nimi);
+        if(nimi == null || nimi.compareTo("-")== 0) {
+            //nimi = "";
+            ((ViewGroup)pal.findViewById(R.id.kaava_nimi).getParent()).removeView(pal.findViewById(R.id.kaava_nimi));
+        }else {
+            ((TextView) pal.findViewById(R.id.kaava_nimi)).setText(nimi);
+        }
 
-        KaavaFactory kf = new KaavaFactory(pal.getContext(),pal.getResources(),(int)Math.ceil(((TextView)pal.findViewById(R.id.kaava_nimi)).getTextSize()/ pal.getResources().getDisplayMetrics().density)); //viimeinen parametri laskee käytetyn teksti koon.
-        ((ImageView)pal.findViewById(R.id.kaava_lause_small)).setImageDrawable(kf.getBmD(tiedot.get("lause")));
+
 
 
 
@@ -81,9 +86,12 @@ public class kaavaTulos extends Tulos{
         View pal = infl.inflate(layoutLarge, paren, false);
         KaavaFactory ka = new KaavaFactory(pal.getContext(),pal.getResources(),(int)Math.ceil(((TextView)pal.findViewById(R.id.kaava_nimi_largeee)).getTextSize()/ pal.getResources().getDisplayMetrics().density)); //viimeinen parametri laskee käytetyn teksti koon.
         ((ImageView)pal.findViewById(R.id.kaava_lause_large)).setImageDrawable(ka.getBmD(tiedot.get("lause")));
-        String nimi = tiedot.get(nimiarvo);
-        if(nimi.compareTo("-")== 0) nimi = "";
-        ((TextView)pal.findViewById(R.id.kaava_nimi_largeee)).setText(nimi);
+        String nimi = tiedot.get(nimiarvo); //rohkea oletus että tässä kohtaa ollaan ajettu getSmallViewi jossa nimiarvo asetetaan. Taitaa kylläkin pitää paikkansa.
+        if(nimi.compareTo("-")== 0) {
+            ((ViewGroup)pal.findViewById(R.id.kaava_nimi_largeee).getParent()).removeView(pal.findViewById(R.id.kaava_nimi_largeee));
+        }else {
+            ((TextView) pal.findViewById(R.id.kaava_nimi_largeee)).setText(nimi);
+        }
 
 
        /* kaikkimuuttujat = "";

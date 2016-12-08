@@ -8,7 +8,7 @@
     <string name="chemistry_string">Kemia</string>
     <string name="formulas">Kaavat</string>
     <string name="front_page">Etusivu</string>
-    <string name="math_string">Matikka</string>
+    <string name="math_string">Matematiikka</string>
     <string name="navigation_drawer_close">Sulje navigointi valikko</string>
     <string name="navigation_drawer_open">Avaa navigointi valikko</string>
     <string name="physics_string">Fysiikka</string>
@@ -18,7 +18,7 @@
     <string name="title_activity_physics">Fysiikka Activity</string>
     <string name="check_input">Tarkasta syöte</string>
     <string name="back">Takaisin</string>
-    <string name="naming">Nimeäminen</string>
+    <string name="naming">Nimeäminen:</string>
     <string name="IR_absor">IR absorptio taajuudet: </string>
     <string name="elektronega">Elektronegatiivisuus: </string>
     <string name="hajoamistavat">Hajoamistavat: </string>

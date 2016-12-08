@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -41,9 +42,9 @@ public class ioniTulos extends Tulos {
     public View getSmallView(LayoutInflater infl, ViewGroup paren)
     {
         View pal = super.getSmallView(infl, paren);
-        ((TextView)pal.findViewById(R.id.txvVaraus)).setText(tiedot.get("varaus"));
+        //((TextView)pal.findViewById(R.id.txvVaraus)).setText(tiedot.get("varaus"));
         ((TextView)pal.findViewById(R.id.txvNimi)).setText(tiedot.get("name"));
-        KaavaFactory kf = new KaavaFactory(pal.getContext(),pal.getResources(),(int)Math.ceil(((TextView)pal.findViewById(R.id.txvVaraus)).getTextSize()/ pal.getResources().getDisplayMetrics().density)); //viimeinen parametri laskee käytetyn teksti koon.
+        KaavaFactory kf = new KaavaFactory(pal.getContext(),pal.getResources(),(int)Math.ceil(((TextView)pal.findViewById(R.id.txvNimi)).getTextSize()/ pal.getResources().getDisplayMetrics().density)); //viimeinen parametri laskee käytetyn teksti koon.
         ((ImageView)pal.findViewById(R.id.mvKaava)).setImageDrawable(kf.getBmD(tiedot.get("kaava")));
         return pal;
 
@@ -58,7 +59,7 @@ public class ioniTulos extends Tulos {
         KaavaFactory kf = new KaavaFactory(pal.getContext(),pal.getResources(),(int)Math.ceil(((TextView)pal.findViewById(R.id.txvNimi)).getTextSize()/ pal.getResources().getDisplayMetrics().density)); //viimeinen parametri laskee käytetyn teksti koon.
         ((ImageView)pal.findViewById(R.id.mvKaava)).setImageDrawable(kf.getBmD(tiedot.get("kaava")));
 
-        LinearLayout suolatLay = (LinearLayout)pal.findViewById(R.id.lnlSuolat);
+        TableLayout suolatLay = (TableLayout)pal.findViewById(R.id.tblSuolat);
 
         int[] sanat = new int[]{R.string.liukoinen, R.string.osittain, R.string.niukka, R.string.reagoi}; //tämä siksi jotta voidaan loopata koko homma
         for(int i = 0; i < vastinIonit.length; i++)

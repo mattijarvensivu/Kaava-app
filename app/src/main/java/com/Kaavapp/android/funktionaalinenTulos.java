@@ -49,7 +49,9 @@ private String nimiarvo, fragnimi;
 
         //laitetaan kuva paikoilleen
         try {
-            ((ImageView)pal.findViewById(R.id.imgKuva)).setImageResource(R.drawable.class.getField(tiedot.get(nimiarvo)).getInt(null));
+            if(tiedot.get("kuva").compareTo("-") != 0)
+            ((ImageView)pal.findViewById(R.id.imgKuva)).setImageResource(R.drawable.class.getField(tiedot.get("kuva")).getInt(null));
+
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (NoSuchFieldException e) {
@@ -65,7 +67,10 @@ private String nimiarvo, fragnimi;
 
         ((TextView)pal.findViewById(R.id.txvNimi)).setText(tiedot.get(nimiarvo));
         try {
-            ((ImageView)pal.findViewById(R.id.imgKuva)).setImageResource(R.drawable.class.getField(tiedot.get(nimiarvo)).getInt(null));
+
+            if(tiedot.get("kuva").compareTo("-") != 0)
+            ((ImageView)pal.findViewById(R.id.imgKuva)).setImageResource(R.drawable.class.getField(tiedot.get("kuva")).getInt(null));
+
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (NoSuchFieldException e) {

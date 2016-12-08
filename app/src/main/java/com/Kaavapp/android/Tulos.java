@@ -259,6 +259,8 @@ public class Tulos implements Comparable<Tulos> {
             }
         }
         if(highest == -1 && reqTags.length > 0) return getCategory(new String[]{}); //mikäli yksikään tägi ei ollut sallittu ja oli olemassa tägiRajtteita, poistetaan rajoitteet
+        if(highest == -1) return defaultCategory+""; //ei ollut rajotteita, mutta ei myöskään kelvollisiä tägejä
+        checkLanguage();
         if(isEnglish)
         {
             return tagit.get(highest).get("ennimi");
@@ -274,7 +276,7 @@ public class Tulos implements Comparable<Tulos> {
         if(tagit == null) return -1;
         for(HashMap<String, String> h: tagit)
         {
-            if(h.get("nimi").compareTo(category) == 0) return Integer.parseInt(h.get("prior"));
+            if(h.get("nimi").compareTo(category) == 0 || h.get("ennimi").compareTo(category) == 0) return Integer.parseInt(h.get("prior"));
         }
         return -1;
     }

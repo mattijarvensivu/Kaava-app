@@ -23,7 +23,7 @@ public class triFunMasterTulos extends Tulos {
 
     public triFunMasterTulos(HashMap<String,String> vals) {
         tiedot = vals;
-        layoutSmall = R.layout.trifunm_small;
+        layoutSmall = R.layout.arvo_small;
         layoutLarge = R.layout.trifunm_large;
 
         type = "triFunMaster";
@@ -38,6 +38,7 @@ public class triFunMasterTulos extends Tulos {
     public View getSmallView (LayoutInflater infl, ViewGroup paren)
     {
         View pal = super.getSmallView(infl,paren);
+        ((TextView)pal.findViewById(R.id.txvKuvaus)).setText(R.string.trifunt);
         return pal;
     }
     public View getLargeView (LayoutInflater infl, ViewGroup paren)
@@ -51,6 +52,7 @@ public class triFunMasterTulos extends Tulos {
             //luodaan yksittäinen rivi
             //luodaan asteiden teksti kenttä
             TableRow tmp = new TableRow(paren.getContext());
+            tmp.setPadding(0,0,0,30);
             TextView tmpTV = new TextView(tmp.getContext());
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 //Tulee tarkastella onko tämä järkevä ratkaisu. Onko api 23 liian uusi?
