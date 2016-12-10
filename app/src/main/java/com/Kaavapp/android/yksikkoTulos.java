@@ -67,6 +67,7 @@ private  String nimiarvo, suurearvo;
         for(Tulos t: compoundYksikot)
         {
             View tmp = t.getSmallView(infl,lnlComp);
+            ((ViewGroup)tmp.findViewById(R.id.imgSuosikki).getParent()).removeView(pal.findViewById(R.id.imgSuosikki));
             tmp.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
