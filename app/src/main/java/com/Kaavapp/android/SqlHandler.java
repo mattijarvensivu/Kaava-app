@@ -343,17 +343,7 @@ public class SqlHandler extends SQLiteOpenHelper {
 
         //haetaan taulun kenttien arvot
         ArrayList<String[]> taulunRakenne = getStructure(tableName);
-        String halututKentat = "";
-        for(int i = 0; i < taulunRakenne.size(); i++)
-        {
-            halututKentat += "a." + taulunRakenne.get(i)[0];
 
-            if(i < taulunRakenne.size()-1)
-            {
-                halututKentat += ", ";
-            }
-
-        }
         //asetetaan väli operaattori
         String separator = " UNION ";
         if(useIntersection) {
@@ -815,7 +805,7 @@ String nimiarvo = "";
 
     private ArrayList<Tulos> getLinkitettytYksikot(int yid)
     {
-        String querry = "SELECT _yksikkoId,nimi,yksikko,suure FROM (SELECT linkitettyYksikko FROM yksikko_linkki WHERE isantaYksikko = " +yid+ ") AS l,yksikot as y WHERE y._yksikkoId = l.linkitettyYksikko";
+        String querry = "SELECT _yksikkoId,nimi,yksikko,suure,ennimi, ensuure FROM (SELECT linkitettyYksikko FROM yksikko_linkki WHERE isantaYksikko = " +yid+ ") AS l,yksikot as y WHERE y._yksikkoId = l.linkitettyYksikko";
         ArrayList<Tulos> pal = null;
         SQLiteDatabase db = getReadableDatabase();
         Cursor c = db.rawQuery(querry,null);
@@ -838,21 +828,6 @@ String nimiarvo = "";
     }
 
 
-
-    /*public void addLine (String str, String integ) {
-        //Katsotaan onko identtinen rivi jo olemassa
-        HashMap<String, String> data = getValue("", str, integ);
-        if(data.get("id") != null )
-        {
-            Log.d("minun","IDenttinen rivi oli jo olemassa");
-            return; //Tässä ois ihan hyvä jos kerrottais käyttäjälle että ny kosahti. Jos sais vaikka toastin toimimaan
-        }
-        //rakennetaan querry
-        String querry = "insert into kaavat(name,latex) values('" + str + "','" + integ + "')";
-        SQLiteDatabase db = getWritableDatabase();
-        db.execSQL(querry);
-        db.close();
-    }*/
 }
 
 

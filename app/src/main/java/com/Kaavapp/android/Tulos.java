@@ -240,7 +240,7 @@ public class Tulos implements Comparable<Tulos> {
             boolean valid = true;
             for(String s: reqTags)
             {
-                if(s.compareTo(tagit.get(i).get("nimi")) == 0) valid = false;
+                if(s.compareTo(tagit.get(i).get("nimi")) == 0 || s.compareTo(tagit.get(i).get("ennimi")) == 0) valid = false;
             }
             if(valid && Integer.parseInt(tagit.get(i).get("prior")) > 0) highest = i;
             i++;
@@ -253,7 +253,7 @@ public class Tulos implements Comparable<Tulos> {
                 boolean valid = true;
                 for(String s: reqTags)
                 {
-                    if(s.compareTo(tagit.get(i).get("nimi")) == 0) valid = false;
+                    if(s.compareTo(tagit.get(i).get("nimi")) == 0 || s.compareTo(tagit.get(i).get("ennimi")) == 0) valid = false;
                 }
                 if(valid) highest = i;
             }
