@@ -109,17 +109,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/txvENegLabel"
-                android:textSize="25dp"
+                android:textSize="20dp"
                 android:text="@string/elektronega"/>
 
             <TextView
 
                 android:textColor="#000000"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:id="@+id/txvENegField"
-                android:textSize="25dp"
+                android:textSize="20dp"
                 android:text="E.neg arvo"/>
         </TableRow>
 
@@ -130,17 +130,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/txvOMLabel"
-            android:textSize="25dp"
+            android:textSize="20dp"
             android:text="@string/olomuoto"/>
 
         <TextView
 
             android:textColor="#000000"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:id="@+id/txvOMField"
-            android:textSize="25dp"
+            android:textSize="20dp"
 
             android:text="@string/olomuoto"/>
     </TableRow>
@@ -152,7 +152,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/txvSPLabel"
-            android:textSize="25dp"
+            android:textSize="20dp"
             android:text="@string/sulamis"/>
 
         <TextView
@@ -161,7 +161,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/txvSPField"
-            android:textSize="25dp"
+            android:textSize="20dp"
             android:text="SP"/>
 
         <ImageView
@@ -178,7 +178,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/txvKPLabel"
-            android:textSize="25dp"
+            android:textSize="20dp"
             android:text="@string/kiehumis"/>
 
         <TextView
@@ -187,7 +187,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/txvKPField"
-            android:textSize="25dp"
+            android:textSize="20dp"
             android:text="kp"/>
 
         <ImageView
@@ -205,7 +205,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/txvDenLabel"
-            android:textSize="25dp"
+            android:textSize="20dp"
             android:text="@string/tiheys"/>
         <TextView
 
@@ -213,7 +213,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/txvDenField"
-            android:textSize="25dp"
+            android:textSize="20dp"
             android:text="Dens"/>
 
         <ImageView
@@ -229,7 +229,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/txvOmLLabel"
-            android:textSize="25dp"
+            android:textSize="20dp"
             android:text="@string/ominaislampo"/>
         <TextView
 
@@ -237,7 +237,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/txvOmLField"
-            android:textSize="25dp"
+            android:textSize="20dp"
             android:text="ominais.l"/>
 
         <ImageView
@@ -253,12 +253,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/txvLJLabel"
-            android:textSize="25dp"
+            android:textSize="20dp"
             android:text="@string/lammonjohta"/>
         <TextView
 
             android:textColor="#000000"
-            android:textSize="25dp"
+            android:textSize="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/txvLJField"
