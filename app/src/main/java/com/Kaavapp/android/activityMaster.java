@@ -241,12 +241,14 @@ public static  String language;
         if(lajittelu.size() == 1) return raaka;
         //laitetaan suosikki kärkeen
         HashMap<String,String> tmp = new HashMap<>();
-        if(lajittelu.get("suosikki") != null)
+        String suosik = "suosikki";
+        if(lajittelu.get(suosik) == null) suosik = "favorite"; //purkkaa, mutta ei tarvitse tarkistaa kieltä. Jouduttaisiin muutenkin melki hardcodaamaan nuo eri suosikki tägit tässä.
+        if(lajittelu.get(suosik) != null)
         {
-            tmp.put("nimi","suosikki");
+            tmp.put("nimi",suosik);
             pal.add(new headerTulos(tmp));
-            pal.addAll(lajittelu.get("suosikki"));
-            lajittelu.remove("suosikki");
+            pal.addAll(lajittelu.get(suosik));
+            lajittelu.remove(suosik);
         }
         //lisätään seuraavaksi ne tulokset joilla on vain vaadittu tägi
         for(String s: laajReqTags)
