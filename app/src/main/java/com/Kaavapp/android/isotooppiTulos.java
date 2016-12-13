@@ -35,9 +35,13 @@ public class isotooppiTulos extends Tulos {
         View pal = infl.inflate(layoutSmall, paren, false);
         //asetetaan tiedot paikoilleen
         ((TextView)pal.findViewById(R.id.txvParticles)).setText(tiedot.get("massaluku") + symbol);
-        String pVal = tiedot.get("puoliintumisaika") + " " + tiedot.get("yksikko");
-        if(tiedot.get("puoliintumisaika").compareTo("0") == 0) pVal = "stabiili";
-        ((TextView)pal.findViewById(R.id.txvPuolAika)).setText(pVal);
+        if(tiedot.get("puoliintumisaika").compareTo("0") == 0)
+        {
+            ((TextView)pal.findViewById(R.id.txvPuolAika)).setText(R.string.stabiili);
+
+        }else {
+            ((TextView) pal.findViewById(R.id.txvPuolAika)).setText(tiedot.get("puoliintumisaika") + " " + tiedot.get("yksikko"));
+        }
 
         return pal;
     }
@@ -52,19 +56,24 @@ public class isotooppiTulos extends Tulos {
 
         ((TextView)pal.findViewById(R.id.txvSymbol)).setText(tiedot.get("massaluku") + symbol);
 
-        String pVal = tiedot.get("puoliintumisaika") + " " + tiedot.get("yksikko");
-        if(tiedot.get("puoliintumisaika").compareTo("0") == 0) pVal = "stabiili";
-        ((TextView)pal.findViewById(R.id.txvPuolAika)).setText(pVal);
+        if(tiedot.get("puoliintumisaika").compareTo("0") == 0)
+        {
+            ((TextView)pal.findViewById(R.id.txvPuolAika)).setText(R.string.stabiili);
+
+        }else {
+            ((TextView) pal.findViewById(R.id.txvPuolAika)).setText(tiedot.get("puoliintumisaika") + " " + tiedot.get("yksikko"));
+        }
 
         ((TextView)pal.findViewById(R.id.txvOsuus)).setText(tiedot.get("esiintymisprosentti") + "%");
 
         //hoidetaan hajoamis tavat
-        String[] hajoamis = selvennaHajoaminen(tiedot.get("hajoamistapa").split("#"));
+        int[] hajoamis = selvennaHajoaminen(tiedot.get("hajoamistapa").split("#"));
         LinearLayout hajoamisTavat = (LinearLayout)pal.findViewById(R.id.lnlHajoamis);
 
         for(int i =0; i < hajoamis.length; i++)
         {
             TextView textView = new TextView(paren.getContext());
+
             textView.setText(hajoamis[i]);
             LinearLayout.LayoutParams textViewLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT); //width, height
             textView.setLayoutParams(textViewLayoutParams);
@@ -76,30 +85,38 @@ public class isotooppiTulos extends Tulos {
         return pal;
     }
 
-    private String[] selvennaHajoaminen(String[] hajoamis)
+    private int[] selvennaHajoaminen(String[] hajoamis)
     {
-        String[] pal = new String[hajoamis.length];
+       int[] pal = new int[hajoamis.length];
         for(int i = 0; i < hajoamis.length; i++)
         {
-            pal[i] = hajoamis[i];
             if(hajoamis[i].compareTo("SF") == 0)
             {
-                pal[i] = "Spontaani fissio";
+                pal[i] = R.string.spontaanifissio;
             }else  if(hajoamis[i].compareTo("EC") == 0)
             {
-                pal[i] = "Elektroni sieppaus";
+                pal[i] = R.string.elektronisieppaus;
             }else  if(hajoamis[i].compareTo("p") == 0)
             {
-                pal[i] = "Protoni emissio";
+                pal[i] = R.string.protoniemissio;
             }else  if(hajoamis[i].compareTo("n") == 0)
             {
-                pal[i] = "Neutroni emissio";
+                pal[i] = R.string.neutroniemisio;
             }else  if(hajoamis[i].compareTo("IT") == 0)
             {
-                pal[i] = "Isomeri transitio";
+                pal[i] = R.string.isomeeritransfor;
             }else  if(hajoamis[i].compareTo("0") == 0)
             {
-                pal[i] = "Stabiili";
+                pal[i] = R.string.stabiili;
+            }else  if(hajoamis[i].compareTo("a") == 0)
+            {
+                pal[i] = R.string.alpfa;
+            }else  if(hajoamis[i].compareTo("b+") == 0)
+            {
+                pal[i] = R.string.betaplus;
+            }else  if(hajoamis[i].compareTo("b-") == 0)
+            {
+                pal[i] = R.string.betaminus;
             }
             /*
             String[] tmp = hajoamis[i].split( Character.toString('+') ); //Ei suostu ottamaan "+", joten tehdään sitten hölmöllä tavalla. Ei toimi tälläkään tavalla

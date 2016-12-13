@@ -124,6 +124,15 @@
     <string name="triFunCat">Trogonometristen funktioiden arvo</string>
     <string name="vakioCat">Vakio</string>
     <string name="yksikkoCat">Yksikkö</string>
+    <string name="stabiili">stabiili</string>
+    <string name="elektronisieppaus">elektorni sieppaus</string>
+    <string name="isomeeritransfor">isomeeri muutos</string>
+    <string name="neutroniemisio">neutroni emissio</string>
+    <string name="protoniemissio">protoni emissio</string>
+    <string name="spontaanifissio">spontaani fissio</string>
+    <string name="alpfa">alfa hajoaminen</string>
+    <string name="betaminus">beta miinus hajoaminen</string>
+    <string name="betaplus">beta plus hajoaminen</string>
 
 
 </resources>

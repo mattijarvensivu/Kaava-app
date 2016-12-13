@@ -125,4 +125,13 @@
     <string name="triFunCat">Value of trigonometric functions</string>
     <string name="vakioCat">Constant</string>
     <string name="yksikkoCat">Unit</string>
+    <string name="stabiili">stable</string>
+    <string name="spontaanifissio">spontane fission</string>
+    <string name="elektronisieppaus">electron capture</string>
+    <string name="protoniemissio">proton emision</string>
+    <string name="neutroniemisio">neutron emision</string>
+    <string name="isomeeritransfor">isomer transformation</string>
+    <string name="alpfa">alpha decay</string>
+    <string name="betaminus">beta minus decay</string>
+    <string name="betaplus">beta plus decay</string>
 </resources>
