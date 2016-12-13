@@ -21,6 +21,7 @@ private String nimiarvo;
         tiedot = values;
 
         type = "Vakio";
+        taulu = "Vakio";
         tagiTaulu = "VakioTag";
         linkkiTaulu = "Vakio_tag";
 
