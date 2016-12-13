@@ -133,6 +133,8 @@
     <string name="alpfa">alfa hajoaminen</string>
     <string name="betaminus">beta miinus hajoaminen</string>
     <string name="betaplus">beta plus hajoaminen</string>
+    <string name="suosikit">Suosikit</string>
+
 
 
 </resources>

@@ -14,11 +14,15 @@
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/chemistryicon"
             android:title="@string/chemistry_string" />
-
+        <item
+            android:id="@+id/suosikit"
+            android:icon="@drawable/taysitahti"
+            android:title="@string/suosikit" />
     </group>
 
     <item android:title="@string/aiheet">
         <menu>
+
             <item
                 android:id="@+id/harmooninenliike"
                 android:title="@string/harmooninen_liike" />

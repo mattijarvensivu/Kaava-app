@@ -70,6 +70,8 @@ public class MathActivity extends activityMaster {
         boolean haetaan = true; //suoritetaanko haku "suosikki" tägillä
 
         if (id == R.id.nav_camera) {
+            Intent myIntent = new Intent(this, MainActivity.class);
+            startActivity(myIntent);
             haetaan = false;
             finish();
 
@@ -84,7 +86,13 @@ public class MathActivity extends activityMaster {
             startActivity(myIntent);
             haetaan = false;
             finish();
-        } else if (id == R.id.algebra) {
+        }
+        else if (id == R.id.suosikit) {
+
+            listOfReqTags = new String[]{"suosikki"};
+            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.suosikit));
+
+        }else if (id == R.id.algebra) {
             ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.algebra));
             listOfReqTags = new String[]{"algebra"};
 

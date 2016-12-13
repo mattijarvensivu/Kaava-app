@@ -74,7 +74,8 @@ public class PhysicsActivity extends activityMaster {
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-
+            Intent myIntent = new Intent(this, MainActivity.class);
+            startActivity(myIntent);
             haetaan = false;
             finish();
         } else if (id == R.id.nav_gallery) {
@@ -87,7 +88,15 @@ public class PhysicsActivity extends activityMaster {
             startActivity(myIntent);
             haetaan = false;
             finish();
-        } else if (id == R.id.termodynamiikka) {
+        }
+
+        else if (id == R.id.suosikit) {
+
+            listOfReqTags = new String[]{"suosikki"};
+            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.suosikit));
+
+        }
+        else if (id == R.id.termodynamiikka) {
             ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.termodynamiikka));
             listOfTables = new String[]{"Kaava","Vakio"};
             listOfTagTables = new String[]{"Kaava","Vakio"};

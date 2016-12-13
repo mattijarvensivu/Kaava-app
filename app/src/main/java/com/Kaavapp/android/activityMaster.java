@@ -330,20 +330,7 @@ public static  String language;
                     //kyseessä on tägi haku
                     for(String s: splitattuHP) {
                         HashMap<String, String> tmp = new HashMap<>();
-                        /* purkkaa
-                        for (String k : kentatNimet) {
-                            while(s.charAt(0) == ' ')
-                            {
-                                s = s.substring(1,s.length());
-                            }
 
-                            while(s.charAt(s.length()-1) == ' ')
-                            {
-                                s = s.substring(0,s.length()-1);
-                            }
-
-                            tmp.put(k, s);
-                        }*/
                         while(s.charAt(0) == ' ')
                         {
                             s = s.substring(1,s.length());
@@ -362,7 +349,7 @@ public static  String language;
 
                 //luodaan mustHave tägi rajoite lista
                 ArrayList<HashMap<String,String>> mstHvTags = new ArrayList<>();
-                if(t.compareTo("Kaava") == 0 || t.compareTo("Vakio") == 0)
+                if(t.compareTo("Kaava") == 0 || t.compareTo("Vakio") == 0 && actKategoria != null)
                 {
                     HashMap<String, String> tmp = new HashMap<>();
                     tmp.put("nimi",actKategoria);

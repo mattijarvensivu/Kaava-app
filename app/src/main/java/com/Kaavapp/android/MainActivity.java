@@ -16,6 +16,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -24,70 +27,22 @@ import com.google.android.gms.ads.MobileAds;
 
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends activityMaster {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        layout = R.layout.activity_main;
+        //actKategoria = null;
+        classParam = MainActivity.class;
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        MobileAds.initialize(getApplicationContext(), "ca-app-pub-4707921089851609~9967794573");
+        listOfTagTables = new String[]{"Alkuaineet", "Funktionaalinenryhma", "Kaava", "Vakio", "Hapot", "aine", "yksikot"};
+        listOfTables = new String[]{"Alkuaineet", "Funktionaalinenryhma", "Hapot", "Isotoopit", "Kaava", "Muuttuja", "Vakio", "ionit", "aine", "yksikot"};
+        listOfReqTags = new String[]{};
 
-
-        //ads
-
-
-        AdView mAdView = (AdView) findViewById(R.id.adViewMain);
-        AdRequest adRequest = new AdRequest.Builder()
-                //Kaikki emulaattorit testin vuoksi
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                //Mun oma laiteid testi adien vuoksi (Otetaan pois kun oikeet adit)
-                .addTestDevice("358267051453788")
-                .build();
-        mAdView.loadAd(adRequest);
-
-
-
-        setSupportActionBar(toolbar);
-
-      /*  FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
-            @Override
-            //muutetaan standardi metodia niin että se sulkee näppäimistön kun sivupalkki avataan
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(drawerView.getWindowToken(), 0);
-
-            }
-        };
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
     }
 
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -96,82 +51,56 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-      if(id==R.id.english_language){
-            Toast.makeText(this, "Your Language is now English", Toast.LENGTH_LONG).show();
-
-            setLocale("en");
-        }
-        else if(id==R.id.finnish_language){
-            Toast.makeText(this, "Kielesi on nyt suomi", Toast.LENGTH_LONG).show();
-
-            setLocale("fi");
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+
+        boolean haetaan = true;
+        listOfTagTables = new String[]{"Alkuaineet", "Funktionaalinenryhma", "Kaava", "Vakio", "Hapot", "aine"};
+        listOfTables = new String[]{"Alkuaineet", "Funktionaalinenryhma", "Hapot", "Kaava", "Vakio", "aine", "yksikot"};
+        listOfReqTags = new String[]{};
+        ((EditText) findViewById(R.id.edtHakuKentta)).setText("%");
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
             // Handle the camera action
             Intent myIntent = new Intent(this, MathActivity.class);
             startActivity(myIntent);
+            haetaan = false;
+            finish();
         } else if (id == R.id.nav_gallery) {
 
             Intent myIntent = new Intent(this, PhysicsActivity.class);
+            haetaan = false;
             startActivity(myIntent);
+            finish();
 
         } else if (id == R.id.nav_slideshow) {
             Intent myIntent = new Intent(this, ChemistryActivity.class);
+            haetaan = false;
             startActivity(myIntent);
+            finish();
+        } else if (id == R.id.suosikit) {
 
-        //} else if (id == R.id.nav_manage) {
-       //     Toast.makeText(this, "Voidaan pistää meneen jonnekkin", Toast.LENGTH_LONG).show();
+            listOfReqTags = new String[]{"suosikki"};
+            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.suosikit));
 
-       // } else if (id == R.id.nav_share) {
-        //    Toast.makeText(this, "Voidaan pistää meneen jonnekkin 2", Toast.LENGTH_LONG).show();
-       // } else if (id == R.id.nav_send) {
-
-            SqlHandler handler = new SqlHandler(getApplicationContext().getApplicationContext(), "", null, 1, true);
-            //http://blog.reigndesign.com/blog/using-your-own-sqlite-database-in-android-applications/ alkaa
-
-
-
-            //http://blog.reigndesign.com/blog/using-your-own-sqlite-database-in-android-applications/ loppuu
-           // HashMap<String, String> hash = handler.getValue("");
-
-
-
-            //Toast.makeText(this, hash.get("id") , Toast.LENGTH_LONG).show();
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+
+
+        if (haetaan) {
+            ((LinearLayout) findViewById(R.id.lnlContainer)).removeAllViews();
+            Hae(null, false);
+            ((EditText) findViewById(R.id.edtHakuKentta)).setText("");
+        }
+        // SqlHandler handler = new SqlHandler(getApplicationContext().getApplicationContext(), "", null, 1, true);
+
         return true;
     }
 
-    public void setLocale(String lang) {
-        Locale myLocale = new Locale(lang);
-        Resources res = getResources();
-        DisplayMetrics dm = res.getDisplayMetrics();
-        Configuration conf = res.getConfiguration();
-        conf.locale = myLocale;
-        res.updateConfiguration(conf, dm);
-        Intent refresh = new Intent(this, MainActivity.class);
-        startActivity(refresh);
-        finish();
-    }
-
 }
+

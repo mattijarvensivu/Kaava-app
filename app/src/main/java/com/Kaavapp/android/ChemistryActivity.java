@@ -61,6 +61,8 @@ public class ChemistryActivity extends activityMaster {
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
+            Intent myIntent = new Intent(this, MainActivity.class);
+            startActivity(myIntent);
             haetaan = false;
             finish();
 
@@ -75,11 +77,14 @@ public class ChemistryActivity extends activityMaster {
             startActivity(myIntent);
             haetaan = false;
             finish();
-        } else if (id == R.id.nav_camera) {
+        } else if (id == R.id.suosikit) {
 
+            listOfTables = new String[]{"Alkuaineet","Funktionaalinenryhma","Hapot","Kaava","Vakio","aine"};
+            listOfReqTags = new String[]{"suosikki"};
+            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.suosikit));
 
-
-        } else if (id == R.id.Alkuaineet) {
+        }
+        else if (id == R.id.Alkuaineet) {
             listOfTagTables = new String[]{"Alkuaineet"};
             listOfTables = new String[]{"Alkuaineet"};
             ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.chemistry_elements));

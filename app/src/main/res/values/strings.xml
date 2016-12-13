@@ -134,4 +134,6 @@
     <string name="alpfa">alpha decay</string>
     <string name="betaminus">beta minus decay</string>
     <string name="betaplus">beta plus decay</string>
+    <string name="suosikit">Favorites</string>
+
 </resources>
