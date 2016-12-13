@@ -349,7 +349,7 @@ public static  String language;
 
                 //luodaan mustHave tägi rajoite lista
                 ArrayList<HashMap<String,String>> mstHvTags = new ArrayList<>();
-                if(t.compareTo("Kaava") == 0 || t.compareTo("Vakio") == 0 && actKategoria != null)
+                if((t.compareTo("Kaava") == 0 || t.compareTo("Vakio") == 0) && actKategoria != null)
                 {
                     HashMap<String, String> tmp = new HashMap<>();
                     tmp.put("nimi",actKategoria);

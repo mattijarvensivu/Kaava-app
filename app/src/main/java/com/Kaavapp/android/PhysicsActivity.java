@@ -50,7 +50,10 @@ public class PhysicsActivity extends activityMaster {
 
         listOfTagTables = new String[]{"yksikot","Kaava","aine","Vakio"};
         listOfTables = new String[]{"Kaava","Vakio","aine","yksikot"};
-        listOfReqTags = new String[]{};
+        listOfReqTags = new String[]{"suosikki"};
+        ((EditText) findViewById(R.id.edtHakuKentta)).setText("%");
+        Hae(null, false);
+        ((EditText) findViewById(R.id.edtHakuKentta)).setText("");
     }
 
     @Override

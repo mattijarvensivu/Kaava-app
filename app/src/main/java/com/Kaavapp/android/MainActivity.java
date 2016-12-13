@@ -37,10 +37,12 @@ public class MainActivity extends activityMaster {
         //actKategoria = null;
         classParam = MainActivity.class;
         super.onCreate(savedInstanceState);
-        listOfTagTables = new String[]{"Alkuaineet", "Funktionaalinenryhma", "Kaava", "Vakio", "Hapot", "aine", "yksikot"};
-        listOfTables = new String[]{"Alkuaineet", "Funktionaalinenryhma", "Hapot", "Isotoopit", "Kaava", "Muuttuja", "Vakio", "ionit", "aine", "yksikot"};
-        listOfReqTags = new String[]{};
-
+        listOfTagTables = new String[]{"Alkuaineet", "Funktionaalinenryhma", "Kaava", "Vakio", "Hapot", "aine"};
+        listOfTables = new String[]{"Alkuaineet", "Funktionaalinenryhma", "Hapot", "Kaava", "Vakio", "aine", "yksikot"};
+        listOfReqTags = new String[]{"suosikki"};
+        ((EditText) findViewById(R.id.edtHakuKentta)).setText("%");
+        Hae(null, false);
+        ((EditText) findViewById(R.id.edtHakuKentta)).setText("");
     }
 
 

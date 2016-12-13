@@ -35,8 +35,11 @@ public class ChemistryActivity extends activityMaster {
 
 
         listOfTagTables = new String[]{"Alkuaineet","Funktionaalinenryhma","Kaava","Vakio","Hapot","aine"};
-        listOfTables = new String[]{"Alkuaineet","Funktionaalinenryhma","Hapot","Isotoopit","Kaava","Muuttuja","Vakio","ionit","aine"};
-        listOfReqTags = new String[]{};
+        listOfTables = new String[]{"Alkuaineet","Funktionaalinenryhma","Hapot","Kaava","Vakio","aine"};
+        listOfReqTags = new String[]{"suosikki"};
+        ((EditText) findViewById(R.id.edtHakuKentta)).setText("%");
+        Hae(null, false);
+        ((EditText) findViewById(R.id.edtHakuKentta)).setText("");
 
 
     }
@@ -57,6 +60,7 @@ public class ChemistryActivity extends activityMaster {
         listOfTables = new String[]{"Alkuaineet","Funktionaalinenryhma","Hapot","Isotoopit","Kaava","Muuttuja","Vakio","ionit","aine"};
         listOfReqTags = new String[]{};
         ((EditText) findViewById(R.id.edtHakuKentta)).setText("%");
+
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 

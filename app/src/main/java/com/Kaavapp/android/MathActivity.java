@@ -48,7 +48,10 @@ public class MathActivity extends activityMaster {
 
         listOfTagTables = new String[]{"Kaava","Vakio"};
         listOfTables = new String[]{"Kaava","Vakio"};
-        listOfReqTags = new String[]{};
+        listOfReqTags = new String[]{"suosikki"};
+        ((EditText) findViewById(R.id.edtHakuKentta)).setText("%");
+        Hae(null, false);
+        ((EditText) findViewById(R.id.edtHakuKentta)).setText("");
     }
 
     @Override
