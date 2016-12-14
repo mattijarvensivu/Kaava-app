@@ -219,14 +219,7 @@ public static  String language;
             //Jos haku tyhjä haetaan osahaulla TULEE MUUTTAA YLEISEKSI TAI OTTAA POIS!
             if(tulos.size()==0 && hakuparametri.length()!=0){
                 tulos = suoritaHaku("%"+hakuparametri+"%",listOfTables,false);
-                for(int i = 0; i < tulos.size(); i++)
-                {
-                    if(tulos.get(i).getType().compareTo("Alkuaineet") == 0)
-                    {
-                        ((alkuaineTulos)tulos.get(i)).boldaa(hakuparametri);
-                    }
-                }
-            }
+                            }
 
             placeToCenter(listView); //laitetaan listViewi keskelle
 
