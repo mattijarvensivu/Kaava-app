@@ -56,7 +56,15 @@ public static  String language;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        fullLayoutAlustus();
 
+
+        hand = new SqlHandler(getApplicationContext().getApplicationContext(), "", null, 1, true);
+    }
+
+    //tällä alustetaan näkymä ja mainos.
+    private void fullLayoutAlustus()
+    {
         this.language = getResources().getConfiguration().locale.getLanguage();
         Log.d("Lokaali", language);
 
@@ -113,15 +121,33 @@ public static  String language;
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Context con = getApplicationContext();
                 ViewGroup prnt = (ViewGroup) findViewById(R.id.lnlContainer); //haetaan isäntä, eli komponentti mihin tuo tiedot sisältävä komponentti tulee
-               if(((Tulos) parent.getItemAtPosition(position)).checkifheader() != true){
+                if(((Tulos) parent.getItemAtPosition(position)).checkifheader() != true){
 
-                   placeToCenter(((Tulos) parent.getItemAtPosition(position)).getLargeView((LayoutInflater) con.getSystemService(Context.LAYOUT_INFLATER_SERVICE), prnt));
-                   inLargeView = true;
+                    placeToCenter(((Tulos) parent.getItemAtPosition(position)).getLargeView((LayoutInflater) con.getSystemService(Context.LAYOUT_INFLATER_SERVICE), prnt));
+                    inLargeView = true;
                 }
 
             }
         });
-        hand = new SqlHandler(getApplicationContext().getApplicationContext(), "", null, 1, true);
+
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        LinearLayout contai = (LinearLayout) findViewById(R.id.lnlContainer);
+        View tmp = null;
+        if(contai.getChildCount() > 0) {
+            tmp = contai.getChildAt(0); //OLETUS: containerissa on kerrallaan vain 1 viewi.
+            contai.removeAllViews();
+        }
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            fullLayoutAlustus();
+        } else {
+            fullLayoutAlustus();
+        }
+        if(tmp != null) placeToCenter(tmp);
     }
 
     @Override
