@@ -99,7 +99,7 @@ public class MainActivity extends activityMaster {
             Hae(null, false);
             ((EditText) findViewById(R.id.edtHakuKentta)).setText("");
         }
-        // SqlHandler handler = new SqlHandler(getApplicationContext().getApplicationContext(), "", null, 1, true);
+
 
         return true;
     }

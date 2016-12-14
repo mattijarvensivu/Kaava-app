@@ -18,6 +18,7 @@ import java.util.Locale;
  */
 public class Tulos implements Comparable<Tulos> {
 
+    protected  boolean isHeader = false;
     protected int layoutSmall;
     protected int layoutLarge;
     protected HashMap<String,String> tiedot;
@@ -194,7 +195,9 @@ public class Tulos implements Comparable<Tulos> {
 
     public String getTaulu(){ return taulu;}
 
-
+public boolean checkifheader(){
+    return isHeader;
+}
 
     public boolean checkLanguage(){
 
@@ -209,7 +212,6 @@ public class Tulos implements Comparable<Tulos> {
 
         return this.isEnglish;
     }
-
 
 
     @Override

@@ -113,8 +113,12 @@ public static  String language;
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Context con = getApplicationContext();
                 ViewGroup prnt = (ViewGroup) findViewById(R.id.lnlContainer); //haetaan isäntä, eli komponentti mihin tuo tiedot sisältävä komponentti tulee
-                placeToCenter(((Tulos) parent.getItemAtPosition(position)).getLargeView((LayoutInflater) con.getSystemService(Context.LAYOUT_INFLATER_SERVICE), prnt));
-                inLargeView = true;
+               if(((Tulos) parent.getItemAtPosition(position)).checkifheader() != true){
+
+                   placeToCenter(((Tulos) parent.getItemAtPosition(position)).getLargeView((LayoutInflater) con.getSystemService(Context.LAYOUT_INFLATER_SERVICE), prnt));
+                   inLargeView = true;
+                }
+
             }
         });
         hand = new SqlHandler(getApplicationContext().getApplicationContext(), "", null, 1, true);

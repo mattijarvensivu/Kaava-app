@@ -18,9 +18,12 @@ public class headerTulos extends Tulos {
 
     public headerTulos(HashMap<String,String> vals){
 
+        isHeader = true;
         tiedot = vals;
         layoutSmall = R.layout.header;
     }
+
+
 
     public View getSmallView (LayoutInflater infl, ViewGroup paren)
     {
