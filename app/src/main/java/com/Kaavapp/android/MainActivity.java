@@ -43,6 +43,7 @@ public class MainActivity extends activityMaster {
         ((EditText) findViewById(R.id.edtHakuKentta)).setText("%");
         Hae(null, false);
         ((EditText) findViewById(R.id.edtHakuKentta)).setText("");
+        listOfReqTags = new String[]{};
     }
 
 
