@@ -1,5 +1,6 @@
 package com.Kaavapp.android;
 
+import android.content.res.Resources;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.text.Html;
@@ -83,6 +84,21 @@ private String nimiarvo;
         }
         View pal = infl.inflate(layoutLarge, paren, false);
 
+        Resources c = paren.getResources();
+        ((TextView)pal.findViewById(R.id.txvENegLabel)).setText(c.getString(R.string.elektronega));
+        ((TextView)pal.findViewById(R.id.txvOMLabel)).setText(c.getString(R.string.olomuoto));
+        ((TextView)pal.findViewById(R.id.txvSPLabel)).setText(c.getString(R.string.sulamis));
+        ((TextView)pal.findViewById(R.id.txvKPLabel)).setText(c.getString(R.string.kiehumis));
+        ((TextView)pal.findViewById(R.id.txvDenLabel)).setText(c.getString(R.string.tiheys));
+        ((TextView)pal.findViewById(R.id.txvOmLLabel)).setText(c.getString(R.string.ominaislampo));
+        ((TextView)pal.findViewById(R.id.txvLJLabel)).setText(c.getString(R.string.lammonjohta));
+        ((TextView)pal.findViewById(R.id.txvHLLabel)).setText(c.getString(R.string.hapetus_luvut));
+        ((TextView)pal.findViewById(R.id.txvRakenneLabel)).setText(c.getString(R.string.elektronirakenne));
+        ((TextView)pal.findViewById(R.id.txvASLabel)).setText(c.getString(R.string.atomisade));
+        ((TextView)pal.findViewById(R.id.txvTASLabel)).setText(c.getString(R.string.kokeellinen));
+        ((TextView)pal.findViewById(R.id.txvIOField)).setText(c.getString(R.string.ionisaatioene));
+        ((TextView)pal.findViewById(R.id.txvIsoLabel)).setText(c.getString(R.string.yleisimmat_isotoopit));
+
         Log.d("URL!!!!!!!!!!!!!", url);
         final WebView myWebView = (WebView) pal.findViewById(R.id.webview);
         myWebView.loadUrl(url);
@@ -147,68 +163,68 @@ private String nimiarvo;
         aSadeT.setText(tiedot.get("atomiSadeEmpi") + "pm");
         if (tiedot.get("atomiSadeEmpi").compareTo("no data") == 0) {
             aSadeT.setText(tiedot.get("atomiSadeTheo") + "pm");
-            ((TextView)pal.findViewById(R.id.txvTASLabel)).setText(R.string.teoreettinen);
+            ((TextView)pal.findViewById(R.id.txvTASLabel)).setText(c.getString(R.string.teoreettinen));
         }
         if(tiedot.get("atomiSadeTheo").compareTo("no data") == 0)
         {
             aSadeT.setText("");
-            ((TextView)pal.findViewById(R.id.txvTASLabel)).setText(R.string.eiTietoa);
+            ((TextView)pal.findViewById(R.id.txvTASLabel)).setText(c.getString(R.string.eiTietoa));
         }
 
         //olomuoto ja luokka on koodattu tietokannassa. Tässä numero muutetaan sanaksi
         switch (Integer.parseInt(tiedot.get("olomuoto"))) {
             case 1:
-                oMuoto.setText(R.string.kiintea);
+                oMuoto.setText(c.getString(R.string.kiintea));
                 break;
 
             case 2:
-                oMuoto.setText(R.string.neste);
+                oMuoto.setText(c.getString(R.string.neste));
                 break;
 
             case 3:
-                oMuoto.setText(R.string.kaasu);
+                oMuoto.setText(c.getString(R.string.kaasu));
                 break;
         }
 
         switch (Integer.parseInt(tiedot.get("luokka"))) {
             case 0:
-                luokka.setText(R.string.alkaaliMetalli);
+                luokka.setText(c.getString(R.string.alkaaliMetalli));
                 break;
 
             case 1:
-                luokka.setText(R.string.maaAlkaaliMetalli);
+                luokka.setText(c.getString(R.string.maaAlkaaliMetalli));
                 break;
 
             case 2:
-                luokka.setText(R.string.siirtymaMetalli);
+                luokka.setText(c.getString(R.string.siirtymaMetalli));
                 break;
 
             case 3:
-                luokka.setText(R.string.muuMetalli);
+                luokka.setText(c.getString(R.string.muuMetalli));
                 break;
 
             case 4:
-                luokka.setText(R.string.puoliMetalli);
+                luokka.setText(c.getString(R.string.puoliMetalli));
                 break;
 
             case 5:
-                luokka.setText(R.string.lantanoidi);
+                luokka.setText(c.getString(R.string.lantanoidi));
                 break;
 
             case 6:
-                luokka.setText(R.string.aktanoidi);
+                luokka.setText(c.getString(R.string.aktanoidi));
                 break;
 
             case 7:
-                luokka.setText(R.string.epametalli);
+                luokka.setText(c.getString(R.string.epametalli));
                 break;
 
             case 8:
-                luokka.setText(R.string.halogeeni);
+                luokka.setText(c.getString(R.string.halogeeni));
                 break;
 
             case 9:
-                luokka.setText(R.string.jalokaasu);
+                luokka.setText(c.getString(R.string.jalokaasu));
                 break;
         }
 

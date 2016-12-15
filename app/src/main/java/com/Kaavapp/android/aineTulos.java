@@ -1,5 +1,7 @@
 package com.Kaavapp.android;
 
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,6 +46,9 @@ public class aineTulos extends Tulos {
        // ((TextView)pal.findViewById(R.id.txvName)).setText(tiedot.get("name"));
         KaavaFactory kf = new KaavaFactory(pal.getContext(),pal.getResources(),(int)Math.ceil(((TextView)pal.findViewById(R.id.txvNimi)).getTextSize()/ pal.getResources().getDisplayMetrics().density));
         BitmapDrawable celsius = kf.getBmD("C^{\\circ}");
+        Resources c = paren.getResources();
+        ((TextView)pal.findViewById(R.id.txvSpLabel)).setText(c.getString(R.string.sp));
+        ((TextView)pal.findViewById(R.id.txvBpLabel)).setText(c.getString(R.string.kp));
 
         if(!dataHaettu) GAD.findData(this);
 
@@ -72,6 +77,15 @@ public class aineTulos extends Tulos {
         //määritellään desimaali formaatit pyöristyksiä varten
         DecimalFormat df2 = new DecimalFormat("#.##");
         View pal = infl.inflate(layoutLarge, paren, false);
+
+        Resources c = paren.getResources();
+        ((TextView)pal.findViewById(R.id.txvMPlabel)).setText(c.getString(R.string.sulamis));
+        ((TextView)pal.findViewById(R.id.txvBpLabel)).setText(c.getString(R.string.kiehumis));
+        ((TextView)pal.findViewById(R.id.txvDenLabel)).setText(c.getString(R.string.tiheys));
+        ((TextView)pal.findViewById(R.id.txvSHClabel)).setText(c.getString(R.string.ominaislampo));
+        ((TextView)pal.findViewById(R.id.txvLlajLabel)).setText(c.getString(R.string.lampolaajeneminen));
+        ((TextView)pal.findViewById(R.id.txvResiLabel)).setText(c.getString(R.string.resistanssi));
+
         //laitetaan tiedot paikoilleen
         ((TextView)pal.findViewById(R.id.txvNimi)).setText(tiedot.get("nimi"));
         ((TextView)pal.findViewById(R.id.txvName)).setText(tiedot.get("name"));

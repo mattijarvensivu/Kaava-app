@@ -39,7 +39,7 @@ public class redoxTulos extends Tulos {
     public View getSmallView (LayoutInflater infl, ViewGroup paren)
     {
         View pal = super.getSmallView(infl,paren);
-        ((TextView)pal.findViewById(R.id.txvKuvaus)).setText(R.string.redox);
+        ((TextView)pal.findViewById(R.id.txvKuvaus)).setText(paren.getResources().getString(R.string.redox));
         return pal;
     }
     public View getLargeView (LayoutInflater infl, ViewGroup paren)

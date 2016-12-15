@@ -377,6 +377,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:textSize="25dp"
+                android:id="@+id/txvIsoLabel"
                 android:text="@string/yleisimmat_isotoopit"/>
 
             <LinearLayout

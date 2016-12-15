@@ -1,5 +1,6 @@
 package com.Kaavapp.android;
 
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,11 +55,16 @@ public class isotooppiTulos extends Tulos {
     public View getLargeView (LayoutInflater infl, ViewGroup paren) {
         View pal = infl.inflate(layoutLarge, paren, false);
 
+        Resources c = paren.getResources();
+        ((TextView)pal.findViewById(R.id.txvPuolLabel)).setText(c.getString(R.string.puoliintumisaika));
+        ((TextView)pal.findViewById(R.id.txvNatOcLabel)).setText(c.getString(R.string.suhteellinenosuus));
+        ((TextView)pal.findViewById(R.id.txvDecPathsLabel)).setText(c.getString(R.string.hajoamistavat));
+
         ((TextView)pal.findViewById(R.id.txvSymbol)).setText(tiedot.get("massaluku") + symbol);
 
         if(tiedot.get("puoliintumisaika").compareTo("0") == 0)
         {
-            ((TextView)pal.findViewById(R.id.txvPuolAika)).setText(R.string.stabiili);
+            ((TextView)pal.findViewById(R.id.txvPuolAika)).setText(c.getString(R.string.stabiili));
 
         }else {
             ((TextView) pal.findViewById(R.id.txvPuolAika)).setText(tiedot.get("puoliintumisaika") + " " + tiedot.get("yksikko"));
@@ -67,7 +73,7 @@ public class isotooppiTulos extends Tulos {
         ((TextView)pal.findViewById(R.id.txvOsuus)).setText(tiedot.get("esiintymisprosentti") + "%");
 
         //hoidetaan hajoamis tavat
-        int[] hajoamis = selvennaHajoaminen(tiedot.get("hajoamistapa").split("#"));
+        String[] hajoamis = selvennaHajoaminen(tiedot.get("hajoamistapa").split("#"), paren);
         LinearLayout hajoamisTavat = (LinearLayout)pal.findViewById(R.id.lnlHajoamis);
 
         for(int i =0; i < hajoamis.length; i++)
@@ -85,38 +91,39 @@ public class isotooppiTulos extends Tulos {
         return pal;
     }
 
-    private int[] selvennaHajoaminen(String[] hajoamis)
+    private String[] selvennaHajoaminen(String[] hajoamis, ViewGroup paren)
     {
-       int[] pal = new int[hajoamis.length];
+       String[] pal = new String[hajoamis.length];
+        Resources c = paren.getResources();
         for(int i = 0; i < hajoamis.length; i++)
         {
             if(hajoamis[i].compareTo("SF") == 0)
             {
-                pal[i] = R.string.spontaanifissio;
+                pal[i] = c.getString(R.string.spontaanifissio);
             }else  if(hajoamis[i].compareTo("EC") == 0)
             {
-                pal[i] = R.string.elektronisieppaus;
+                pal[i] = c.getString(R.string.elektronisieppaus);
             }else  if(hajoamis[i].compareTo("p") == 0)
             {
-                pal[i] = R.string.protoniemissio;
+                pal[i] = c.getString(R.string.protoniemissio);
             }else  if(hajoamis[i].compareTo("n") == 0)
             {
-                pal[i] = R.string.neutroniemisio;
+                pal[i] = c.getString(R.string.neutroniemisio);
             }else  if(hajoamis[i].compareTo("IT") == 0)
             {
-                pal[i] = R.string.isomeeritransfor;
+                pal[i] = c.getString(R.string.isomeeritransfor);
             }else  if(hajoamis[i].compareTo("0") == 0)
             {
-                pal[i] = R.string.stabiili;
+                pal[i] = c.getString(R.string.stabiili);
             }else  if(hajoamis[i].compareTo("a") == 0)
             {
-                pal[i] = R.string.alpfa;
+                pal[i] = c.getString(R.string.alpfa);
             }else  if(hajoamis[i].compareTo("b+") == 0)
             {
-                pal[i] = R.string.betaplus;
+                pal[i] = c.getString(R.string.betaplus);
             }else  if(hajoamis[i].compareTo("b-") == 0)
             {
-                pal[i] = R.string.betaminus;
+                pal[i] = c.getString(R.string.betaminus);
             }
             /*
             String[] tmp = hajoamis[i].split( Character.toString('+') ); //Ei suostu ottamaan "+", joten tehdään sitten hölmöllä tavalla. Ei toimi tälläkään tavalla

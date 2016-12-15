@@ -1,5 +1,6 @@
 package com.Kaavapp.android;
 
+import android.content.res.Resources;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.view.LayoutInflater;
@@ -41,6 +42,10 @@ public class happoTulos extends Tulos {
         DecimalFormat df2 = new DecimalFormat("#.##");
 
         View pal = super.getSmallView(infl,paren);
+
+        Resources c = paren.getResources();
+        ((TextView)pal.findViewById(R.id.txvHappoVakioLabel)).setText(c.getString(R.string.happovakiot));
+        ((TextView)pal.findViewById(R.id.txvPhConsLabel)).setText(c.getString(R.string.ph1mliuos));
         //asetetaan tiedot paikoilleen
         ((TextView)pal.findViewById(R.id.txvNimi)).setText(tiedot.get("name"));
         ((TextView)pal.findViewById(R.id.txvPKa)).setText(tiedot.get("happovakio1"));
@@ -53,7 +58,7 @@ public class happoTulos extends Tulos {
         if(tiedot.get("isHappo").compareTo("1") != 0)
         {
             //kyseessä on emäs
-            ((TextView)pal.findViewById(R.id.txvHappoVakioLabel)).setText(R.string.emäsvakiot);
+            ((TextView)pal.findViewById(R.id.txvHappoVakioLabel)).setText(c.getString(R.string.emäsvakiot));
         }
 
         return pal;
@@ -62,6 +67,14 @@ public class happoTulos extends Tulos {
     public View getLargeView (LayoutInflater infl, ViewGroup paren)
     {
         View pal = infl.inflate(layoutLarge, paren, false);
+
+        Resources c = paren.getResources();
+        ((TextView)pal.findViewById(R.id.txvMolarLabes)).setText(c.getString(R.string.moolimassa));
+        ((TextView)pal.findViewById(R.id.txvDensLabel)).setText(c.getString(R.string.tiheys));
+        ((TextView)pal.findViewById(R.id.txvMpLabel)).setText(c.getString(R.string.sulamis));
+        ((TextView)pal.findViewById(R.id.txvBpLabel)).setText(c.getString(R.string.kiehumis));
+        ((TextView)pal.findViewById(R.id.txvConsLabel)).setText(c.getString(R.string.konsentraatio));
+        ((TextView)pal.findViewById(R.id.txvPhConsLabel)).setText(c.getString(R.string.ph_konsentraatio));
 
         SeekBar conBar = (SeekBar) pal.findViewById(R.id.sbCons);
         final TextView phView = (TextView) pal.findViewById(R.id.txvPh);

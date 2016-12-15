@@ -29,6 +29,7 @@
             android:textColor="#000000"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_marginRight="3dp"
+            android:id="@+id/txvNamingLabel"
             android:text="@string/naming"/>
 
         <TextView
@@ -45,6 +46,7 @@
         android:layout_height="wrap_content"
         android:textColor="#000000"
         android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/txvIrLabel"
         android:text="@string/IR_absor"
         />
 

@@ -1,5 +1,6 @@
 package com.Kaavapp.android;
 
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Build;
 import android.view.LayoutInflater;
@@ -81,19 +82,20 @@ private String nimiarvo;
 
         }
 
-        int teksti = R.string.virhearvossa;
+        Resources c = paren.getResources();
+        String teksti = c.getString(R.string.virhearvossa);
         switch (arvoId) {
             case 0:
-                teksti = R.string.refraction;
+                teksti = c.getString(R.string.refraction);
                 break;
             case 1:
-                teksti = R.string.permitivity;
+                teksti = c.getString(R.string.permitivity);
                 break;
             case 2:
-                teksti = R.string.permeability;
+                teksti = c.getString(R.string.permeability);
                 break;
             case 3:
-                teksti = R.string.aanennopeus;
+                teksti = c.getString(R.string.aanennopeus);
                 break;
         }
         ((TextView)pal.findViewById(R.id.txvKuvaus)).setText(teksti);
@@ -103,6 +105,11 @@ private String nimiarvo;
     {
         if(!dataHaettu) GAD.findData(this);
         View pal = infl.inflate(layoutLarge, paren, false);
+
+        Resources c = paren.getResources();
+        ((TextView)pal.findViewById(R.id.txvMateriaali)).setText(c.getString(R.string.materiaali));
+        ((TextView)pal.findViewById(R.id.txvKerroin)).setText(c.getString(R.string.kerroin));
+
         ((TextView)pal.findViewById(R.id.txvMateriaali)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -131,29 +138,29 @@ private String nimiarvo;
         }
     });
 
-        int teksti = R.string.virhearvossa;
-        int headerTeksti = -1;
+        String teksti = c.getString(R.string.virhearvossa);
+        String headerTeksti = "-1";
         switch (arvoId) {
             case 0:
-                teksti = R.string.kerroin;
-                headerTeksti = R.string.kerroinTeksti;
+                teksti = c.getString(R.string.kerroin);
+                headerTeksti = c.getString(R.string.kerroinTeksti);
                 break;
             case 1:
-                teksti = R.string.permitiivisyys;
-                headerTeksti = R.string.huoneenlammossa;
+                teksti = c.getString(R.string.permitiivisyys);
+                headerTeksti = c.getString(R.string.huoneenlammossa);
                 break;
             case 2:
-                teksti = R.string.permeabilityheader;
-                headerTeksti = R.string.huoneenlammossa;
+                teksti = c.getString(R.string.permeabilityheader);
+                headerTeksti = c.getString(R.string.huoneenlammossa);
                 break;
             case 3:
-                teksti = R.string.aanennopeusheader;
-                headerTeksti = R.string.huoneenlammossa;
+                teksti = c.getString(R.string.aanennopeusheader);
+                headerTeksti = c.getString(R.string.huoneenlammossa);
                 break;
         }
         ((TextView)pal.findViewById(R.id.txvKerroin)).setText(teksti);
 
-        if(headerTeksti != -1)
+        if(headerTeksti.compareTo("-1")!= 0)
         ((TextView)pal.findViewById(R.id.txvHead)).setText(headerTeksti);
 
         setTaulukko(pal);

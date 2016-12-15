@@ -1,5 +1,6 @@
 package com.Kaavapp.android;
 
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,6 +65,10 @@ private String nimiarvo, fragnimi;
 
     public View getLargeView (LayoutInflater infl, ViewGroup paren) {
         View pal = infl.inflate(layoutLarge, paren, false);
+
+        Resources c = paren.getResources();
+        ((TextView)pal.findViewById(R.id.txvNamingLabel)).setText(c.getString(R.string.naming));
+        ((TextView)pal.findViewById(R.id.txvIrLabel)).setText(c.getString(R.string.IR_absor));
 
         ((TextView)pal.findViewById(R.id.txvNimi)).setText(tiedot.get(nimiarvo));
         try {
