@@ -78,6 +78,7 @@ public static  String language;
         setSupportActionBar(toolbar);
 
 
+        /*
         MobileAds.initialize(getApplicationContext(), "ca-app-pub-4707921089851609~9967794573");
 
 
@@ -93,6 +94,7 @@ public static  String language;
                 .build();
         mAdView.loadAd(adRequest);
 
+*/
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

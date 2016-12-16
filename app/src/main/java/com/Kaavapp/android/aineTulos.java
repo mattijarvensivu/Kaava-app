@@ -42,7 +42,12 @@ public class aineTulos extends Tulos {
 
         View pal = super.getSmallView(infl,paren);
         //laitetaan tiedot paikoilleen
-        ((TextView)pal.findViewById(R.id.txvNimi)).setText(tiedot.get("nimi"));
+        if(checkLanguage())
+        {
+            ((TextView)pal.findViewById(R.id.txvNimi)).setText(tiedot.get("name"));
+        }else {
+            ((TextView) pal.findViewById(R.id.txvNimi)).setText(tiedot.get("nimi"));
+        }
        // ((TextView)pal.findViewById(R.id.txvName)).setText(tiedot.get("name"));
         KaavaFactory kf = new KaavaFactory(pal.getContext(),pal.getResources(),(int)Math.ceil(((TextView)pal.findViewById(R.id.txvNimi)).getTextSize()/ pal.getResources().getDisplayMetrics().density));
         BitmapDrawable celsius = kf.getBmD("C^{\\circ}");
@@ -87,8 +92,13 @@ public class aineTulos extends Tulos {
         ((TextView)pal.findViewById(R.id.txvResiLabel)).setText(c.getString(R.string.resistanssi));
 
         //laitetaan tiedot paikoilleen
-        ((TextView)pal.findViewById(R.id.txvNimi)).setText(tiedot.get("nimi"));
-        ((TextView)pal.findViewById(R.id.txvName)).setText(tiedot.get("name"));
+        if(checkLanguage())
+        {
+            ((TextView) pal.findViewById(R.id.txvNimi)).setText(tiedot.get("name"));
+        }else {
+            ((TextView) pal.findViewById(R.id.txvNimi)).setText(tiedot.get("nimi"));
+            ((TextView) pal.findViewById(R.id.txvName)).setText(tiedot.get("name"));
+        }
         KaavaFactory kf = new KaavaFactory(pal.getContext(),pal.getResources(),(int)Math.ceil(((TextView)pal.findViewById(R.id.txvNimi)).getTextSize()/ pal.getResources().getDisplayMetrics().density));
         BitmapDrawable celsius = kf.getBmD("C^{\\circ}");
         if(tiedot.get("sulamispiste").compareTo("-") == 0)
