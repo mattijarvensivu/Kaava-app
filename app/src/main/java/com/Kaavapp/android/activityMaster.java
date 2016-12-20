@@ -221,7 +221,16 @@ public static  String language;
             //Jos haku tyhjä haetaan osahaulla TULEE MUUTTAA YLEISEKSI TAI OTTAA POIS!
             if(tulos.size()==0 && hakuparametri.length()!=0){
                 tulos = suoritaHaku("%"+hakuparametri+"%",listOfTables,false);
-                            }
+
+                //Jos vieläkin tyhjää
+                if(tulos.size()==0){
+
+                    // Kirjotetaan ei löytynyt mitään tällä hetkellä toast voidaan laittaa joku muu teksti?
+                    Toast.makeText(this, getString(R.string.eituloksia), Toast.LENGTH_SHORT).show();
+
+                }
+            }
+
 
             placeToCenter(listView); //laitetaan listViewi keskelle
 

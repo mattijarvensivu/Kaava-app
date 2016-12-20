@@ -18,6 +18,10 @@
             android:id="@+id/suosikit"
             android:icon="@drawable/taysitahti"
             android:title="@string/suosikit" />
+        <item
+            android:id="@+id/tietoa"
+            android:title="@string/tietoa"
+            />
 
     </group>
 

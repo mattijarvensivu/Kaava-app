@@ -135,5 +135,10 @@
     <string name="betaminus">beta minus decay</string>
     <string name="betaplus">beta plus decay</string>
     <string name="suosikit">Favorites</string>
+    <string name="eituloksia">No results</string>
+    <string name="tietoa">Info</string>
+    <string name="ohjeet">Instructions</string>
+    <string name="tietoacontent">"Here vähän tietoa blaa blaa blaaa"</string>
+    <string name="ohjeetcontent">"here vähän ohjetia blaa blaa blaaa"</string>
 
 </resources>

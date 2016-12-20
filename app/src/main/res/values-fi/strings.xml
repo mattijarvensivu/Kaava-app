@@ -134,6 +134,11 @@
     <string name="betaminus">beta miinus hajoaminen</string>
     <string name="betaplus">beta plus hajoaminen</string>
     <string name="suosikit">Suosikit</string>
+    <string name="eituloksia">Ei tuloksia</string>
+    <string name="tietoa">Tietoa</string>
+    <string name="ohjeet">Ohjeet</string>
+    <string name="tietoacontent">"Tässä vähän tietoa blaa blaa blaaa"</string>
+    <string name="ohjeetcontent">"Tässä vähän ohjeita blaa blaa blaaa"</string>
 
 
 
