@@ -1,12 +1,7 @@
 package com.Kaavapp.android;
 
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
@@ -14,12 +9,6 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Set;
 
 public class ChemistryActivity extends activityMaster {
 

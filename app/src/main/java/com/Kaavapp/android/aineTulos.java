@@ -1,17 +1,13 @@
 package com.Kaavapp.android;
 
-import android.content.res.Configuration;
+
 import android.content.res.Resources;
 import android.graphics.drawable.BitmapDrawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.VideoView;
-
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;

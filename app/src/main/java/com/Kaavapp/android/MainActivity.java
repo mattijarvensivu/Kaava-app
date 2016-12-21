@@ -80,8 +80,8 @@ public class MainActivity extends activityMaster {
 
             LinearLayout contai = (LinearLayout) findViewById(R.id.lnlContainer);
             contai.removeAllViews();
-            LayoutInflater inflater = LayoutInflater.from(MainActivity.this); // 1
-            View theInflatedView = inflater.inflate(R.layout.info, null); // 2 and 3
+            LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
+            View theInflatedView = inflater.inflate(R.layout.info, null);
             contai.addView(theInflatedView);
             haetaan = false;
             ((EditText) findViewById(R.id.edtHakuKentta)).setText("");

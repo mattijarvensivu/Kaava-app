@@ -9,7 +9,7 @@ import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Locale;
+
 
 /**
  * Created by janne on 27.6.2016.

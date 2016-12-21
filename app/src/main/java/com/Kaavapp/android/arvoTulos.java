@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
