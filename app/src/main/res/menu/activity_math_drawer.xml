@@ -7,6 +7,11 @@
             android:icon="@drawable/mainmenu"
             android:title="@string/front_page" />
         <item
+            android:id="@+id/math"
+            android:icon="@drawable/matikkaicon"
+            android:title = "@string/math_string"
+            />
+        <item
             android:id="@+id/nav_gallery"
             android:icon="@drawable/physicsicon"
             android:title="@string/physics_string" />

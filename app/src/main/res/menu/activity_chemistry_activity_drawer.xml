@@ -7,6 +7,11 @@
             android:icon="@drawable/mainmenu"
             android:title="@string/front_page" />
         <item
+            android:id="@+id/kemia"
+            android:icon="@drawable/chemistryicon"
+            android:title = "@string/chemistry_string"
+            />
+        <item
             android:id="@+id/nav_gallery"
             android:icon="@drawable/matikkaicon"
             android:title="@string/math_string" />

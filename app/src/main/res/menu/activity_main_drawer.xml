@@ -20,6 +20,7 @@
             android:title="@string/suosikit" />
         <item
             android:id="@+id/tietoa"
+            android:icon="@drawable/info_logo"
             android:title="@string/tietoa"
             />
 

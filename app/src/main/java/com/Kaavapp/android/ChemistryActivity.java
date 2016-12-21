@@ -60,7 +60,13 @@ public class ChemistryActivity extends activityMaster {
             haetaan = false;
             finish();
 
-        } else if (id == R.id.nav_gallery) {
+        }else if(id==R.id.kemia){
+            Intent myIntent = new Intent(this, ChemistryActivity.class);
+            startActivity(myIntent);
+            haetaan = false;
+            finish();
+        }
+        else if (id == R.id.nav_gallery) {
             Intent myIntent = new Intent(this, MathActivity.class);
             startActivity(myIntent);
             haetaan = false;

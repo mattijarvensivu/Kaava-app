@@ -56,7 +56,14 @@ public class PhysicsActivity extends activityMaster {
             startActivity(myIntent);
             haetaan = false;
             finish();
-        } else if (id == R.id.nav_gallery) {
+        }
+        else if (id==R.id.physics){
+            Intent myIntent = new Intent(this, PhysicsActivity.class);
+            startActivity(myIntent);
+            haetaan = false;
+            finish();
+        }
+        else if (id == R.id.nav_gallery) {
             Intent myIntent = new Intent(this, MathActivity.class);
             startActivity(myIntent);
             haetaan = false;
