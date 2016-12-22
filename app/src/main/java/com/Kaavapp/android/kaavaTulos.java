@@ -1,6 +1,6 @@
 package com.Kaavapp.android;
 
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -139,9 +139,8 @@ public class kaavaTulos extends Tulos{
         dataHaettu = haettuMuuttujat && haettuVakiot;
         for(int i = 0; i < vals.size(); i++) {
             muuttujat.add((muuttujaTulos)vals.get(i));
-            Log.d("Lisätty",vals.get(i).getValue(kuvausarvo));
-            //Log.d("KAIKKIMUUTTUJAT",muuttujat.get(i).getValue("kuvaus"));
-            //this.kaikkimuuttujat += muuttujat.get(i).getValue("symbol") + " = " +  muuttujat.get(i).getValue("kuvaus") + "  "+  muuttujat.get(i).getValue("yksikkö")+"\n";
+
+
         }
     }
     public void addVakiot(ArrayList<Tulos> vals)
@@ -150,9 +149,6 @@ public class kaavaTulos extends Tulos{
         dataHaettu = haettuMuuttujat && haettuVakiot;
         for(int i = 0; i < vals.size(); i++) {
             vakiot.add((vakioTulos)vals.get(i));
-            Log.d("Lisätty",vals.get(i).getValue(nimiarvo));
-            //Log.d("KAIKKIMUUTTUJAT",muuttujat.get(i).getValue("kuvaus"));
-            //this.kaikkimuuttujat += muuttujat.get(i).getValue("symbol") + " = " +  muuttujat.get(i).getValue("kuvaus") + "  "+  muuttujat.get(i).getValue("yksikkö")+"\n";
         }
     }
 

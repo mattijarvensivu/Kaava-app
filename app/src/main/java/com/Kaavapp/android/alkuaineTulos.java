@@ -4,7 +4,6 @@ import android.content.res.Resources;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +51,7 @@ private String nimiarvo;
             this.nimiarvo = "fiName";
 
         }
-        Log.d("NAME", this.nimiarvo);
+
         View pal = super.getSmallView(infl, paren);
         //asetetaan tiedot paikoilleen
         ((TextView)pal.findViewById(R.id.txvNumber)).setText(tiedot.get("jarjestyluku"));
@@ -98,7 +97,7 @@ private String nimiarvo;
         ((TextView)pal.findViewById(R.id.txvIOField)).setText(c.getString(R.string.ionisaatioene));
         ((TextView)pal.findViewById(R.id.txvIsoLabel)).setText(c.getString(R.string.yleisimmat_isotoopit));
 
-        Log.d("URL!!!!!!!!!!!!!", url);
+
         final WebView myWebView = (WebView) pal.findViewById(R.id.webview);
         myWebView.loadUrl(url);
 
@@ -276,7 +275,7 @@ private String nimiarvo;
         }
 
         Locale current = paren.getResources().getConfiguration().locale;
-        Log.d("minun", current.getDisplayLanguage());
+
 
 
         return pal;

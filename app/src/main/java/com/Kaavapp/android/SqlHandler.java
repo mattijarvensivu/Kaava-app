@@ -5,8 +5,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
-
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -59,7 +57,7 @@ public class SqlHandler extends SQLiteOpenHelper {
         }
 
     }
-    //http://blog.reigndesign.com/blog/using-your-own-sqlite-database-in-android-applications/ alkaa
+
     public void createDataBase(boolean forceCreate) throws IOException {
 
         boolean dbExist = !forceCreate && checkDataBase(); //hiukan ehkä turhaa hifistelyä mutta menkööt
@@ -168,10 +166,10 @@ public class SqlHandler extends SQLiteOpenHelper {
             }
         }catch (SQLiteException e)
         {
-            Log.d("minun", "Tapahtui sqlVirhe!");
+
         }
 
-        Log.d("minun","creating database");
+
         //Open your local db as the input stream
         InputStream myInput = myContext.getAssets().open(DB_NAME);
 
@@ -216,7 +214,7 @@ public class SqlHandler extends SQLiteOpenHelper {
         myDataBase = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
 
     }
-    //http://blog.reigndesign.com/blog/using-your-own-sqlite-database-in-android-applications/ loppuu
+
     @Override
     public void onCreate(SQLiteDatabase db) {
 
@@ -232,7 +230,7 @@ public class SqlHandler extends SQLiteOpenHelper {
         ArrayList<String[]> tableS = getStructure(tableName);
 
         Cursor cur = getCursor(tableName, searchParameters, tagit);
-        Log.d("minun",cur.getCount() + " tulosta");
+
         //käsitellään saatu data
         try {
             if (cur.moveToFirst()) {
@@ -294,7 +292,7 @@ public class SqlHandler extends SQLiteOpenHelper {
             }
         }catch (Exception e)
         {
-            Log.d("virhe","tapahtui virhe getValue by tägissä");
+
         }
         finally {
             cur.close();
@@ -328,7 +326,7 @@ public class SqlHandler extends SQLiteOpenHelper {
         }
         query += ")";
 
-        Log.d("Tag Cursor query",query);
+
         Cursor pal = db.rawQuery(query, null);
         return pal;
     }
@@ -466,14 +464,14 @@ String nimiarvo = "";
         }
         //luodaan querry
         String query = "Select * from (" + source + ")";
-        Log.d("SOURCETEST", source);
+
         String searchParamsS = "";
         boolean isFirst = true;
         for(int i = 0; i < tableS.size(); i++)
         {
             if(searchParameters.get(tableS.get(i)[0]) != null)
             {
-                Log.d("minun","getCursorissa osui " + tableS.get(i)[0] + ": " + searchParameters.get(tableS.get(i)[0]));
+
                 if(searchParamsS.compareTo("") == 0) searchParamsS += " where "; //On olemassa ainakin yksi haku rajoite ja queryyn ei ole lisätty where avain sanaa. Lisätään se
                 if(!isFirst)
                 {
@@ -492,9 +490,9 @@ String nimiarvo = "";
                 isFirst = false;
             }
         }
-        Log.d("SERCHPARAMS", searchParamsS);
+
         if(source.compareTo("Kaava")==0){
-            Log.d("IFFIN SIÄLLÄ", source);
+
             searchParamsS +=" ORDER BY mainTag";
         }
         //toteutetaan haku
@@ -520,7 +518,7 @@ String nimiarvo = "";
             querry += " WHERE " + findPrimaryKeyName(t.getTaulu()) + " = " + id + " AND _tagid = (SELECT _tagid FROM "+ t.tagiTaulu +" WHERE nimi LIKE \"suosikki\")";
         }
 
-        Log.d("suosikin muutos","ollaan muuttamassa suosikkia: " + querry);
+
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL(querry);
 
@@ -561,7 +559,7 @@ String nimiarvo = "";
             }while (cur.moveToNext());
         }
         cur.close();
-        Log.d("Tagi","id: " + idVal + " table: " + tableName + " number of tags: " + pal.size());
+
         return pal;
     }
 

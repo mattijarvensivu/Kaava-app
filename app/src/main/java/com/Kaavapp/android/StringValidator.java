@@ -1,6 +1,6 @@
 package com.Kaavapp.android;
 
-import android.util.Log;
+
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -30,7 +30,7 @@ public class StringValidator {
         //on olemassa instanssi
         //poistetaan edeltävä osa
         pal = initial.substring(0,alkuPiste) + "<b>" + hakuString + "</b>" + boldaa(initial.substring(alkuPiste+hakuString.length(),initial.length()),hakuString);
-        Log.d("minun","boldaajassa: " + pal);
+
         return pal;
 
     }

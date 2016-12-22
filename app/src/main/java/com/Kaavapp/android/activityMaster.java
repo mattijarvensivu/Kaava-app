@@ -12,7 +12,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,9 +37,8 @@ import java.util.Set;
  */
 public class activityMaster extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
     protected SqlHandler hand;
-public static  String language;
+    public static  String language;
     protected int layout; //tähän tallennetaan lapsiLuokassa layoutti mitä käytetään
     protected String actKategoria; //tähän tallennetaan lapsiLuokan kategoria. Lähinnä kaavoja varten
     protected Class classParam;
@@ -66,7 +64,7 @@ public static  String language;
     private void fullLayoutAlustus()
     {
         this.language = getResources().getConfiguration().locale.getLanguage();
-        Log.d("Lokaali", language);
+
 
         // register listView's context menu (to delete row)
         // registerForContextMenu(listView);
@@ -197,7 +195,7 @@ public static  String language;
 
     public void Hae(View v, boolean includeTags) {
         inLargeView = false;
-        Log.w("myApp", "Nappia painettu");
+
 
         EditText haku = (EditText) findViewById(R.id.edtHakuKentta);
         String hakuparametri = haku.getText().toString();
@@ -241,7 +239,9 @@ public static  String language;
             //onClick oli tässä
 
 
-        }else{ Log.w("myApp", tarkistus.toString() );}
+        }else{
+
+        }
     }
 
     //lisätään väli otsikot

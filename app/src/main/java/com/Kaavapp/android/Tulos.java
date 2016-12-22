@@ -1,7 +1,7 @@
 package com.Kaavapp.android;
 
 import android.support.annotation.Nullable;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -95,7 +95,7 @@ public class Tulos implements Comparable<Tulos> {
             case 11:
                 return new aineTulos(values);
             default:
-                Log.d("Tulos virhe","Palautetaan default tulos");
+
                 return new Tulos(values); //mahdollisesti vaarallista, mutta toisaalta mahdollistetaan puhtaan tiedon siirtely.
         }
 
@@ -136,7 +136,7 @@ public class Tulos implements Comparable<Tulos> {
 
     public View getLargeView(LayoutInflater infl, ViewGroup paren)
     {
-        Log.d("minun","ollaan super tulos metodissa");
+
         return null;
     }
 
