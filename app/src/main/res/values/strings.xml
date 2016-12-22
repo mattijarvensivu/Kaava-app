@@ -124,7 +124,7 @@
     <string name="redoxCat">Reduction potential</string>
     <string name="triFunCat">Value of trigonometric functions</string>
     <string name="vakioCat">Constant</string>
-    <string name="yksikkoCat">Unit</string>
+    <string name="yksikkoCat">Unit</string>as
     <string name="stabiili">stable</string>
     <string name="spontaanifissio">spontane fission</string>
     <string name="elektronisieppaus">electron capture</string>
@@ -138,7 +138,7 @@
     <string name="eituloksia">No results</string>
     <string name="tietoa">Info</string>
     <string name="ohjeet">Instructions</string>
-    <string name="tietoacontent">"Here vähän tietoa blaa blaa blaaa"</string>
-    <string name="ohjeetcontent">"here vähän ohjetia blaa blaa blaaa"</string>
+    <string name="tietoacontent">"Developers:\nJärvensivu Matti and\nMyöhänen Janne.\nContact: kaavappTeam@gmail.com."</string>
+    <string name="ohjeetcontent">"You can open the sidebar by swiping left to right or clicking the button on the left top corner.\nYou can search by name or by subject for example: Copper or Gas. You can also add favourites by clicking the star "</string>
 
 </resources>

@@ -76,7 +76,7 @@ public class activityMaster extends AppCompatActivity
         setSupportActionBar(toolbar);
 
 
-        /*
+
         MobileAds.initialize(getApplicationContext(), "ca-app-pub-4707921089851609~9967794573");
 
 
@@ -89,10 +89,11 @@ public class activityMaster extends AppCompatActivity
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 //Mun oma laiteid testi adien vuoksi (Otetaan pois kun oikeet adit)
                 .addTestDevice("358267051453788")
+                .addTestDevice("358848042144865")
                 .build();
         mAdView.loadAd(adRequest);
 
-*/
+
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

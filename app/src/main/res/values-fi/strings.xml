@@ -137,8 +137,8 @@
     <string name="eituloksia">Ei tuloksia</string>
     <string name="tietoa">Tietoa</string>
     <string name="ohjeet">Ohjeet</string>
-    <string name="tietoacontent">"Tässä vähän tietoa blaa blaa blaaa"</string>
-    <string name="ohjeetcontent">"Tässä vähän ohjeita blaa blaa blaaa"</string>
+    <string name="tietoacontent">"Tekijät:\nJärvensivu Matti ja \nMyöhänen Janne \nYhteyden otot: kaavappTeam@gmail.com"</string>
+    <string name="ohjeetcontent">"Sivupalkin saat auki pyyhkäisemällä vasemmasta reunasta oikealle tai painamalla vasemman reunan nappia. Voit hakea tietoa nimellä tai aihealueella esim: Kupari tai Kaasu. \nVoit asettaa suosikkeja klikkaamalla tähteä."</string>
 
 
 
