@@ -16,6 +16,7 @@ public class MathActivity extends activityMaster {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTitle(R.string.app_name);
         layout = R.layout.activity_math;
         actKategoria = "matematiikka";
         classParam = MathActivity.class;

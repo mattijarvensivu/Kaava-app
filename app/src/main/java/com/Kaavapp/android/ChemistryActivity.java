@@ -17,6 +17,7 @@ public class ChemistryActivity extends activityMaster {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTitle(R.string.app_name);
         layout = R.layout.activity_chemistry_activity;
         actKategoria = "kemia";
         classParam = ChemistryActivity.class;

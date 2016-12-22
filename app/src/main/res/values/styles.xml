@@ -22,7 +22,7 @@
     </style>
 
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="android:windowBackground">@drawable/kaavapp_splash</item>
+        <item name="android:windowBackground">@drawable/kaavapp_splash1</item>
     </style>
     <style name="MyActionButtonOverflow" parent="android:style/Widget.Holo.Light.ActionButton.Overflow">
 

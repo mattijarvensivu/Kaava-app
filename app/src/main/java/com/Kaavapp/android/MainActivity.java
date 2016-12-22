@@ -19,6 +19,7 @@ public class MainActivity extends activityMaster {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTitle(R.string.app_name);
         layout = R.layout.activity_main;
         //actKategoria = null;
         classParam = MainActivity.class;
@@ -52,8 +53,15 @@ public class MainActivity extends activityMaster {
         listOfReqTags = new String[]{};
         ((EditText) findViewById(R.id.edtHakuKentta)).setText("%");
         int id = item.getItemId();
+        if (id == R.id.front_page) {
 
-        if (id == R.id.nav_camera) {
+            Intent myIntent = new Intent(this, MainActivity.class);
+            haetaan = false;
+            startActivity(myIntent);
+            finish();
+
+        }
+        else if (id == R.id.nav_camera) {
             // Handle the camera action
             Intent myIntent = new Intent(this, MathActivity.class);
             startActivity(myIntent);

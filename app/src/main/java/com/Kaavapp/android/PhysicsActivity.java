@@ -15,6 +15,7 @@ public class PhysicsActivity extends activityMaster {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTitle(R.string.app_name);
         layout = R.layout.activity_physics;
         actKategoria = "fysiikka";
         classParam = PhysicsActivity.class;

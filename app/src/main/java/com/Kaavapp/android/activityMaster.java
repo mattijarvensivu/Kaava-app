@@ -155,14 +155,20 @@ public class activityMaster extends AppCompatActivity
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
         }else if(inLargeView)
         {
             inLargeView = false;
             placeToCenter(listView);
-        } else {
-            super.onBackPressed();
+        } else if (actKategoria != null) {
+            drawer.closeDrawer(GravityCompat.START);
+            Intent myIntent = new Intent(this, MainActivity.class);
+            startActivity(myIntent);
+            finish();
         }
+            else{
+                super.onBackPressed();
+            }
+
     }
 
     @Override
