@@ -1,5 +1,6 @@
 package com.Kaavapp.android;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -31,6 +33,12 @@ public class MainActivity extends activityMaster {
         Hae(null, false);
         ((EditText) findViewById(R.id.edtHakuKentta)).setText("");
         listOfReqTags = new String[]{};
+        //tutkitaan sisältääkö lista alkioita
+        if(listView.getCount() == 0)
+        {
+            LayoutInflater infl = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            placeToCenter(infl.inflate(R.layout.info, (ViewGroup) findViewById(R.id.lnlContainer), false));
+        }
     }
 
 

@@ -436,7 +436,7 @@ public class activityMaster extends AppCompatActivity
 
 
     //Tässä laitetaan annettu Vievi keskellä olevaan layouttiin
-    private void placeToCenter(View target)
+    protected void placeToCenter(View target)
     {
         LinearLayout contai = (LinearLayout) findViewById(R.id.lnlContainer);
         contai.removeAllViews();
