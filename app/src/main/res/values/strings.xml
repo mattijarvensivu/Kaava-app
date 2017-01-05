@@ -57,7 +57,16 @@
     <string name="atomisade">Atomic radius: </string>
     <string name="english">English</string>
     <string name="finnish">Finnish</string>
+
+    <!--
+    testi -->
+    <!--
     <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    -->
+   <!--
+   oikea -->
+<string name="banner_ad_unit_id">ca-app-pub-4707921089851609/2444527778</string>
+
     <string name="vektori">Vectors</string>
     <string name="tilastotiede">Statistics</string>
     <string name="liukoinen">Soluable</string>

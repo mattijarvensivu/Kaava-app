@@ -83,9 +83,8 @@ public class activityMaster extends AppCompatActivity
         //ads
 
 
-        AdView mAdView = (AdView) findViewById(R.id.adViewMainos);
+       /* AdView mAdView = (AdView) findViewById(R.id.adViewMainos);
         AdRequest adRequest = new AdRequest.Builder()
-                //Kaikki emulaattorit testin vuoksi
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 //Mun oma laiteid testi adien vuoksi (Otetaan pois kun oikeet adit)
                 .addTestDevice("358267051453788")
@@ -94,7 +93,7 @@ public class activityMaster extends AppCompatActivity
         mAdView.loadAd(adRequest);
 
 
-
+*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

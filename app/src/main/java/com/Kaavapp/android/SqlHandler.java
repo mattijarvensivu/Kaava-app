@@ -1,10 +1,14 @@
 package com.Kaavapp.android;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.preference.PreferenceManager;
+import android.util.Log;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,7 +38,15 @@ public class SqlHandler extends SQLiteOpenHelper {
         myContext = context;
         try {
 
-            createDataBase(forceCreate);
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(myContext);
+            int currentVersionCode = BuildConfig.VERSION_CODE;
+
+            if (prefs.getInt("LASTVERSION", 0) < currentVersionCode) {
+
+                prefs.edit().putInt("LASTVERSION", currentVersionCode).apply();
+                createDataBase(forceCreate);
+            }
+
 
         } catch (IOException ioe) {
 
@@ -59,7 +71,7 @@ public class SqlHandler extends SQLiteOpenHelper {
     }
 
     public void createDataBase(boolean forceCreate) throws IOException {
-
+        Log.d("DATABASE" ,"Database creationissa");
         boolean dbExist = !forceCreate && checkDataBase(); //hiukan ehkä turhaa hifistelyä mutta menkööt
 
         if(dbExist){
