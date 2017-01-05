@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -71,7 +70,6 @@ public class SqlHandler extends SQLiteOpenHelper {
     }
 
     public void createDataBase(boolean forceCreate) throws IOException {
-        Log.d("DATABASE" ,"Database creationissa");
         boolean dbExist = !forceCreate && checkDataBase(); //hiukan ehkä turhaa hifistelyä mutta menkööt
 
         if(dbExist){
@@ -219,6 +217,7 @@ public class SqlHandler extends SQLiteOpenHelper {
 
     }
 
+
     public void openDataBase() throws SQLException {
 
         //Open the database
@@ -226,6 +225,7 @@ public class SqlHandler extends SQLiteOpenHelper {
         myDataBase = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
 
     }
+
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -328,7 +328,7 @@ public class SqlHandler extends SQLiteOpenHelper {
     }
 
     public Cursor getTagcursor(String tableName, ArrayList<HashMap<String, String>> searchParameters, ArrayList<HashMap<String, String>> mustHaveTags) {
-        SQLiteDatabase db = getWritableDatabase();
+        SQLiteDatabase db = myDataBase;
 
         String query = "SELECT DISTINCT * FROM(" + getTagiStringi(tableName,true,searchParameters) + " UNION  ALL " + getTagiStringi(tableName,false,searchParameters);
 
@@ -340,6 +340,7 @@ public class SqlHandler extends SQLiteOpenHelper {
 
 
         Cursor pal = db.rawQuery(query, null);
+        //db.close();
         return pal;
     }
 
@@ -391,7 +392,7 @@ String nimiarvo = "";
     private String[] getTagFields(String tableName)
     {
         String querry = "SELECT tagiTaulu,linkkiTaulu FROM defaultFields WHERE _tname LIKE '" + tableName + "'";
-        SQLiteDatabase db = getReadableDatabase();
+        SQLiteDatabase db = myDataBase;
         Cursor cur = db.rawQuery(querry,null);
         String[] pal = {"ERROR FINDING TAG FIELDS","ERROR FINDING TAG FIELDS"};
         if(cur.moveToFirst())
@@ -445,7 +446,7 @@ String nimiarvo = "";
     public ArrayList<String[]> getStructure(String tableName)
     {
         ArrayList<String[]> pal = new ArrayList<>();
-        SQLiteDatabase db = getWritableDatabase();
+        SQLiteDatabase db = myDataBase;
         //haetaan pölydän rakenne
         Cursor cur = db.rawQuery("PRAGMA table_info('" + tableName +"')", null); // itse haku täpahtuu tässä
         //käsitellään saatu data
@@ -508,7 +509,7 @@ String nimiarvo = "";
             searchParamsS +=" ORDER BY mainTag";
         }
         //toteutetaan haku
-        SQLiteDatabase db = getWritableDatabase();
+        SQLiteDatabase db = myDataBase;
         Cursor pal = db.rawQuery(query + searchParamsS, null); // itse haku täpahtuu tässä
         return pal;
     }
@@ -531,7 +532,7 @@ String nimiarvo = "";
         }
 
 
-        SQLiteDatabase db = getWritableDatabase();
+        SQLiteDatabase db = myDataBase;
         db.execSQL(querry);
 
 
@@ -553,7 +554,7 @@ String nimiarvo = "";
         //String query = "SELECT nimi FROM " + tagiTaulu + " AS k JOIN (SELECT * FROM " + linkkitaulu + " WHERE _" + tableName + "id = " + idVal +" ) as l ON k._tagid = l._tagid";
 
         //suoritetaan haku
-        SQLiteDatabase db = getWritableDatabase();
+        SQLiteDatabase db = myDataBase;
         Cursor cur = db.rawQuery(query, null);
 
         //Luetaan tägit kursorista array listiin
@@ -579,7 +580,7 @@ String nimiarvo = "";
     private String findPrimaryKeyName(String tName)
     {
         String querry = "pragma table_info(" + tName + ")";
-        SQLiteDatabase db = getWritableDatabase();
+        SQLiteDatabase db = myDataBase;
         Cursor cur = db.rawQuery(querry, null); // itse haku täpahtuu tässä
         boolean jatketaan = true;
         String pal = "";
@@ -745,7 +746,7 @@ String nimiarvo = "";
             tableName = "Muuttuja";
         }
         String query = "SELECT k._"+tableName+"id FROM " + tableName + " AS k JOIN (SELECT * FROM " + tableName + "_kaava WHERE _kaavaid = " + kaavaid +" ) as l ON k._"+tableName+"id = l._"+tableName+"id";
-        SQLiteDatabase db = getWritableDatabase();
+        SQLiteDatabase db = myDataBase;
         Cursor cur = db.rawQuery(query, null);
 
         if(cur.moveToFirst())
@@ -790,7 +791,7 @@ String nimiarvo = "";
             kohdeKentta = "kationiid";
         }
         String querry = "";
-        SQLiteDatabase db = getReadableDatabase();
+        SQLiteDatabase db = myDataBase;
         ArrayList<String[]> tableS = getStructure("ionit");
         for(int i = 0; i < liukoisuusTaulut.length; i++) {
             pal[i] = new ArrayList<>();
@@ -809,7 +810,6 @@ String nimiarvo = "";
             }
             c.close();
         }
-        db.close();
         return pal;
     }
 
@@ -817,7 +817,7 @@ String nimiarvo = "";
     {
         String querry = "SELECT _yksikkoId,nimi,yksikko,suure,ennimi, ensuure FROM (SELECT linkitettyYksikko FROM yksikko_linkki WHERE isantaYksikko = " +yid+ ") AS l,yksikot as y WHERE y._yksikkoId = l.linkitettyYksikko";
         ArrayList<Tulos> pal = null;
-        SQLiteDatabase db = getReadableDatabase();
+        SQLiteDatabase db = myDataBase;
         Cursor c = db.rawQuery(querry,null);
         if(c.moveToFirst())
         {
@@ -833,7 +833,6 @@ String nimiarvo = "";
             }while(c.moveToNext());
         }
         c.close();
-        db.close();
         return pal;
     }
 
