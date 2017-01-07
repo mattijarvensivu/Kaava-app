@@ -77,32 +77,39 @@ public class MathActivity extends activityMaster {
         else if (id == R.id.suosikit) {
 
             listOfReqTags = new String[]{"suosikki"};
-            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.suosikit));
+           // ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.suosikit));
+            setTitle(getString(R.string.suosikit));
 
         }else if (id == R.id.algebra) {
-            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.algebra));
+           // ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.algebra));
+            setTitle(getString(R.string.algebra));
             listOfReqTags = new String[]{"algebra"};
 
 
         } else if (id == R.id.trigonometria) {
-            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.trigonometria));
+           // ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.trigonometria));
+            setTitle(getString(R.string.trigonometria));
             listOfReqTags = new String[]{"trigonometria"};
 
 
         } else if (id == R.id.derivointi) {
-            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.derivointi));
+           // ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.derivointi));
+            setTitle(getString(R.string.derivointi));
             listOfReqTags = new String[]{"derivointi"};
 
         }else if (id == R.id.integrointi) {
-            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.integrointi));
+           // ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.integrointi));
+            setTitle(getString(R.string.integrointi));
             listOfReqTags = new String[]{"integrointi"};
 
         }else if (id == R.id.vektori) {
-            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.vektori));
+           // ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.vektori));
+            setTitle(getString(R.string.vektori));
             listOfReqTags = new String[]{"vektori"};
 
         }else if (id == R.id.tilastotiede) {
-            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.tilastotiede));
+           // ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.tilastotiede));
+            setTitle(getString(R.string.tilastotiede));
             listOfReqTags = new String[]{"tilastotiede"};
 
         }

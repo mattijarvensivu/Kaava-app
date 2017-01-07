@@ -82,44 +82,52 @@ public class ChemistryActivity extends activityMaster {
 
             listOfTables = new String[]{"Alkuaineet","Funktionaalinenryhma","Hapot","Kaava","Vakio","aine"};
             listOfReqTags = new String[]{"suosikki"};
-            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.suosikit));
+            //((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.suosikit));
+            setTitle(getString(R.string.suosikit));
 
         }
         else if (id == R.id.Alkuaineet) {
             listOfTagTables = new String[]{"Alkuaineet"};
             listOfTables = new String[]{"Alkuaineet"};
-            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.chemistry_elements));
+            //((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.chemistry_elements));
+            setTitle(getString(R.string.chemistry_elements));
 
 
         } else if (id == R.id.FnkRyhma) {
             listOfTagTables = new String[]{"Funktionaalinenryhma"};
             listOfTables = new String[]{"Funktionaalinenryhma"};
-            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.chemistry_functional));
+            //((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.chemistry_functional));
+            setTitle(getString(R.string.chemistry_functional));
 
         }else if (id == R.id.Kaavat) {
             listOfTagTables = new String[]{"Kaava"};
             listOfTables = new String[]{"Kaava"};
-            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.formulas));
+           // ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.formulas));
+            setTitle(getString(R.string.formulas));
 
         }else if (id == R.id.Vakiot) {
             listOfTagTables = new String[]{"Vakio"};
             listOfTables = new String[]{"Vakio"};
-            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.vakiot));
+           // ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.vakiot));
+            setTitle(getString(R.string.vakiot));
 
         }else if (id == R.id.Hapot) {
             listOfTagTables = new String[]{"Hapot"};
             listOfTables = new String[]{"Hapot"};
-            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.hapot));
+            //((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.hapot));
+            setTitle(getString(R.string.hapot));
 
         }else if (id == R.id.Suolat) {
             listOfTagTables = new String[]{};
             listOfTables = new String[]{"ionit"};
-            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.ionit));
+           // ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.ionit));
+            setTitle(getString(R.string.ionit));
 
         }else if (id == R.id.Aineet) {
             listOfTagTables = new String[]{"aine"};
             listOfTables = new String[]{"aine"};
-            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.aine));
+           // ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.aine));
+            setTitle(getString(R.string.aine));
 
 
         }else if (id == R.id.redox) {

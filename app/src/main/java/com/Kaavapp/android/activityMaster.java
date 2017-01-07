@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -180,8 +181,25 @@ public class activityMaster extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+
+
+    if(id==R.id.searchbar)
+    {
+      
+ LinearLayout hakualue = (LinearLayout) findViewById(R.id.hakualue);
+
+                if(hakualue.getVisibility()==View.GONE)
+                {
+                    hakualue.setVisibility(View.VISIBLE);
+                }
+                else {
+                    hakualue.setVisibility(View.GONE);
+                    }
+
+
+    }
         //noinspection SimplifiableIfStatement
-        if(id==R.id.english_language){
+        else if(id==R.id.english_language){
             Toast.makeText(this, "Your Language is now English", Toast.LENGTH_LONG).show();
 
             setLocale("en");

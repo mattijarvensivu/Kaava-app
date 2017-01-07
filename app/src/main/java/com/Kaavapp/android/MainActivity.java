@@ -90,7 +90,8 @@ public class MainActivity extends activityMaster {
         } else if (id == R.id.suosikit) {
 
             listOfReqTags = new String[]{"suosikki"};
-            ((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.suosikit));
+            //((TextView)findViewById(R.id.txvOtsikko)).setText(getString(R.string.suosikit));
+            setTitle(getString(R.string.suosikit));
 
         }else if(id==R.id.tietoa){
 
