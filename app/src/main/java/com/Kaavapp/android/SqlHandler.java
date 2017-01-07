@@ -40,7 +40,7 @@ public class SqlHandler extends SQLiteOpenHelper {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(myContext);
             int currentVersionCode = BuildConfig.VERSION_CODE;
 
-            if (prefs.getInt("LASTVERSION", 0) < currentVersionCode) {
+            if (prefs.getInt("LASTVERSION", 0) < currentVersionCode ||forceCreate) {
 
                 prefs.edit().putInt("LASTVERSION", currentVersionCode).apply();
                 createDataBase(forceCreate);
@@ -138,7 +138,8 @@ public class SqlHandler extends SQLiteOpenHelper {
 
                 //otetaan suosikki asetukset talteen.
                 //haetaan defaultFieldsistä kaikki taulut joilla on tägitaulu, ja sen linkkitaulu
-                SQLiteDatabase d = getReadableDatabase();
+                openDataBase();
+                SQLiteDatabase d = myDataBase;
                 String querryDefault = "SELECT _tname,linkkiTaulu,tagiTaulu FROM defaultFields WHERE linkkiTaulu NOT NULL";
                 Cursor curDef = d.rawQuery(querryDefault, null);
                 if (curDef.moveToFirst()) {
@@ -177,6 +178,15 @@ public class SqlHandler extends SQLiteOpenHelper {
         }catch (SQLiteException e)
         {
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            if(myDataBase != null)
+            {
+                myDataBase.close();
+                myDataBase = null;
+            }
         }
 
 
@@ -203,7 +213,7 @@ public class SqlHandler extends SQLiteOpenHelper {
 
         if(writeSuosikit) { //Suosikit otettiin ylös. Viedään ne takaisin päivitettyyn tietokantaan
             //Nyt pitää kirjoittaa suosikit takaisin omiin linkki tauluihinsa.
-            SQLiteDatabase dn = getWritableDatabase();
+            SQLiteDatabase dn = getWritableDatabase(); //tätä ei voida kutsua tilanteessa missä tietokanta olisi jo auki. Voidaan siis huoletta sulkea
             for (int i = 0; i < linkit.size(); i++) {
                 for (int j = 1; j < suosikit.get(linkit.get(i)).size(); j++) {
                     String querry = "INSERT INTO " + linkit.get(i) + " VALUES (" + suosikit.get(linkit.get(i)).get(j) + " , " + suosikit.get(linkit.get(i)).get(0) + ")";
