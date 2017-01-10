@@ -26,8 +26,8 @@
     <string name="sulamis">Melting point: </string>
     <string name="kiehumis">boiling point: </string>
     <string name="tiheys">Density:</string>
-    <string name="ominaislampo">Specific heat cap.</string>
-    <string name="lammonjohta">Thermal cond.:</string>
+    <string name="ominaislampo">Specific heat capacity</string>
+    <string name="lammonjohta">Thermal conductivity:</string>
     <string name="teoreettinen">Theoretical: </string>
     <string name="kokeellinen">Experimental: </string>
     <string name="ionisaatioene">Ionization energies (kJ/mol)</string>
@@ -59,15 +59,14 @@
     <string name="finnish">Finnish</string>
 
     <!--
+    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
     testi -->
 
-    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
 
 
-   <!--
-
-   oikea
     <string name="banner_ad_unit_id">ca-app-pub-4707921089851609/2444527778</string>
+   <!--
+   oikea
 
 -->
 

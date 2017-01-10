@@ -102,15 +102,23 @@
     android:orientation="horizontal">
 
     <TableRow
+        android:layout_width="match_parent"
         >
             <TextView
 
                 android:textColor="#000000"
-                android:layout_width="wrap_content"
+                android:layout_width="1dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/txvENegLabel"
                 android:textSize="20dp"
-                android:text="@string/elektronega"/>
+                android:ellipsize="marquee"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:text="@string/elektronega"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:clickable="true"/>
 
             <TextView
 
@@ -198,7 +206,8 @@
             />
     </TableRow>
 
-    <TableRow>
+    <TableRow
+        android:layout_width="match_parent">
         <TextView
 
             android:textColor="#000000"
@@ -222,19 +231,30 @@
             android:id="@+id/mwDenUnit"
             />
     </TableRow>
-    <TableRow>
+    <TableRow
+        >
         <TextView
 
             android:textColor="#000000"
-            android:layout_width="wrap_content"
+            android:layout_width="1dp"
             android:layout_height="wrap_content"
             android:id="@+id/txvOmLLabel"
             android:textSize="20dp"
-            android:text="@string/ominaislampo"/>
+            android:ellipsize="marquee"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:text="asdqpwekd eprjwqåer sdfsdfwerwdsfwerf¨åaspe fghrt"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:clickable="true"
+            />
+
+
         <TextView
 
             android:textColor="#000000"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/txvOmLField"
             android:textSize="20dp"
@@ -246,15 +266,23 @@
             android:id="@+id/mwOLUnit"
             />
     </TableRow>
-    <TableRow>
+    <TableRow
+        android:layout_width="match_parent">
         <TextView
 
             android:textColor="#000000"
-            android:layout_width="wrap_content"
+            android:layout_width="1dp"
             android:layout_height="wrap_content"
             android:id="@+id/txvLJLabel"
             android:textSize="20dp"
-            android:text="@string/lammonjohta"/>
+            android:ellipsize="marquee"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:text="@string/lammonjohta"
+            android:clickable="true"/>
         <TextView
 
             android:textColor="#000000"

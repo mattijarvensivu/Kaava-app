@@ -1,5 +1,6 @@
 package com.Kaavapp.android;
 
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +41,10 @@ public class ioniTulos extends Tulos {
     {
         View pal = super.getSmallView(infl, paren);
         //((TextView)pal.findViewById(R.id.txvVaraus)).setText(tiedot.get("varaus"));
-        ((TextView)pal.findViewById(R.id.txvNimi)).setText(tiedot.get("name"));
+        if(checkLanguage()){((TextView)pal.findViewById(R.id.txvNimi)).setText(tiedot.get("name"));}
+        else{
+            ((TextView)pal.findViewById(R.id.txvNimi)).setText(tiedot.get("nimi"));
+        }
         KaavaFactory kf = new KaavaFactory(pal.getContext(),pal.getResources(),(int)Math.ceil(((TextView)pal.findViewById(R.id.txvNimi)).getTextSize()/ pal.getResources().getDisplayMetrics().density)); //viimeinen parametri laskee käytetyn teksti koon.
         ((ImageView)pal.findViewById(R.id.mvKaava)).setImageDrawable(kf.getBmD(tiedot.get("kaava")));
         return pal;
@@ -51,7 +55,7 @@ public class ioniTulos extends Tulos {
     {
         if(!dataHaettu) GAD.findData(this);
         View pal = infl.inflate(layoutLarge, paren, false);
-        ((TextView)pal.findViewById(R.id.txvNimi)).setText(tiedot.get("nimi"));
+        if(!checkLanguage())((TextView)pal.findViewById(R.id.txvNimi)).setText(tiedot.get("nimi"));
         ((TextView)pal.findViewById(R.id.txvName)).setText(tiedot.get("name"));
         KaavaFactory kf = new KaavaFactory(pal.getContext(),pal.getResources(),(int)Math.ceil(((TextView)pal.findViewById(R.id.txvNimi)).getTextSize()/ pal.getResources().getDisplayMetrics().density)); //viimeinen parametri laskee käytetyn teksti koon.
         ((ImageView)pal.findViewById(R.id.mvKaava)).setImageDrawable(kf.getBmD(tiedot.get("kaava")));
@@ -63,14 +67,14 @@ public class ioniTulos extends Tulos {
         {
             for(ioniTulos it : vastinIonit[i])
             {
-                suolatLay.addView(getSuolaView(it,sanat[i],infl,null));
+                suolatLay.addView(getSuolaView(it,paren.getContext().getString(sanat[i]),infl,null));
             }
         }
 
         return pal;
     }
 
-    private View getSuolaView(ioniTulos a, int liukoisuus,LayoutInflater infl, ViewGroup paren)
+    private View getSuolaView(ioniTulos a, String liukoisuus,LayoutInflater infl, ViewGroup paren)
     {
         View pal = infl.inflate(suolaLayout,paren);
         ((TextView)pal.findViewById(R.id.txvLiukoisuus)).setText(liukoisuus);

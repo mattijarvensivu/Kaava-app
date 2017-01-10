@@ -24,6 +24,7 @@ import java.util.Locale;
 public class alkuaineTulos extends Tulos {
 
     private ArrayList<isotooppiTulos> isotoopit;
+
 private String nimiarvo;
     public alkuaineTulos (HashMap<String,String> values)
     {
@@ -38,6 +39,7 @@ private String nimiarvo;
         linkkiTaulu = "Alkuaineet_tag";
 
         defaultCategory = R.string.alkuaineCat;
+
     }
 
     @Override
@@ -81,6 +83,7 @@ private String nimiarvo;
             url = "https://fi.m.wikipedia.org/wiki/"+ tiedot.get("fiName");
         }
         View pal = infl.inflate(layoutLarge, paren, false);
+
 
         Resources c = paren.getResources();
         ((TextView)pal.findViewById(R.id.txvENegLabel)).setText(c.getString(R.string.elektronega));
