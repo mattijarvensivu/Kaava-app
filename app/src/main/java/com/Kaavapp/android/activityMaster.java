@@ -91,8 +91,8 @@ public class activityMaster extends AppCompatActivity
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 //Mun oma laiteid testi adien vuoksi (Otetaan pois kun oikeet adit)
                 .addTestDevice("358267051453788")
-                .addTestDevice("358848042144865")*/
-
+                .addTestDevice("358848042144865")
+*/
                 .build();
         mAdView.loadAd(adRequest);
 
