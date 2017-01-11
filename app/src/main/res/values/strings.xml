@@ -59,15 +59,15 @@
     <string name="finnish">Finnish</string>
 
     <!--
-<string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+
     testi -->
+    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
 
 
 
-    <string name="banner_ad_unit_id">ca-app-pub-4707921089851609/2444527778</string>
    <!--
    oikea
-
+<string name="banner_ad_unit_id">ca-app-pub-4707921089851609/2444527778</string>
 -->
 
     <string name="vektori">Vectors</string>
@@ -151,7 +151,7 @@
     <string name="tietoa">Info</string>
     <string name="ohjeet">Instructions</string>
     <string name="tietoacontent">Developers:\nJärvensivu Matti and\nMyöhänen Janne.\nContact: kaavappTeam@gmail.com."</string>
-    <string name="ohjeetcontent">You can open the sidebar by swiping left to right or clicking the button on the left top corner.\nYou can search by clicking the magnififying glass icon\nYou can search by name or by subject for example: Copper or Gas. You can also add favourites by clicking the star\n
-    You can get more info about the result by clicking it.</string>
+    <string name="ohjeetcontent">You can open the sidebar by swiping left to right or clicking the button on the left top corner.\n\nYou can search by clicking the magnififying glass icon\n\nYou can search by name or by subject for example: Copper or Gas. You can also add favourites by clicking the star\n\n
+    You can get more info about the result by clicking it.\n\nYou can touch partially shown lable to see the full text.</string>
 
 </resources>

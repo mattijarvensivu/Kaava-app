@@ -87,12 +87,12 @@ public class activityMaster extends AppCompatActivity
 
         AdView mAdView = (AdView) findViewById(R.id.adViewMainos);
         AdRequest adRequest = new AdRequest.Builder()
-/*
+
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 //Mun oma laiteid testi adien vuoksi (Otetaan pois kun oikeet adit)
                 .addTestDevice("358267051453788")
                 .addTestDevice("358848042144865")
-*/
+
                 .build();
         mAdView.loadAd(adRequest);
 
