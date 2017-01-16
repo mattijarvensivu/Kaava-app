@@ -25,14 +25,15 @@ public class MainActivity extends activityMaster {
         layout = R.layout.activity_main;
         //actKategoria = null;
         classParam = MainActivity.class;
-        super.onCreate(savedInstanceState);
         listOfTagTables = new String[]{"Alkuaineet", "Funktionaalinenryhma", "Kaava", "Vakio", "Hapot", "aine"};
         listOfTables = new String[]{"Alkuaineet", "Funktionaalinenryhma", "Hapot", "Kaava", "Vakio", "aine", "yksikot"};
         listOfReqTags = new String[]{"suosikki"};
+        super.onCreate(savedInstanceState);
         ((EditText) findViewById(R.id.edtHakuKentta)).setText("%");
         Hae(null, false);
         ((EditText) findViewById(R.id.edtHakuKentta)).setText("");
         listOfReqTags = new String[]{};
+        fse.setIndeksi(suoritaHaku("%",listOfTables,false));
         //tutkitaan sisältääkö lista alkioita
         if(listView.getCount() == 0)
         {
@@ -103,16 +104,17 @@ public class MainActivity extends activityMaster {
             haetaan = false;
             ((EditText) findViewById(R.id.edtHakuKentta)).setText("");
 
-
-        }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
 
 
-        if (haetaan) {
-            ((LinearLayout) findViewById(R.id.lnlContainer)).removeAllViews();
-            Hae(null, false);
-            ((EditText) findViewById(R.id.edtHakuKentta)).setText("");
+            if (haetaan) {
+                ((LinearLayout) findViewById(R.id.lnlContainer)).removeAllViews();
+                Hae(null, false);
+                ((EditText) findViewById(R.id.edtHakuKentta)).setText("");
+                fse.setIndeksi(suoritaHaku("%",listOfTables,false));
+            }
+
         }
 
 

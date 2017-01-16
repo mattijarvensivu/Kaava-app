@@ -55,6 +55,8 @@ private String nimiarvo;
 
     }
 
+    public String getNimi(){if(checkLanguage())return tiedot.get("ennimi");return tiedot.get("nimi");}
+
     public String getArvoTaulu()
     {
         switch (arvoId) {

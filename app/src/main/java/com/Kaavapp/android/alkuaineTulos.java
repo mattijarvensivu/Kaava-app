@@ -64,10 +64,7 @@ private String nimiarvo;
         return pal;
     }
 
-    public void boldaa(String haku)
-    {
-        tiedot.put("nimi", StringValidator.boldaa(tiedot.get("nimi"),haku));
-    }
+    public String getNimi(){if(checkLanguage())return tiedot.get("nimi");return tiedot.get("fiName");}
 
     @Override
     //tuottaa Viewin annetulla inflaterillä ja isännällä. Tässä vievissä näytetään kaikki alkuaineen tiedot

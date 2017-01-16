@@ -36,6 +36,8 @@ public class ioniTulos extends Tulos {
         defaultCategory = R.string.ionCat;
     }
 
+    public String getNimi(){if(checkLanguage())return tiedot.get("nimi");return tiedot.get("name");}
+
 
     public View getSmallView(LayoutInflater infl, ViewGroup paren)
     {

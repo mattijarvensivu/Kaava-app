@@ -39,6 +39,9 @@ public class triFunMasterTulos extends Tulos {
         ((TextView)pal.findViewById(R.id.txvKuvaus)).setText(R.string.trifunt);
         return pal;
     }
+
+    public String getNimi(){if(checkLanguage())return tiedot.get("ennimi");return tiedot.get("nimi");}
+
     public View getLargeView (LayoutInflater infl, ViewGroup paren)
     {
         if(!dataHaettu) GAD.findData(this);

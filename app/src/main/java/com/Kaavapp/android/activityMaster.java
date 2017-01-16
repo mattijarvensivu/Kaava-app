@@ -12,6 +12,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,6 +40,7 @@ import java.util.Set;
 public class activityMaster extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     protected SqlHandler hand;
+    protected FuzzySearchEngine fse;
     public static  String language;
     protected int layout; //tähän tallennetaan lapsiLuokassa layoutti mitä käytetään
     protected String actKategoria; //tähän tallennetaan lapsiLuokan kategoria. Lähinnä kaavoja varten
@@ -58,8 +60,10 @@ public class activityMaster extends AppCompatActivity
         fullLayoutAlustus();
 
 
-        //hand = new SqlHandler(getApplicationContext().getApplicationContext(), "", null, 1, true); //tämä on testi versio
-        hand = new SqlHandler(getApplicationContext().getApplicationContext(), "", null, 1, false); //tämä on oikea versio
+        hand = new SqlHandler(getApplicationContext().getApplicationContext(), "", null, 1, true); //tämä on testi versio
+        //hand = new SqlHandler(getApplicationContext().getApplicationContext(), "", null, 1, false); //tämä on oikea versio
+
+        fse = new FuzzySearchEngine();
     }
 
     //tällä alustetaan näkymä ja mainos.
@@ -87,12 +91,12 @@ public class activityMaster extends AppCompatActivity
 
         AdView mAdView = (AdView) findViewById(R.id.adViewMainos);
         AdRequest adRequest = new AdRequest.Builder()
-/*
+
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 //Mun oma laiteid testi adien vuoksi (Otetaan pois kun oikeet adit)
                 .addTestDevice("358267051453788")
                 .addTestDevice("358848042144865")
-*/
+
                 .build();
         mAdView.loadAd(adRequest);
 
@@ -237,23 +241,41 @@ public class activityMaster extends AppCompatActivity
 
         if(tarkistus) {
 
+            //Tämä blokki alkaa olla kohta sekainen. jos siitäisi haun omaan luokkaansa, jolle vaikka passattaisiin vain numero, joka kertoisi minkälainen haku suoritetaan?
+            //tai sitten jonkni toisenlainen rakenne
+
             // Tarkistus mistä taulusta haetaan täytyy tehä
             ArrayList<Tulos> tulos = new ArrayList<>();
             if(includeTags)tulos = suoritaHaku(hakuparametri,listOfTagTables,true);
             if(tulos.size()==0 && hakuparametri.length()!=0) {
                 tulos = suoritaHaku(hakuparametri, listOfTables, false);
             }
-            //Jos haku tyhjä haetaan osahaulla TULEE MUUTTAA YLEISEKSI TAI OTTAA POIS!
+            //Jos haku tyhjä haetaan osahaulla
             if(tulos.size()==0 && hakuparametri.length()!=0){
                 tulos = suoritaHaku("%"+hakuparametri+"%",listOfTables,false);
 
-                //Jos vieläkin tyhjää
-                if(tulos.size()==0){
+            }
+            //Jos vieläkin tyhjää
+            //FSE haku, löydetty stringi on tägi
+            if(tulos.size()==0 && hakuparametri.length()!=0){
 
-                    // Kirjotetaan ei löytynyt mitään tällä hetkellä toast voidaan laittaa joku muu teksti?
-                    Toast.makeText(this, getString(R.string.eituloksia), Toast.LENGTH_SHORT).show();
-
+                //käytetään fuzzySearchiä... ja mitä? suoritetaan haku lopulta tällä vai annetaan vain ehdotus?
+                String fseResult = fse.findClosest(hakuparametri);
+                Log.d("FSETesti","Ei löytynyt: " + hakuparametri + ". Käytetään FSE, tulos: " + fseResult);
+                if(fseResult != null){
+                    tulos = suoritaHaku(fseResult,listOfTables,true);
                 }
+                //FSE haku, löydetty stringi ei ole tägi
+                if(tulos.size()==0 && fseResult != null){
+                    tulos = suoritaHaku(fseResult,listOfTables,false);
+                }
+
+            }
+
+            if(tulos.size() == 0)
+            {
+                // Kirjotetaan ei löytynyt mitään tällä hetkellä toast voidaan laittaa joku muu teksti?
+                Toast.makeText(this, getString(R.string.eituloksia), Toast.LENGTH_SHORT).show();
             }
 
 
@@ -263,7 +285,6 @@ public class activityMaster extends AppCompatActivity
             resultAdapter a = new resultAdapter(getApplicationContext(), -1, addOtsikot(tulos));
             listView.setAdapter(a);
 
-            //onClick oli tässä
 
 
         }else{
@@ -369,7 +390,7 @@ public class activityMaster extends AppCompatActivity
 
     }
 
-    private ArrayList<Tulos> suoritaHaku(String hakuparametri, String[] taulut, boolean isTag)
+    protected ArrayList<Tulos> suoritaHaku(String hakuparametri, String[] taulut, boolean isTag)
     {
         HashMap<String, String> kentat;
         String[] splitattuHP = siivoaHaku(hakuparametri);

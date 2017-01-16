@@ -60,6 +60,8 @@ private String nimiarvo;
         return pal;
     }
 
+    public String getNimi(){if(checkLanguage())return tiedot.get("ennimi");return tiedot.get("nimi");}
+
     @Override
     //tuottaa Viewin annetulla inflaterillä ja isännällä. Tässä viewissä näytetään nopea yhteen veto tuloksesta
     public View getLargeView (LayoutInflater infl, ViewGroup paren) {

@@ -111,6 +111,7 @@ public class Tulos implements Comparable<Tulos> {
     {
         GAD = s;
     }
+    public String getNimi(){return null;}
 
     public String getType()
     {
@@ -285,6 +286,18 @@ public boolean checkifheader(){
             if(h.get("nimi").compareTo(category) == 0 || h.get("ennimi").compareTo(category) == 0) return Integer.parseInt(h.get("prior"));
         }
         return -1;
+    }
+
+    public ArrayList<String> getTagit()
+    {
+        String nimia = "nimi";
+        if(checkLanguage()) nimia = "ennimi";
+        ArrayList<String> pal = new ArrayList<>();
+        for(HashMap<String,String> h: tagit)
+        {
+            pal.add(h.get(nimia));
+        }
+        return pal;
     }
 }
 

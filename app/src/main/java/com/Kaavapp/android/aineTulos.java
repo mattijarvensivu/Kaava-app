@@ -174,6 +174,8 @@ public class aineTulos extends Tulos {
         return pal;
     }
 
+    public String getNimi(){if(checkLanguage())return tiedot.get("name");return tiedot.get("nimi");}
+
     public void setAlkuaine(ArrayList<Tulos> data)
     {
         dataHaettu = true;

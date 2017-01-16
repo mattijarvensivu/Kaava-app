@@ -20,15 +20,17 @@ public class MathActivity extends activityMaster {
         layout = R.layout.activity_math;
         actKategoria = "matematiikka";
         classParam = MathActivity.class;
-        super.onCreate(savedInstanceState);
-
         listOfTagTables = new String[]{"Kaava","Vakio"};
         listOfTables = new String[]{"Kaava","Vakio"};
         listOfReqTags = new String[]{"suosikki"};
+        super.onCreate(savedInstanceState);
+
+
         ((EditText) findViewById(R.id.edtHakuKentta)).setText("%");
         Hae(null, false);
         ((EditText) findViewById(R.id.edtHakuKentta)).setText("");
         listOfReqTags = new String[]{};
+        fse.setIndeksi(suoritaHaku("%",listOfTables,false));
     }
 
     @Override
@@ -122,6 +124,7 @@ public class MathActivity extends activityMaster {
             ((EditText) findViewById(R.id.edtHakuKentta)).setText("%"); //ongelma, tehdään tägi haku. Pitäisi forsettaa nimi haku.
             Hae(null,false);
             ((EditText) findViewById(R.id.edtHakuKentta)).setText("");
+            fse.setIndeksi(suoritaHaku("%",listOfTables,false));
         }
 
         return true;

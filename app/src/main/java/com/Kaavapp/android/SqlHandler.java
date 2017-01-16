@@ -846,6 +846,64 @@ String nimiarvo = "";
         return pal;
     }
 
+    //EI EHKÄ TARVITA. TARKISTA FUZZY SEARCHIN TOTEUTUKSEN JÄLKEEN
+    public ArrayList<String> getPossibleStrings(String[] tagTables, String[] tables, String[] reqTags, boolean isEnglish)
+    {
+        ArrayList<String> pal = new ArrayList<>();
+        String nimiQ;
+        //etsitään kaikki alueen nimet
+        for(String s: tables)
+        {
+            nimiQ = "SELECT DISTINCT " + findDefaultField(s,isEnglish) + " FROM " + s;
+            Cursor c = myDataBase.rawQuery(nimiQ, null);
+            if(c.moveToFirst())
+            {
+                do{
+                    pal.add(c.getString(0));
+                }while(c.moveToNext());
+            }
+            c.close();
+        }
+        //etsitään kaikki alueen tägit
+        String tagiQ = "SELECT DISTINCT * FROM (";
+        String knimi = "nimi";
+        if(isEnglish) knimi = "ennimi";
+        for(int i = 0; i < tagTables.length; i++) {
+            tagiQ += "SELECT " + knimi + " FROM " + getTagFields(tagTables[i])[0];
+            if(i < tagTables.length - 1) tagiQ += " UNION ";
+        }
+        tagiQ += ")";
+        Cursor c = myDataBase.rawQuery(tagiQ,null);
+        if(c.moveToFirst())
+        {
+            do{
+                pal.add(c.getString(0));
+            }while(c.moveToNext());
+        }
+        c.close();
+        return pal;
+    }
+
+    private String findDefaultField(String tName, boolean isEnglish)
+    {
+        String q = "SELECT ";
+        if(isEnglish)
+        {
+            q += "enfieldname";
+        }else{
+            q += "fieldname";
+        }
+        q += " FROM defaultFields WHERE _tname LIKE '" + tName + "'";
+        Cursor c = myDataBase.rawQuery(q,null);
+        String pal = "VIRHE! eli löydetty taulua, ehkä";
+        if(c.moveToFirst())
+        {
+            pal = c.getString(0);
+        }
+        c.close();
+        return pal;
+    }
+
 
 }
 

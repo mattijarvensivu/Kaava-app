@@ -39,6 +39,9 @@ public class redoxTulos extends Tulos {
         ((TextView)pal.findViewById(R.id.txvKuvaus)).setText(paren.getResources().getString(R.string.redox));
         return pal;
     }
+
+    public String getNimi(){if(checkLanguage())return tiedot.get("ennimi");return tiedot.get("nimi");}
+
     public View getLargeView (LayoutInflater infl, ViewGroup paren)
     {
         if(!dataHaettu) GAD.findData(this);

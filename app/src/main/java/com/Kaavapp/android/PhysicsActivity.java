@@ -19,17 +19,19 @@ public class PhysicsActivity extends activityMaster {
         layout = R.layout.activity_physics;
         actKategoria = "fysiikka";
         classParam = PhysicsActivity.class;
+        listOfTagTables = new String[]{"yksikot","Kaava","aine","Vakio"};
+        listOfTables = new String[]{"Kaava","Vakio","aine","yksikot"};
+        listOfReqTags = new String[]{"suosikki"};
 
         super.onCreate(savedInstanceState);
 
 
-        listOfTagTables = new String[]{"yksikot","Kaava","aine","Vakio"};
-        listOfTables = new String[]{"Kaava","Vakio","aine","yksikot"};
-        listOfReqTags = new String[]{"suosikki"};
+
         ((EditText) findViewById(R.id.edtHakuKentta)).setText("%");
         Hae(null, false);
         ((EditText) findViewById(R.id.edtHakuKentta)).setText("");
         listOfReqTags = new String[]{};
+        fse.setIndeksi(suoritaHaku("%",listOfTables,false));
     }
 
     @Override
@@ -166,6 +168,7 @@ public class PhysicsActivity extends activityMaster {
             ((LinearLayout) findViewById(R.id.lnlContainer)).removeAllViews();
             Hae(null,false);
             ((EditText) findViewById(R.id.edtHakuKentta)).setText("");
+            fse.setIndeksi(suoritaHaku("%",listOfTables,false));
         }
 
         return true;

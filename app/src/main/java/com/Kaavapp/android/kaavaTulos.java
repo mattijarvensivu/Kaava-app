@@ -80,6 +80,7 @@ public class kaavaTulos extends Tulos{
 
         return pal;
     }
+    public String getNimi(){if(checkLanguage())return tiedot.get("ennimi");return tiedot.get("nimi");}
 
     public View getLargeView (LayoutInflater infl, ViewGroup paren) {
         if(!dataHaettu) GAD.findData(this);

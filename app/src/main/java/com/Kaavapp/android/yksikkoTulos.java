@@ -56,6 +56,8 @@ private  String nimiarvo, suurearvo;
         return pal;
     }
 
+    public String getNimi(){if(checkLanguage())return tiedot.get("ennimi");return tiedot.get("nimi");}
+
     public View getLargeView (final LayoutInflater infl, final ViewGroup paren)
     {
         View pal = infl.inflate(layoutLarge, paren, false);

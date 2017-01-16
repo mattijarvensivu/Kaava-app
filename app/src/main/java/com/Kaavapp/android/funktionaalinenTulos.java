@@ -102,4 +102,5 @@ private String nimiarvo, fragnimi;
             irpiikit.add((piikkiTulos)t);
         }
     }
+    public String getNimi(){if(checkLanguage())return tiedot.get("ennimi");return tiedot.get("nimi");}
 }

@@ -21,16 +21,16 @@ public class ChemistryActivity extends activityMaster {
         layout = R.layout.activity_chemistry_activity;
         actKategoria = "kemia";
         classParam = ChemistryActivity.class;
-        super.onCreate(savedInstanceState);
-
-
         listOfTagTables = new String[]{"Alkuaineet","Funktionaalinenryhma","Kaava","Vakio","Hapot","aine"};
         listOfTables = new String[]{"Alkuaineet","Funktionaalinenryhma","Hapot","Kaava","Vakio","aine"};
         listOfReqTags = new String[]{"suosikki"};
+        super.onCreate(savedInstanceState);
+
         ((EditText) findViewById(R.id.edtHakuKentta)).setText("%");
         Hae(null, false);
         ((EditText) findViewById(R.id.edtHakuKentta)).setText("");
         listOfReqTags = new String[]{};
+        fse.setIndeksi(suoritaHaku("%",listOfTables,false));
 
 
     }
@@ -142,6 +142,7 @@ public class ChemistryActivity extends activityMaster {
             ((LinearLayout) findViewById(R.id.lnlContainer)).removeAllViews();
             Hae(null,false);
             ((EditText) findViewById(R.id.edtHakuKentta)).setText("");
+            fse.setIndeksi(suoritaHaku("%",listOfTables,false));
         }
 
         return true;
