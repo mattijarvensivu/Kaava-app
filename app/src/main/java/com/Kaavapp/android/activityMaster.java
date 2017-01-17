@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -23,6 +24,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
@@ -132,6 +134,10 @@ public class activityMaster extends AppCompatActivity
                 if(((Tulos) parent.getItemAtPosition(position)).checkifheader() != true){
 
                     placeToCenter(((Tulos) parent.getItemAtPosition(position)).getLargeView((LayoutInflater) con.getSystemService(Context.LAYOUT_INFLATER_SERVICE), prnt));
+                    LinearLayout ehdotusalue = (LinearLayout) findViewById(R.id.ehdotusalue);
+                    if(ehdotusalue.getVisibility()==View.VISIBLE){
+                        ehdotusalue.setVisibility(View.GONE);
+                    }
                     inLargeView = true;
                 }
 
@@ -191,6 +197,7 @@ public class activityMaster extends AppCompatActivity
     {
       
  LinearLayout hakualue = (LinearLayout) findViewById(R.id.hakualue);
+        LinearLayout ehdotusalue = (LinearLayout) findViewById(R.id.ehdotusalue);
 
                 if(hakualue.getVisibility()==View.GONE)
                 {
@@ -198,6 +205,8 @@ public class activityMaster extends AppCompatActivity
                 }
                 else {
                     hakualue.setVisibility(View.GONE);
+
+                    ehdotusalue.setVisibility(View.GONE);
                     }
 
 
@@ -227,6 +236,11 @@ public class activityMaster extends AppCompatActivity
     public void Hae(View v, boolean includeTags) {
         inLargeView = false;
 
+LinearLayout ehdotusalue = (LinearLayout) findViewById(R.id.ehdotusalue);
+
+        if(ehdotusalue.getVisibility()==View.VISIBLE){
+            ehdotusalue.setVisibility(View.GONE);
+        }
 
         EditText haku = (EditText) findViewById(R.id.edtHakuKentta);
         String hakuparametri = haku.getText().toString();
@@ -262,6 +276,19 @@ public class activityMaster extends AppCompatActivity
                 //käytetään fuzzySearchiä... ja mitä? suoritetaan haku lopulta tällä vai annetaan vain ehdotus?
                 String fseResult = fse.findClosest(hakuparametri);
                 Log.d("FSETesti","Ei löytynyt: " + hakuparametri + ". Käytetään FSE, tulos: " + fseResult);
+                if(fseResult != null) {
+                    TextView ehdotus = (TextView) findViewById(R.id.ehdotus);
+                    //LinearLayout ehdotusalue = (LinearLayout) findViewById(R.id.ehdotusalue);
+
+                    ehdotusalue.setVisibility(View.VISIBLE);
+                    ehdotus.setTextColor(Color.BLUE);
+                    ehdotus.setText(fseResult);
+
+
+                }
+
+
+
                 if(fseResult != null){
                     tulos = suoritaHaku(fseResult,listOfTables,true);
                 }

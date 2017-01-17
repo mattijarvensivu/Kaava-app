@@ -139,7 +139,7 @@
     <string name="ohjeet">Ohjeet</string>
     <string name="tietoacontent">"Tekijät:\nJärvensivu Matti ja \nMyöhänen Janne \nYhteydenotot: kaavappTeam@gmail.com"</string>
     <string name="ohjeetcontent">"Sivupalkin saat auki pyyhkäisemällä vasemmasta reunasta oikealle tai painamalla vasemman reunan nappia. Voit hakea tietoa nimellä tai aihealueella esim: Kupari tai Kaasu. \nVoit asettaa suosikkeja klikkaamalla tähteä."</string>
-
+<string name="tarkoititko">Tarkoititko\u0020 </string>
 
 
 </resources>

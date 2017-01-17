@@ -154,5 +154,5 @@
     <string name="ohjeet">Instructions</string>
     <string name="tietoacontent">"Developers:\nJärvensivu Matti and\nMyöhänen Janne.\nContact: kaavappTeam@gmail.com."</string>
     <string name="ohjeetcontent">"You can open the sidebar by swiping left to right or clicking the button on the left top corner.\nYou can search by name or by subject for example: Copper or Gas. You can also add favourites by clicking the star "</string>
-
+<string name="tarkoititko">Did you mean\u0020</string>
 </resources>
