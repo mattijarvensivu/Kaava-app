@@ -131,7 +131,10 @@ public class ChemistryActivity extends activityMaster {
 
 
         }else if (id == R.id.redox) {
-            ((EditText) findViewById(R.id.edtHakuKentta)).setText("redox");
+            //((EditText) findViewById(R.id.edtHakuKentta)).setText("redox");
+            listOfTables = new String[]{"Vakio"};
+            listOfTagTables = new String[]{"Vakio"};
+            listOfReqTags = new String[]{"redoxpotentiaali"};
 
         }
 

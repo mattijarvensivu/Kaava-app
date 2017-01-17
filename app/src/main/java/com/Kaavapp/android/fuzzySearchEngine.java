@@ -27,7 +27,12 @@ public class FuzzySearchEngine {
         for(Tulos t: names)
         {
             stringit.add(t.getNimi());
-            stringit.addAll(t.getTagit());
+            try {
+                stringit.addAll(t.getTagit());
+            }catch (NullPointerException e)
+            {
+                //Ei ollut tägejä... ei jatko toimen piteitä?
+            }
         }
         stringit = getUnique(stringit);
         for(String s: stringit)
@@ -92,6 +97,7 @@ public class FuzzySearchEngine {
         int edRivinPienin = 0;
         for(int i = 1; i < taulu.length; i++)
         {
+            int thisPienin = taulu[i][0];
             for(int j = 1; j < taulu[i].length; j++)
             {
                 if(Math.min(edRivinPienin,taulu[i][j-1]) > best )
@@ -111,7 +117,9 @@ public class FuzzySearchEngine {
                     //verrataan tätä suoraan vasemalla olevaan [0][-1] ja valitaan pienin.
                      taulu[i][j] = Math.min(Math.min(taulu[i-1][j],taulu[i-1][j-1]),taulu[i][j-1])+1;
                 }
+                thisPienin = Math.min(thisPienin,taulu[i][j]);
             }
+            edRivinPienin = thisPienin;
         }
         //tulos on alin solu oikealla.
         return taulu[s1.length()][s2.length()];
