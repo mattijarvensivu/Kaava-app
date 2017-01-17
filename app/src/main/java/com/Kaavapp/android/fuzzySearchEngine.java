@@ -75,7 +75,7 @@ public class FuzzySearchEngine {
 
 
     //Lasketaan shortest edit distance 2 stringin välillä käyttäen sitä videon metodia. Tätä voi varmasti tehostaa.
-    private int calculateSED(String s1, String s2)
+    private int calculateSED(String s1, String s2, int best)
     {
         //alustetaan taulu
         int[][] taulu = new int[s1.length()+1][s2.length()+1];
@@ -89,10 +89,17 @@ public class FuzzySearchEngine {
             taulu[i][0] = i;
         }
         //aloitetaan algoritmi
+        int edRivinPienin = 0;
         for(int i = 1; i < taulu.length; i++)
         {
             for(int j = 1; j < taulu[i].length; j++)
             {
+                if(Math.min(edRivinPienin,taulu[i][j-1]) > best )
+                {
+                    //kaikki ylemmän rivin, ja tämän rivin eka numero ovat yli maxEDT -> ei ole mahdollista että SED =< maxEDT
+                    //Ei tunneta kuitenkaan todellista SED! mutta ei haittaa.
+                    return Integer.MAX_VALUE;
+                }
                 //tarkistetaan ovatko kirjaimet samoja
                 if(s1.charAt(i-1) == s2.charAt(j-1))
                 {
@@ -124,7 +131,7 @@ public class FuzzySearchEngine {
                  for(String s: indeksi.get(given.length() + dPit))
                  {
                      //lasketaan SED yhden stringin suhteen
-                     int ehdokas = calculateSED(given, s);
+                     int ehdokas = calculateSED(given, s, best);
                      if(ehdokas <= best)
                      {
                          best = ehdokas;
@@ -139,7 +146,7 @@ public class FuzzySearchEngine {
                 for(String s: indeksi.get(given.length() - dPit))
                 {
                     //lasketaan SED yhden stringin suhteen
-                    int ehdokas = calculateSED(given, s);
+                    int ehdokas = calculateSED(given, s, best);
                     if(ehdokas <= best)
                     {
                         best = ehdokas;
